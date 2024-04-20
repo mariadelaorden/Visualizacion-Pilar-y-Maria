@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 public class Controlador implements Initializable {
     @FXML
     private Slider SliderAncho;
+    @FXML
     private Slider SliderLargo;
     @FXML
     protected void onIniciarPartidaButtonClick() {
@@ -39,7 +41,7 @@ public class Controlador implements Initializable {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tablero-view.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 420, 340);
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setTitle("Tablero");
             stage.setScene(scene);
             stage.show();
@@ -50,20 +52,17 @@ public class Controlador implements Initializable {
     }
     @FXML
     protected void onGuardarButtonClick() {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tablero-view.fxml"));
             int ancho = (int) SliderAncho.getValue();
             int largo = (int) SliderLargo.getValue();
         try {
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Tablero");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
+            Parent root = fxmlLoader.load();
+            TableroController tableroController = fxmlLoader.getController();
+            tableroController.crearTablero(ancho, largo);
 
-            //controlador ventana tablero
-            ParameterController tableroController = fxmlLoader.getController();
-            Tablero tablero = new Tablero(ancho, largo);  //Creo tablero
-            tableroController.setTablero(tablero);
-            tableroController.setStage(stage);
-            stage.setScene(scene);
+            Stage stage = new Stage();
+            stage.setTitle("Tablero");
+            stage.setScene(new Scene(root));
             stage.show();
         }
         catch (Exception e) {

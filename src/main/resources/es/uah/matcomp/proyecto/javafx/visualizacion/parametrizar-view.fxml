@@ -27,9 +27,9 @@
                                              </font></Label>
 
                                                 <Label text="Seleccione ancho del tablero:" />
-                                                <Slider fx:id="sliderAncho" blockIncrement="1.0" majorTickUnit="1.0" max="20" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" />
+                                                <Slider fx:id="SliderAncho" blockIncrement="1.0" majorTickUnit="1.0" max="20" min="1.0" minorTickCount="0" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                                                 <Label text="Seleccione largo del tablero:" />
-                                                <Slider fx:id="sliderLargo" blockIncrement="1.0" majorTickUnit="1.0" max="20" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+                                                <Slider fx:id="SliderLargo" blockIncrement="1.0" majorTickUnit="1.0" max="20" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" />
                                             </children>
                                         </VBox>
                                     </children>
@@ -84,7 +84,7 @@
       </AnchorPane>
        <HBox alignment="CENTER_RIGHT" layoutX="386.0" layoutY="350.0" prefHeight="50.0" prefWidth="200.0" spacing="3.0" style="-fx-border-width: 3px;">
            <children>
-               <Button fx:id="onGuardarButtonClick" text="Guardar">
+               <Button fx:id="onGuardarButtonClick" onAction="#onGuardarButtonClick" text="Guardar">
                    <opaqueInsets>
                        <Insets />
                    </opaqueInsets></Button>
