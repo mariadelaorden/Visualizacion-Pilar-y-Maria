@@ -1,33 +1,35 @@
 package es.uah.matcomp.proyecto.cod;
 
-public class Tablero {
-    private int n;
-    private int m;
+import javafx.scene.layout.GridPane;
+
+public class Tablero  {
+    private int ancho;
+    private int largo;
     private ListaSimple listaceldas;
 
-    public Tablero(int n, int m) {
-        this.n = n;
-        this.m = m;
-        this.listaceldas = new ListaSimple(n * m);
+    public Tablero(int ancho, int largo) {
+        this.ancho = largo;
+        this.ancho = largo;
+        this.listaceldas = new ListaSimple(ancho * largo);
         crearTablero();
     }
 
     private void crearTablero() {
-        for (int i = 0; i < n * m; i++) {
+        for (int i = 0; i < ancho * largo; i++) {
             listaceldas.add(new Celda());
         }
     }
 
-    public int getN(){
-        return this.n;
+    public int getAncho(){
+        return this.ancho;
     }
-    public void setN(int n){
-        n=this.n;
+    public void setAncho(int n){
+        n=this.ancho;
     }
-    public int getM(){
-        return this.m;
+    public int getLargo(){
+        return this.largo;
     }
-    public void setM(int m){
-        m=this.m;
+    public void setLargo(int m){
+        m=this.largo;
     }
 }
