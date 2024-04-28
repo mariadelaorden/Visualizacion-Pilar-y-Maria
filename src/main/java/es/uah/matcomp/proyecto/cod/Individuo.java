@@ -7,7 +7,7 @@ public class Individuo {
     private float probreproduccion; //Probabilidad de reproduccion
     private float probclonacion; //Probabilidad de clonacion
     private float probmuerte= 1-probreproduccion; //Probabilidad de muerte
-    private String tipo; //Tipo de infividuo
+    private String tipo; //Tipo de individuo
 
     public Individuo(int id, int vida, float probreproduccion, float probclonacion, String tipo){
         this.id = id;
