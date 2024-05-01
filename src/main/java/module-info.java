@@ -8,4 +8,6 @@ module es.uah.matcomp.proyecto.javafx.visualizacion {
 
     opens es.uah.matcomp.proyecto.javafx.visualizacion to javafx.fxml;
     exports es.uah.matcomp.proyecto.javafx.visualizacion;
+    exports es.uah.matcomp.proyecto.cod;
+    opens es.uah.matcomp.proyecto.cod to javafx.fxml;
 }
