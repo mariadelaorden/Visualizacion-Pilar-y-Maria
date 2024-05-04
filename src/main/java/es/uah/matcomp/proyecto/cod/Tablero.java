@@ -10,7 +10,7 @@ public class Tablero {
     private ListaSimple listaceldas;
 
     public Tablero(int ancho, int largo) {
-        this.ancho = largo;
+        this.ancho = ancho;
         this.ancho = largo;
         this.listaceldas = new ListaSimple(ancho * largo);
         crearTablero();

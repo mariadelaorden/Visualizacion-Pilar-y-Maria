@@ -4,6 +4,7 @@ import es.uah.matcomp.proyecto.cod.Tablero;
 import es.uah.matcomp.proyecto.javafx.visualizacion.TableroController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
@@ -20,6 +21,14 @@ public class ParameterController implements Initializable {
     private Slider SliderAncho;
     @FXML
     private Slider SliderLargo;
+    @FXML
+    private Slider sliderVidas;
+    @FXML
+    private Slider sliderProbReproduccion;
+    @FXML
+    private Slider sliderProbClonacion;
+    @FXML
+    ChoiceBox<String> seleccionTipo;
     @FXML
 
 
@@ -62,6 +71,7 @@ public class ParameterController implements Initializable {
         if (model != null) {
             this.updateGUIwithModel();
         }
+
     }
 
     /**
@@ -70,6 +80,10 @@ public class ParameterController implements Initializable {
     protected void updateGUIwithModel() {
         SliderAncho.valueProperty().bindBidirectional(model.anchoProperty());
         SliderLargo.valueProperty().bindBidirectional(model.largoProperty());
+        sliderVidas.valueProperty().bindBidirectional(model.vidasProperty());
+        sliderProbReproduccion.valueProperty().bindBidirectional(model.probReproduccionProperty());
+        sliderProbClonacion.valueProperty().bindBidirectional(model.probClonacionProperty());
+        seleccionTipo.valueProperty().bindBidirectional(model.seleccionTipoProperty());
     }
 
     /**

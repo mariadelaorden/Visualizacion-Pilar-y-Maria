@@ -12,13 +12,16 @@ public class Biblioteca extends Recursos {
 
     @Override
     public void aplicarEfecto(Individuo individuo) {
-        float probClonacionActual = individuo.getProbclonacion();
+        double probClonacionActual = individuo.getProbclonacion();
         probClonacionActual += aumentoProbabilidadClonacion;
         individuo.setProbreproduccion(probClonacionActual);
+
+        /**
 
         int tipoIndividuoActual = Integer.parseInt(individuo.getTipo());
         tipoIndividuoActual += aumentoTipoIndividuo;
         individuo.setTipo(tipoIndividuoActual);
+         **/
     }
 
 }

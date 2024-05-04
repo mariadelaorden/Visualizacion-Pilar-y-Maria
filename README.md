@@ -9,4 +9,15 @@ PROYECTO
 - Cargar partida desde un archivo????
 - En la identificacion del individuo restringir para que solo se puedan numeros de 4 cifras
 - Mostrar valor slider
-- Los individuos tienen posicion inicial
+- Mostrar unas instrucciones o leyendas de cada cosa
+- Bloquear para que no se pueda modificar el tablero
+- Revisar pq muchos recursos dan error
+
+
+RECURSOS ABREVIACIONES
+- AGUA (A)
+- COMIDA (C)
+- MONTAÑA (M)
+- TESORO (T)
+- BIBLIOTECA (B)
+- POZO (P)
