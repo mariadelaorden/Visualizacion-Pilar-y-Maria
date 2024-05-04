@@ -63,8 +63,6 @@
                                                       </FXCollections>
                                                   </items>
                                               </ChoiceBox>
-                                              <Label text="Escriba el numero de identificacion del individuo:" />
-                                              <TextField prefHeight="25.0" prefWidth="200.0" />
                                           </children>
                                       </VBox>
                                   </children>

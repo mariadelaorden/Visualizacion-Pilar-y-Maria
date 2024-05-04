@@ -1,5 +1,6 @@
 package es.uah.matcomp.proyecto.javafx.visualizacion;
 
+import es.uah.matcomp.proyecto.cod.Tablero;
 import es.uah.matcomp.proyecto.javafx.visualizacion.TableroController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +28,7 @@ public class ParameterController implements Initializable {
      **/
     private ParameterDataModelProperties model;
     private Stage scene;
-    private TableroController tablero;
+    private Tablero tablero;
 
 
     /** Métodos de respuesta a eventos: El GUI llama a estos métodos del controlador para realizar operaciones **/
@@ -82,7 +83,7 @@ public class ParameterController implements Initializable {
     public void setStage(Stage s){
         this.scene = s;
     }
-    public void setTablero(TableroController tablero) {
+    public void setTablero(Tablero tablero) {
         this.tablero = tablero;
     }
 }

@@ -32,6 +32,7 @@ public class Controlador implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML
@@ -46,26 +47,32 @@ public class Controlador implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML
     protected void onGuardarButtonClick() {
         int ancho = (int) SliderAncho.getValue();
         int largo = (int) SliderLargo.getValue();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
+            Parent root = fxmlLoader.load();
+            TableroController tableroController = fxmlLoader.getController();
+            tableroController.crearTablero(ancho, largo);
 
-        // Crear el tablero directamente
-        Tablero tablero = new Tablero(ancho, largo);
-        GridPane tableroGridPane = tablero.getGridPane();
+            Stage stage = new Stage();
+            stage.setTitle("Tablero");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        // Crear una nueva escena con el tablero
-        Stage stage = new Stage();
-        stage.setTitle("Tablero");
-        stage.setScene(new Scene(tableroGridPane));
-        stage.show();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.print("Inicialización en ejecución del controlador\n");
+
     }
 }
