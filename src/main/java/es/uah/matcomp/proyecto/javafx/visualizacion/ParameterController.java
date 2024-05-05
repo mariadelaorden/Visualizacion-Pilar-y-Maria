@@ -46,12 +46,6 @@ public class ParameterController implements Initializable {
      * onMiBotonEjemploClick indica que es un "manejador de evento de tipo click" del botón MiBotonEjemplo del interfaz
      */
 
-
-    @FXML
-    protected void onGuardarButtonClick() {
-        model.commit();
-    }
-
     @FXML
     protected void onReiniciarButtonClick() {
         model.rollback();

@@ -33,7 +33,9 @@ public class ParameterDataModelProperties {
     public void rollback(){
         ancho.set(originalTablero.getAncho());
         largo.set(originalTablero.getLargo());
-
+        vidas.set(originalIndividuo.getvida());
+        probReproduccion.set(originalIndividuo.getProbreproduccion());
+        probClonacion.set(originalIndividuo.getProbclonacion());
     }
 
     public Tablero getOriginalTablero(){
