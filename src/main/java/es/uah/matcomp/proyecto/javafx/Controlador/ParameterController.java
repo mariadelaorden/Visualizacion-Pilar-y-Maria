@@ -1,7 +1,6 @@
-package es.uah.matcomp.proyecto.javafx.visualizacion;
+package es.uah.matcomp.proyecto.javafx.Controlador;
 
 import es.uah.matcomp.proyecto.cod.Tablero;
-import es.uah.matcomp.proyecto.javafx.visualizacion.TableroController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;

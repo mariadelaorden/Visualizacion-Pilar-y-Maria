@@ -6,8 +6,8 @@ module es.uah.matcomp.proyecto.javafx.visualizacion {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
 
-    opens es.uah.matcomp.proyecto.javafx.visualizacion to javafx.fxml;
-    exports es.uah.matcomp.proyecto.javafx.visualizacion;
+    opens es.uah.matcomp.proyecto.javafx.Controlador to javafx.fxml;
+    exports es.uah.matcomp.proyecto.javafx.Controlador;
     exports es.uah.matcomp.proyecto.cod;
     opens es.uah.matcomp.proyecto.cod to javafx.fxml;
 }

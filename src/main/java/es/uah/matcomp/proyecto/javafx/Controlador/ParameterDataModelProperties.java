@@ -1,8 +1,7 @@
-package es.uah.matcomp.proyecto.javafx.visualizacion;
+package es.uah.matcomp.proyecto.javafx.Controlador;
 
 import es.uah.matcomp.proyecto.cod.Individuo;
 import es.uah.matcomp.proyecto.cod.Tablero;
-import es.uah.matcomp.proyecto.javafx.visualizacion.TableroController;
 import javafx.beans.property.*;
 
 public class ParameterDataModelProperties {
@@ -17,7 +16,7 @@ public class ParameterDataModelProperties {
     private DoubleProperty probClonacion = new SimpleDoubleProperty();
     private StringProperty seleccionTipo = new SimpleStringProperty();
 
-    public ParameterDataModelProperties(Tablero originaltablero, Individuo originalIndividuo){
+    public ParameterDataModelProperties(Tablero originalTablero, Individuo originalIndividuo){
         setOriginal(originalTablero,originalIndividuo);
     }
 

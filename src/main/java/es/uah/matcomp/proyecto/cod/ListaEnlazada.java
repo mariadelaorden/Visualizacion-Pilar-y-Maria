@@ -51,6 +51,10 @@ public class ListaEnlazada<T> {
             }
         }
     }
+    public void insert(T data, int posicion) {
+        ElementoLE<T> nuevoElemento = new ElementoLE<>(data);
+        insert(nuevoElemento,posicion);
+    }
 
     public int del(int posicion) {
         if (posicion < 0 || primero == null) {
@@ -70,7 +74,7 @@ public class ListaEnlazada<T> {
         return posicion;
     }
 
-    public int getNumeroElementos() {
+    public int length() {
         int contador = 0;
         ElementoLE<T> actual = primero;
         while (actual != null) {

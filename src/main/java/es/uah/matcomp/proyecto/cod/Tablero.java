@@ -1,26 +1,28 @@
 package es.uah.matcomp.proyecto.cod;
 
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-
 public class Tablero {
     private int ancho;
     private int largo;
-    private ListaSimple listaceldas;
+    private ListaSimple<Celda> celdas;
 
     public Tablero(int ancho, int largo) {
         this.ancho = ancho;
-        this.ancho = largo;
-        this.listaceldas = new ListaSimple(ancho * largo);
+        this.largo = largo;
+        this.celdas = new ListaSimple<Celda>(ancho * largo);
         crearTablero();
     }
 
     private void crearTablero() {
         for (int i = 0; i < ancho * largo; i++) {
-            listaceldas.add(new Celda());
+            celdas.add(new Celda());
         }
     }
+/**
+    public Celda getElemento(int i, int j){
+        //return celdas.getElemento(i*ancho+j).getData();
+    }
+ **/
+
 
     public int getAncho(){
         return this.ancho;

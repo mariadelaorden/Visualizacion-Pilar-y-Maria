@@ -1,9 +1,6 @@
-package es.uah.matcomp.proyecto.javafx.visualizacion;
+package es.uah.matcomp.proyecto.javafx.Controlador;
 
 import es.uah.matcomp.proyecto.cod.Individuo;
-import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Slider;
 
 public class IndividuoController {
 

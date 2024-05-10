@@ -1,29 +1,24 @@
-package es.uah.matcomp.proyecto.javafx.visualizacion;
+package es.uah.matcomp.proyecto.javafx.Controlador;
 
-import es.uah.matcomp.proyecto.cod.ElementoLS;
 import es.uah.matcomp.proyecto.cod.Individuo;
 import es.uah.matcomp.proyecto.cod.ListaEnlazada;
+import es.uah.matcomp.proyecto.cod.Recursos;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Side;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class TableroController extends GridPane {
+//VISTA DEL TABLERO -> tablero-view
+public class VistaTableroController extends GridPane implements Initializable {
     @FXML
     private GridPane tableroGridPane;
     private ListaEnlazada individuos;
+    private ListaEnlazada recursos;
 
     @FXML
     private Slider sliderVidas;
@@ -34,9 +29,14 @@ public class TableroController extends GridPane {
     @FXML
     private ChoiceBox<String> seleccionTipo;
 
-    public TableroController(){
-
-    }
+    @FXML
+    protected void onJugarButtonClick(){}
+    @FXML
+    protected void onPausaButtonClick(){}
+    @FXML
+    protected void onEditarButtonClick(){}  //Crear un nuevo Stage???
+    @FXML
+    protected void onFinalizarButtonClick(){}
 
     public void crearTablero(int ancho, int largo) {
         for (int i = 0; i < ancho; i++) {
@@ -83,6 +83,23 @@ public class TableroController extends GridPane {
                 celda.setText("I");
             });
         });
+        /**
+
+        opcion2.setOnAction(event -> {
+            // Capturar los valores
+            tipoRecurso
+
+            // Crear un nuevo individuo con los valores de los sliders
+            Recursos recurso= new Recursos(tipoRecurso);
+
+            // Agregar el nuevo individuo a la lista
+            recursos.add(recurso);
+
+            // Marcar la celda como ocupada
+            celda.setText("I");
+            });
+        });
+         **/
 
         menu.getItems().addAll(opcion1, opcion2);
 
@@ -91,17 +108,6 @@ public class TableroController extends GridPane {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Vincular los sliders a las propiedades adecuadas
-        sliderVidas.valueProperty().addListener((observable, oldValue, newValue) -> {
-            // Manejar el cambio de valor, si es necesario
-        });
-
-        sliderProbReproduccion.valueProperty().addListener((observable, oldValue, newValue) -> {
-            // Manejar el cambio de valor, si es necesario
-        });
-
-        sliderProbClonacion.valueProperty().addListener((observable, oldValue, newValue) -> {
-            // Manejar el cambio de valor, si es necesario
-        });
+        System.out.print("Inicialización en ejecución del controlador\n");
     }
 }

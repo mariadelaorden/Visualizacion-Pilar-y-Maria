@@ -1,6 +1,6 @@
 package es.uah.matcomp.proyecto.cod;
 
-public class ListaSimple {
+public class ListaSimple<C> {
     private ElementoLS[] datos;
     private int maximo;
     public ListaSimple(int maximo){
