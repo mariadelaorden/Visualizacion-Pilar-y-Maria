@@ -2,20 +2,29 @@ package es.uah.matcomp.proyecto.cod;
 
 import java.util.Random;
 
-public class Individuo {
-    private int id;  //Identificacion del individuo
-    private int generacion; //Turno en el que se creo
-    private int vida; //Turnos de vidas que le quedan
-    private double probreproduccion; //Probabilidad de reproduccion
-    private double probclonacion; //Probabilidad de clonacion
-    private double probmuerte= 1-probreproduccion; //Probabilidad de muerte
-    private String tipo; //Tipo de individuo
+import java.util.Random;
 
-    public Individuo(int vida, double probreproduccion, double probclonacion, String tipo){
-        this.vida= vida;
-        this.probreproduccion= probreproduccion;
-        this.probclonacion= probreproduccion;
-        this.tipo= tipo;
+public class Individuo {
+    private int id;
+    private int generacion;
+    private int vida;
+    private double probreproduccion;
+    private double probclonacion;
+    private double probmuerte;
+    private TipoIndividuo tipo;
+
+    public enum TipoIndividuo {
+        BASICO,
+        NORMAL,
+        AVANZADO
+    }
+
+    public Individuo(int vida, double probReproduccion, double probClonacion, TipoIndividuo tipo) {
+        this.vida = vida;
+        this.probreproduccion = probReproduccion;
+        this.probclonacion = probClonacion;
+        this.probmuerte = 1 - probReproduccion;
+        this.tipo = tipo;
     }
 
     public int getId(){
@@ -50,32 +59,34 @@ public class Individuo {
     public void setProbmuerte(double probmuerte){
         probmuerte=this.probmuerte;
     }
-    public int getTipo(){
-        if(tipo=="basico"){
+    public int getTipo() {
+        if (tipo.equals(TipoIndividuo.BASICO)) {
             return 1;
         }
-        if (tipo=="normal"){
+        if (tipo.equals(TipoIndividuo.NORMAL)) {
             return 2;
         }
-        if(tipo=="avanzado"){
+        if (tipo.equals(TipoIndividuo.AVANZADO)) {
             return 3;
         }
-        return 0; //Error
+        return 0; // Error
     }
-    public void setTipo(int tipo){
-        if (tipo==1){
-            this.tipo="basico";
-        }
-        if(tipo==2){
-            this.tipo="normal";
-        }
-        if(tipo==3){
-            this.tipo="avanzado";
+
+    public void setTipo(int tipo) {
+        if (tipo == 1) {
+            this.tipo = TipoIndividuo.BASICO;
+        } else if (tipo == 2) {
+            this.tipo = TipoIndividuo.NORMAL;
+        } else if (tipo == 3) {
+            this.tipo = TipoIndividuo.AVANZADO;
+        } else {
+            System.out.println("Tipo no válido");
         }
     }
+
     public void setTipo(String tipo){
         if (tipo=="basico" || tipo=="normal"|| tipo=="avanzado"){
-            this.tipo=tipo;
+            this.tipo= TipoIndividuo.valueOf(tipo);
         }
         else{
             System.out.println("Tipo no valido");  //log??
@@ -106,22 +117,33 @@ public class Individuo {
         float newprobclonacion = (float) (this.getProbclonacion()+prob);
         setProbreproduccion(newprobclonacion);
     }
-    public void mover(){  //En funcion del tablero y recursos
-        if (getTipo()==1){}
-        else if(getTipo()==2){}
-        else if(getTipo()==3){}
-    }
-    public void subirtipo(){
-        if (getTipo()==1){
-            setTipo(2);  //Tipo normal
-        }
-        else if(getTipo()==2){
-            setTipo(3); //Tipo avanzado
-        }
-        else if (getTipo()==3){
-            setTipo(3); //Tipo maximo
+    public void mover() {
+        if (getTipo() == 1) {
+
+        } else if (getTipo() == 2) {
+
+        } else if (getTipo() == 3) {
+
+        } else {
+            System.out.println("Tipo de individuo no válido: " + getTipo());
+
         }
     }
+
+
+    public void subirTipo() {
+        if (tipo.equals("basico")) {
+            setTipo(2);  // Tipo normal
+        } else if (tipo.equals("normal")) {
+            setTipo(3);  // Tipo avanzado
+        } else if (tipo.equals("avanzado")) {
+            // No hay un tipo "más alto" que "avanzado", así que no se hace nada
+            System.out.println("El individuo ya está en el tipo más alto.");
+        } else {
+            System.out.println("Tipo no válido");
+        }
+    }
+
 
     public void matar(){ //muerte instantanea
         setProbmuerte(1);
