@@ -1,4 +1,4 @@
-package es.uah.matcomp.proyecto.cod.listas;
+package es.uah.matcomp.proyecto.cod.estructurasdedatos.listas;
 
 public class ElementoLS<C> {
     private C data;

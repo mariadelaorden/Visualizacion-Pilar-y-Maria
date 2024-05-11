@@ -10,6 +10,6 @@ module es.uah.matcomp.proyecto.javafx.visualizacion {
     exports es.uah.matcomp.proyecto.javafx.Controlador;
     exports es.uah.matcomp.proyecto.cod;
     opens es.uah.matcomp.proyecto.cod to javafx.fxml;
-    exports es.uah.matcomp.proyecto.cod.listas;
-    opens es.uah.matcomp.proyecto.cod.listas to javafx.fxml;
+    exports es.uah.matcomp.proyecto.cod.estructurasdedatos.listas;
+    opens es.uah.matcomp.proyecto.cod.estructurasdedatos.listas to javafx.fxml;
 }

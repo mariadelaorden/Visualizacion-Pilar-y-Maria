@@ -1,9 +1,9 @@
-package es.uah.matcomp.proyecto.cod.grafo;
+package es.uah.matcomp.proyecto.cod.estructurasdedatos.grafo;
 
 
-import es.uah.matcomp.proyecto.cod.listas.ElementoLE;
-import es.uah.matcomp.proyecto.cod.listas.ListaEnlazada;
-import es.uah.matcomp.proyecto.cod.listas.ListaSimple;
+import es.uah.matcomp.proyecto.cod.estructurasdedatos.listas.ElementoLE;
+import es.uah.matcomp.proyecto.cod.estructurasdedatos.listas.ListaEnlazada;
+import es.uah.matcomp.proyecto.cod.estructurasdedatos.listas.ListaSimple;
 
 
 public class Grafo<T> {

@@ -1,4 +1,4 @@
-package es.uah.matcomp.proyecto.cod.listas;
+package es.uah.matcomp.proyecto.cod.estructurasdedatos.listas;
 
 public class ListaEnlazada<T> {
     private ElementoLE<T> primero;

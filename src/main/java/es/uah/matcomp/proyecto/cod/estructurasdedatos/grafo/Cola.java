@@ -1,4 +1,4 @@
-package es.uah.matcomp.proyecto.cod.grafo;
+package es.uah.matcomp.proyecto.cod.estructurasdedatos.grafo;
 
 public class Cola<T> {
     private NodoGrafo<T> frente;

@@ -1,4 +1,4 @@
-package es.uah.matcomp.proyecto.cod.grafo;
+package es.uah.matcomp.proyecto.cod.estructurasdedatos.grafo;
 
 public class Arco<T> {
     private NodoGrafo<T> inicio;

@@ -1,6 +1,6 @@
 package es.uah.matcomp.proyecto.cod;
 
-import es.uah.matcomp.proyecto.cod.listas.ListaSimple;
+import es.uah.matcomp.proyecto.cod.estructurasdedatos.listas.ListaSimple;
 
 public class Celda {
     private ListaSimple individuos;

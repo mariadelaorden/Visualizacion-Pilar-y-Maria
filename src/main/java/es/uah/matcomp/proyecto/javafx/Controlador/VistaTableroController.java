@@ -1,7 +1,6 @@
 package es.uah.matcomp.proyecto.javafx.Controlador;
 
-import es.uah.matcomp.proyecto.cod.Individuo;
-import es.uah.matcomp.proyecto.cod.listas.ListaEnlazada;
+import es.uah.matcomp.proyecto.cod.estructurasdedatos.listas.ListaEnlazada;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;

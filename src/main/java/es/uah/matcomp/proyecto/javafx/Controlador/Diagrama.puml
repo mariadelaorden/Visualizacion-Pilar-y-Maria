@@ -1,4 +1,36 @@
 @startuml
+abstract class Recursos{
+- nombre:String
++ getNombre():String
++ abstract aplicarEfecto(individuo:Individuo)
+}
+class Agua{
++Agua()
++aplicarEfecto((individuo:Individuo)
+}
+class Comida{
++Comida()
++aplicarEfecto((individuo:Individuo)
+}
+class Montaña{
++Montaña()
++aplicarEfecto((individuo:Individuo)
+}
+class Pozo{
++Pozo()
++aplicarEfecto((individuo:Individuo)
+}
+class Biblioteca{}
+class Tesoro{}
+
+Agua-|> Recursos
+Comida-|> Recursos
+Montaña-|> Recursos
+Pozo-|> Recursos
+Biblioteca-|> Recursos
+Tesoro-|> Recursos
+
+
 
 
 @enduml
