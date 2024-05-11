@@ -1,9 +1,9 @@
 package es.uah.matcomp.proyecto.cod.grafo;
 
 
-import es.uah.matcomp.proyecto.cod.ElementoLE;
-import es.uah.matcomp.proyecto.cod.ListaEnlazada;
-import es.uah.matcomp.proyecto.cod.ListaSimple;
+import es.uah.matcomp.proyecto.cod.listas.ElementoLE;
+import es.uah.matcomp.proyecto.cod.listas.ListaEnlazada;
+import es.uah.matcomp.proyecto.cod.listas.ListaSimple;
 
 
 public class Grafo<T> {
@@ -28,7 +28,7 @@ public class Grafo<T> {
     public void borrarNodo(NodoGrafo<T> nodo) {
         nodos.del(nodos.getPosicion((NodoGrafo<NodoGrafo<T>>) nodo));
         //Eliminar arcos conectados
-        for (int i = 0; i < arcos.getElemento(); i++) {
+        for (int i = 0; i < arcos.length(); i++) {
             Arco<T> arco = (Arco<T>) arcos.getElemento(i).getData();
             if (arco.getInicio().equals(nodo) || arco.getFin().equals(nodo)) {
                 arcos.del(i);
@@ -38,7 +38,7 @@ public class Grafo<T> {
     }
 
     public void borrarArco(NodoGrafo<T> inicio, NodoGrafo<T> fin) {
-        for (int i = 0; i < arcos.getNumeroElementos(); i++) {
+        for (int i = 0; i < arcos.length(); i++) {
             Arco<T> arco = (Arco<T>) arcos.getElemento(i).getData();
             if (arco.getInicio().equals(inicio) && arco.getFin().equals(fin)) {
                 arcos.del(i);
@@ -48,7 +48,7 @@ public class Grafo<T> {
     }
 
     public Arco<T> buscarArco(NodoGrafo<T> inicio, NodoGrafo<T> fin) {
-        for (int i = 0; i < arcos.getNumeroElementos(); i++) {
+        for (int i = 0; i < arcos.length(); i++) {
             ElementoLE elemento = arcos.getElemento(i);  //Selecciono el arco de la lista
             if (elemento.getData() instanceof Arco) {  //Verifica que es un arco
                 Arco<T> arco = (Arco<T>) elemento.getData();   //Extrae los datos
@@ -97,7 +97,7 @@ public class Grafo<T> {
         while (!colaPendientes.isVacia()) {
             NodoGrafo<T> verticeActual = colaPendientes.pull();
 
-            for (int i = 0; i < verticeActual.arcosSalida.getElemento(); i++) {
+            for (int i = 0; i < verticeActual.arcosSalida.length(); i++) {
                 Arco<T> arco = (Arco<T>) verticeActual.arcosSalida.getElemento(i).getData();  //Exploramos los arcos de salido
                 NodoGrafo<T> verticeVecino = arco.getFin();  //Vertices de salida del arco
 
@@ -143,7 +143,7 @@ public class Grafo<T> {
 
         // Arcos
         Mapa<Arco<T>, Boolean> arcosProcesados = new Mapa<>(); // Para evitar duplicados
-        for (int i = 0; i < arcos.getElemento(); i++) {
+        for (int i = 0; i < arcos.length(); i++) {
             Arco<T> arco = (Arco<T>) arcos.getElemento(i).getData();
             if (!arcosProcesados.containsKey(arco)) {
                 arcosProcesados.put(arco, true);

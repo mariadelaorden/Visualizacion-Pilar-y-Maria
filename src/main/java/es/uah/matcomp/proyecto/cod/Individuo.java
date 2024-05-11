@@ -2,8 +2,6 @@ package es.uah.matcomp.proyecto.cod;
 
 import java.util.Random;
 
-import java.util.Random;
-
 public class Individuo {
     private int id;
     private int generacion;

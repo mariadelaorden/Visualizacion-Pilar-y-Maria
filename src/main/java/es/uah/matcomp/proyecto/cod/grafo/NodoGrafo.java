@@ -1,9 +1,7 @@
 package es.uah.matcomp.proyecto.cod.grafo;
 
-import es.uah.matcomp.proyecto.cod.ElementoLS;
-import es.uah.matcomp.proyecto.cod.ListaEnlazada;
-
-import es.uah.matcomp.proyecto.cod.grafo.Arco;
+import es.uah.matcomp.proyecto.cod.listas.ElementoLS;
+import es.uah.matcomp.proyecto.cod.listas.ListaEnlazada;
 
 
 public class NodoGrafo<T> extends ElementoLS {

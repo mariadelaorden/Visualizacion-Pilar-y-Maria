@@ -1,6 +1,6 @@
 package es.uah.matcomp.proyecto.cod.grafo;
 
-import es.uah.matcomp.proyecto.cod.ListaSimple;
+import es.uah.matcomp.proyecto.cod.listas.ListaSimple;
 
 public class Mapa<K, V> {
     private ListaSimple<Entry<K, V>>[] contenedores;

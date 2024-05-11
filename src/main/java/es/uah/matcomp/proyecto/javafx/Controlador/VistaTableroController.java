@@ -1,8 +1,7 @@
 package es.uah.matcomp.proyecto.javafx.Controlador;
 
 import es.uah.matcomp.proyecto.cod.Individuo;
-import es.uah.matcomp.proyecto.cod.ListaEnlazada;
-import es.uah.matcomp.proyecto.cod.Recursos;
+import es.uah.matcomp.proyecto.cod.listas.ListaEnlazada;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
@@ -65,6 +64,7 @@ public class VistaTableroController extends GridPane implements Initializable {
             dialog.setHeaderText(null);
             dialog.setContentText("Identificacion individuo:");
 
+
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(identificacion -> {
                 // Capturar los valores de los sliders
@@ -74,10 +74,10 @@ public class VistaTableroController extends GridPane implements Initializable {
                 String tipoIndividuo = seleccionTipo.getValue();
 
                 // Crear un nuevo individuo con los valores de los sliders
-                Individuo individuo = new Individuo(vidas, probReproduccion, probClonacion, tipoIndividuo);
+                //Individuo individuo = new Individuo(vidas, probReproduccion, probClonacion, tipoIndividuo);
 
                 // Agregar el nuevo individuo a la lista
-                individuos.add(individuo);
+                //individuos.add(individuo);
 
                 // Marcar la celda como ocupada
                 celda.setText("I");

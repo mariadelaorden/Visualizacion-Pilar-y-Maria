@@ -1,5 +1,7 @@
 package es.uah.matcomp.proyecto.cod;
 
+import es.uah.matcomp.proyecto.cod.listas.ListaSimple;
+
 public class Celda {
     private ListaSimple individuos;
     private ListaSimple recursos;

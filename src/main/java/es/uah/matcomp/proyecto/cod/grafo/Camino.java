@@ -2,7 +2,7 @@ package es.uah.matcomp.proyecto.cod.grafo;
 
 
 
-import es.uah.matcomp.proyecto.cod.ListaSimple;
+import es.uah.matcomp.proyecto.cod.listas.ListaSimple;
 
 public class Camino<T> {
     private ListaSimple camino;
