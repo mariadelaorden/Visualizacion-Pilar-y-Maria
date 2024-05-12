@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: yellow;"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="es.uah.matcomp.proyecto.controlador.TableroController">
+    <children>
+        <GridPane fx:id="tableroGridPane" layoutX="29.0" layoutY="37.0" prefHeight="321.0" prefWidth="542.0"
+                  style="-fx-background-color: yellow;"/>
+    </children>
+    <HBox alignment="CENTER_RIGHT" layoutX="386.0" layoutY="350.0" prefHeight="50.0" prefWidth="400.0" spacing="3.0"
+          style="-fx-border-width: 3px;">
+        <children>
+            <Button fx:id="onGuardarButtonClick" text="Guardar Partida">
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Button>
+            <Button fx:id="onEditarButtonClick" mnemonicParsing="false" text="Editar"/>
+            <Button fx:id="onPausaButtonClick" mnemonicParsing="false" text="Pausa"/>
+            <Button fx:id="onJugarButtonClick" mnemonicParsing="false" text="Jugar"/>
+            <Button fx:id="onFinalizarButtonClick" mnemonicParsing="false" text="Finalizar Partida"/>
+        </children>
+        <VBox.margin>
+            <Insets/>
+        </VBox.margin>
+    </HBox>
+</AnchorPane>
+
