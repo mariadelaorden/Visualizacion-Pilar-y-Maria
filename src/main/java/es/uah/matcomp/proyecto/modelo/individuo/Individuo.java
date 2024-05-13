@@ -1,8 +1,14 @@
 package es.uah.matcomp.proyecto.modelo.individuo;
 
+import es.uah.matcomp.proyecto.modelo.tablero.Celda;
+import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
+
 import java.util.Random;
 
 public class Individuo {
+
+    private int posicionX;
+    private int posicionY;
     private static int ultimoId = 0;
     private int id;
     private int generacion;
@@ -13,14 +19,31 @@ public class Individuo {
     private TipoIndividuo tipo;
 
 
-    public Individuo(int generacion, int vida, double probReproduccion, double probClonacion, TipoIndividuo tipo) {
-        this.id = ++ultimoId;
+    public Individuo(int generacion, int posicionX,int posicionY, int vida, double probReproduccion, double probClonacion, TipoIndividuo tipo) {
+        this.id = ++ultimoId;  //Va aumentando
+        this.posicionX = posicionX;
+        this.posicionY = posicionY;
         this.generacion = generacion;
         this.vida = vida;
         this.probreproduccion = probReproduccion;
         this.probclonacion = probClonacion;
         this.probmuerte = 1 - probReproduccion;
         this.tipo = tipo;
+    }
+
+    public int getPosicionX() {
+        return posicionX;
+    }
+
+    public void setPosicionX(int posicionX) {
+        posicionX = posicionX;
+    }
+    public int getPosicionY() {
+        return posicionY;
+    }
+
+    public void setPosicionY(int posicionY) {
+        posicionY = posicionY;
     }
 
     public int getId() {
@@ -31,8 +54,13 @@ public class Individuo {
         Random random = new Random();
         this.id = random.nextInt(0, 100);  //Aleatorio
     }
-    //public int getGeneracion(){}    Depende del turno
-    //public void setGeneracion(){}
+    public int getGeneracion() {  //Dependerá del turno
+        return generacion;
+    }
+
+    public void setGeneracion(int generacion) {
+        this.generacion = generacion;
+    }
 
     public int getvida() {
         return this.vida;
@@ -92,17 +120,56 @@ public class Individuo {
         setProbreproduccion(newprobclonacion);
     }
 
-    public void mover() {
-        if (this.tipo == TipoIndividuo.BASICO) {
-
+    public void mover(Tablero tablero) {
+        if (this.tipo == TipoIndividuo.BASICO) { //Movimiento aleatorio
+            moverAleatorio(tablero);
         } else if (this.tipo == TipoIndividuo.NORMAL) {
-
+            //Dependera tb de los recursos
         } else {
         }
 
     }
-
     public void matar() { //muerte instantanea
         setProbmuerte(1);
+    }
+
+    protected void moverAleatorio(Tablero tablero) {
+        Random r = new Random();
+        int movimiento = r.nextInt(1,8);
+        try {
+            switch (movimiento) {
+                case 1:
+                    cambiarPosicion(getPosicionX() + 1, getPosicionY(), tablero);
+                    break;
+                case 2:
+                    cambiarPosicion(getPosicionX() + 1, getPosicionY() - 1, tablero);
+                    break;
+                case 3:
+                    cambiarPosicion(getPosicionX(), getPosicionY() - 1, tablero);
+                    break;
+                case 4:
+                    cambiarPosicion(getPosicionX() - 1, getPosicionY() - 1, tablero);
+                    break;
+                case 5:
+                    cambiarPosicion(getPosicionX() - 1, getPosicionY(), tablero);
+                    break;
+                case 6:
+                    cambiarPosicion(getPosicionX() - 1, getPosicionY() + 1, tablero);
+                    break;
+                case 7:
+                    cambiarPosicion(getPosicionX(), getPosicionY() + 1, tablero);
+                    break;
+                case 8:
+                    cambiarPosicion(getPosicionX() + 1, getPosicionY() + 1, tablero);
+                    break;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            moverAleatorio(tablero);
+        }
+    }
+
+    protected void cambiarPosicion (int nuevaX, int nuevaY, Tablero tablero) {
+        Celda nuevaCasilla = tablero.getCelda(nuevaX, nuevaY);
+        //Terminar
     }
 }
