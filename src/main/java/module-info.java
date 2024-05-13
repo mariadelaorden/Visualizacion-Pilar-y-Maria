@@ -16,4 +16,5 @@ module es.uah.matcomp.proyecto.javafx.visualizacion {
     opens es.uah.matcomp.proyecto.modelo.recurso to javafx.fxml;
     exports es.uah.matcomp.proyecto.modelo.tablero;
     opens es.uah.matcomp.proyecto.modelo.tablero to javafx.fxml;
+
 }

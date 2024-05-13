@@ -62,14 +62,18 @@ public class Individuo {
         this.generacion = generacion;
     }
 
-    public int getvida() {
-        return this.vida;
+    public TipoIndividuo getTipo() {
+        return this.tipo;
     }
 
-    public void setVida(int vida) {
-        vida = this.vida;
+    public void setTipo(TipoIndividuo tipo) {
+        this.tipo = tipo;
     }
 
+    public int getvida() {return vida;
+    }
+    public void setVida(int vida) {vida = this.vida;
+    }
     public double getProbreproduccion() {
         return this.probreproduccion;
     }
@@ -172,4 +176,5 @@ public class Individuo {
         Celda nuevaCasilla = tablero.getCelda(nuevaX, nuevaY);
         //Terminar
     }
+
 }

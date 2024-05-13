@@ -8,6 +8,21 @@ public class Tablero {
     private int largo;
     private ListaSimple listaceldas;
 
+    public int getAncho() {
+        return ancho;
+    }
+
+    public int getLargo() {
+        return largo;
+    }
+    public void setAncho(int ancho) {
+        this.ancho = ancho;
+    }
+
+    public void setLargo(int largo) {
+        this.largo = largo;
+    }
+
     public Tablero(int ancho, int largo) {
         this.ancho = ancho;
         this.largo = largo;
@@ -44,5 +59,6 @@ public class Tablero {
             }
         }
     }
+
 
 }
