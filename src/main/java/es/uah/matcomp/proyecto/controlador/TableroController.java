@@ -59,7 +59,7 @@ public class TableroController implements Initializable {
     private void addIndividuo(CustomLabel celdaLabel) {
         System.out.println("Clicked position: " + celdaLabel.getI() + " " + celdaLabel.getJ());
         Celda celda = tablero.getCelda(celdaLabel.getI(), celdaLabel.getJ());
-        celda.addIndividuo(new Individuo(1, 1, 1, 1, TipoIndividuo.AVANZADO));
+        celda.addIndividuo(new Individuo(1, celdaLabel.getI(), celdaLabel.getJ(), 1,1,1, TipoIndividuo.AVANZADO));
         celdaLabel.setStyle("-fx-background-color: black;");
     }
 
