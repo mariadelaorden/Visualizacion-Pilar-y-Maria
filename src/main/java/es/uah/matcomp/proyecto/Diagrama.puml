@@ -1,0 +1,65 @@
+@startuml
+abstract class Recurso{
+- nombre:String
++ getNombre():String
++ abstract aplicarEfecto(individuo:Individuo)
+}
+class Agua{
++Agua()
++aplicarEfecto((individuo:Individuo)
+}
+class Comida{
++Comida()
++aplicarEfecto((individuo:Individuo)
+}
+class Montaña{
++Montaña()
++aplicarEfecto((individuo:Individuo)
+}
+class Pozo{
++Pozo()
++aplicarEfecto((individuo:Individuo)
+}
+class Biblioteca{}
+class Tesoro{}
+
+Agua-|> Recurso
+Comida-|> Recurso
+Montaña-|> Recurso
+Pozo-|> Recurso
+Biblioteca-|> Recurso
+Tesoro-|> Recurso
+
+class Tablero{
++ ancho:int
++ largo:int
++ listaceldas: ListaSimple
++ Tablero(int ancho, int largo)
++ getAncho():int
++ getLargo():int
++ setAncho(ancho:int)
++ setLargo(largo:int)
++ getCelda(x:int, y:int):Celda
++ setCelda(x:int, y:int, Celda celda)
++ resetearTablero()
++ imprimirTablero()
+}
+
+class Celda{
++ individuos:ListaSimple
++ recursos:ListaSimple
++ Celda()
++ getIndividuos():ListaSimple
++ getRecursos():ListaSimple
++ addIndividuo(individuo: Individuo)
++ addRecurso(recurso: Recurso)
++ isempty():boolean
+}
+
+
+
+
+
+
+
+@enduml
