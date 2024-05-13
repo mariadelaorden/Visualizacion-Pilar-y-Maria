@@ -1,4 +1,5 @@
-package es.uah.matcomp.proyecto.controlador;
+package es.uah.matcomp.proyecto.modelo;
+import es.uah.matcomp.proyecto.modelo.ParameterDataModel;
 import javafx.beans.property.*;
 
 public class ParameterDataModelProperties {

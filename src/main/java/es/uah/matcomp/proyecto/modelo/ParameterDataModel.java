@@ -1,4 +1,4 @@
-package es.uah.matcomp.proyecto.controlador;
+package es.uah.matcomp.proyecto.modelo;
 
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaEnlazada;
 

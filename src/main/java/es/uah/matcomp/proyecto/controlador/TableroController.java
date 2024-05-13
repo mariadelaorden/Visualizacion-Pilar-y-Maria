@@ -24,6 +24,7 @@ public class TableroController implements Initializable {
     @FXML
     private GridPane tableroGridPane;
     private Tablero tablero;
+    @FXML
 
     private int anchoTablero;
     private int largoTablero;
