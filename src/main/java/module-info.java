@@ -5,6 +5,7 @@ module es.uah.matcomp.proyecto.javafx.visualizacion {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires com.google.gson;
 
     opens es.uah.matcomp.proyecto.controlador to javafx.fxml;
     exports es.uah.matcomp.proyecto.controlador;
