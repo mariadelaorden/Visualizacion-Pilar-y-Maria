@@ -32,7 +32,7 @@ public class PantallaInicialController implements Initializable {
     }
 
     @FXML
-    protected void onCargarPartidaButtonClick() {
+    protected void onCargarPartidaButtonClick() {  //Utilizar json
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tablero-view.fxml"));
         try {
