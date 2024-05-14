@@ -43,6 +43,7 @@ public class TableroController implements Initializable {
             e.printStackTrace();
         }
     }
+    /**
     public void crearTablero(int anchoTablero, int largoTablero) {
         for (int i = 0; i < anchoTablero; i++) {
             for (int j = 0; j < largoTablero; j++) {
@@ -67,6 +68,7 @@ public class TableroController implements Initializable {
     public void onCargarPartidaButtonClick(ActionEvent actionEvent) {
         this.tablero.imprimirTablero();
     }
+     **/
     @FXML
     protected void onReiniciarTableroButtonClick(){
         //Restablecer los valores del tablero
@@ -77,7 +79,7 @@ public class TableroController implements Initializable {
         this.largoTablero = 10;
 
         this.tablero = new Tablero(anchoTablero, largoTablero);
-        crearTablero(anchoTablero, largoTablero); // Pasar el ancho y largo del tablero como argumentos
+        //crearTablero(anchoTablero, largoTablero); // Pasar el ancho y largo del tablero como argumentos
     }
 
 }
