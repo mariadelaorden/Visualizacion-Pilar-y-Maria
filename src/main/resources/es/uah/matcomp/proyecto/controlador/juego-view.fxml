@@ -20,5 +20,5 @@
     </Label>
     <Label text="Bienvenido!"/>
     <Button onAction="#onCargarPartidaButtonClick" text="Cargar partida"/>
-    <Button mnemonicParsing="false" onAction="#onIniciarPartidaButtonClick" text="Iniciciar nueva partida"/>
+    <Button mnemonicParsing="false" onAction="#onIniciarPartidaButtonClick" text="Iniciar nueva partida"/>
 </VBox>

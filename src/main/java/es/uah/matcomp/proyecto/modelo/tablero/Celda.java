@@ -12,7 +12,7 @@ public class Celda {
 
     public Celda() {
         this.individuos = new ListaSimple(this.maxIndividuos); // Máximo 3 individuos por celda
-        this.recursos = new ListaSimple(this.maxIndividuos); // Máximo 3 recursos por celda
+        this.recursos = new ListaSimple(this.maxRecursos); // Máximo 3 recursos por celda
     }
 
     public ListaSimple getIndividuos() {
