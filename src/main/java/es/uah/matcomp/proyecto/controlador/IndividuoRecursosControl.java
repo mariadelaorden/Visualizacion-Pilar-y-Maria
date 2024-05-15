@@ -25,8 +25,8 @@ public class IndividuoRecursosControl implements Initializable {
 
     @FXML
     protected void onGuardarButtonClick() {
-        int ancho = 4; //(int) SliderAncho.getValue();
-        int largo = 4;//(int) SliderLargo.getValue();
+        int ancho= (int) SliderAncho.getValue();
+        int largo = (int) SliderLargo.getValue();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
             Parent root = fxmlLoader.load();
