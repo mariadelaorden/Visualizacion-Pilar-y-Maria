@@ -13,8 +13,8 @@ public class Individuo {
     private int id;
     private int generacion;
     private int vida;
-    private double probreproduccion;
-    private double probclonacion;
+    private double probReproduccion;
+    private double probClonacion;
     private double probmuerte;
     private TipoIndividuo tipo;
 
@@ -25,8 +25,8 @@ public class Individuo {
         this.posicionY = posicionY;
         this.generacion = generacion;
         this.vida = vida;
-        this.probreproduccion = probReproduccion;
-        this.probclonacion = probClonacion;
+        this.probReproduccion = probReproduccion;
+        this.probClonacion = probClonacion;
         this.probmuerte = 1 - probReproduccion;
         this.tipo = tipo;
     }
@@ -77,20 +77,20 @@ public class Individuo {
     }
     public void setVida(int vida) {vida = this.vida;
     }
-    public double getProbreproduccion() {
-        return this.probreproduccion;
+    public double getProbReproduccion() {
+        return this.probReproduccion;
     }
 
-    public void setProbreproduccion(double probreproduccion) {
-        probreproduccion = this.probreproduccion;
+    public void setProbReproduccion(double probReproduccion) {
+        probReproduccion = this.probReproduccion;
     }
 
-    public double getProbclonacion() {
-        return this.probclonacion;
+    public double getProbClonacion() {
+        return this.probClonacion;
     }
 
-    public void setProbclonacion(double probclonacion) {
-        probclonacion = this.probclonacion;
+    public void setProbClonacion(double probClonacion) {
+        probClonacion = this.probClonacion;
     }
 
     public void setProbmuerte(double probmuerte) {
@@ -107,24 +107,24 @@ public class Individuo {
         setVida(newvida);
     }
 
-    public void bajarprobreproduccion(float prob) {
-        float newprobreproduccion = (float) (this.getProbreproduccion() - prob);
-        setProbreproduccion(newprobreproduccion);
+    public void bajarprobReproduccion(float prob) {
+        float newprobreproduccion = (float) (this.getProbReproduccion() - prob);
+        setProbReproduccion(newprobreproduccion);
     }
 
-    public void bajarprobclonacion(float prob) {
-        float newprobclonacion = (float) (this.getProbclonacion() - prob);
-        setProbreproduccion(newprobclonacion);
+    public void bajarprobClonacion(float prob) {
+        float newprobclonacion = (float) (this.getProbClonacion() - prob);
+        setProbReproduccion(newprobclonacion);
     }
 
-    public void subirprobreproduccion(float prob) {
-        float newprobreproduccion = (float) (this.getProbreproduccion() + prob);
-        setProbreproduccion(newprobreproduccion);
+    public void subirprobReproduccion(float prob) {
+        float newprobreproduccion = (float) (this.getProbReproduccion() + prob);
+        setProbReproduccion(newprobreproduccion);
     }
 
-    public void subirprobclonacion(float prob) {
-        float newprobclonacion = (float) (this.getProbclonacion() + prob);
-        setProbreproduccion(newprobclonacion);
+    public void subirprobClonacion(float prob) {
+        float newprobclonacion = (float) (this.getProbClonacion() + prob);
+        setProbReproduccion(newprobclonacion);
     }
 
     public void mover(Tablero tablero) {
