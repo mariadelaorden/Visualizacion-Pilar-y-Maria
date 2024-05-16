@@ -1,6 +1,6 @@
 package es.uah.matcomp.proyecto.estructurasdedatos.listas;
 
-public class ListadoblementeEnlazada {
+public class ListadoblementeEnlazada<I extends Number> {
     private ElementoLDE primero;
     private ElementoLDE ultimo;
 
