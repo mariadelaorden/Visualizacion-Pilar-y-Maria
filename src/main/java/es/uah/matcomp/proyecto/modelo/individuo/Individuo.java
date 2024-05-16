@@ -31,6 +31,9 @@ public class Individuo {
         this.tipo = tipo;
     }
 
+    public Individuo(int generacion, int posicionX, int posicionY, int vida, int probReproduccion, TipoIndividuo tipoIndividuo) {
+    }
+
     public int getPosicionX() {
         return posicionX;
     }

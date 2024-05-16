@@ -1,6 +1,5 @@
 package es.uah.matcomp.proyecto.controlador;
 
-import es.uah.matcomp.proyecto.modelo.ParameterDataModelProperties;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
@@ -8,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
 import java.net.URL;
