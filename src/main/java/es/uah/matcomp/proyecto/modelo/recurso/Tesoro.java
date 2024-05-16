@@ -14,8 +14,8 @@ public class Tesoro extends Recurso {
 
     @Override
     public void aplicarEfecto(Individuo individuo) {
-        double probReproduccionActual = individuo.getProbreproduccion();
+        double probReproduccionActual = individuo.getProbReproduccion();
         probReproduccionActual += aumentoProbabilidadReproduccion;
-        individuo.setProbreproduccion(probReproduccionActual);
+        individuo.setProbReproduccion(probReproduccionActual);
     }
 }

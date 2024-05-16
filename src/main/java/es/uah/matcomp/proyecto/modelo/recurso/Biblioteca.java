@@ -14,9 +14,9 @@ public class Biblioteca extends Recurso {
 
     @Override
     public void aplicarEfecto(Individuo individuo) {
-        double probClonacionActual = individuo.getProbclonacion();
+        double probClonacionActual = individuo.getProbClonacion();
         probClonacionActual += aumentoProbabilidadClonacion;
-        individuo.setProbreproduccion(probClonacionActual);
+        individuo.setProbReproduccion(probClonacionActual);
 
         TipoIndividuo tipoActual = individuo.getTipo();
         TipoIndividuo nuevoTipo = null;
