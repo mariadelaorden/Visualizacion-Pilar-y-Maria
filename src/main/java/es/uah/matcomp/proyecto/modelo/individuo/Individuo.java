@@ -73,7 +73,7 @@ public class Individuo {
         this.tipo = tipo;
     }
 
-    public int getvida() {return vida;
+    public int getVida() {return vida;
     }
     public void setVida(int vida) {vida = this.vida;
     }
@@ -98,12 +98,12 @@ public class Individuo {
     }
 
     public void bajarvida(int numvidas) {
-        int newvida = this.getvida() - numvidas;
+        int newvida = this.getVida() - numvidas;
         setVida(newvida);
     }
 
     public void subirvida(int numvidas) {
-        int newvida = this.getvida() + numvidas;
+        int newvida = this.getVida() + numvidas;
         setVida(newvida);
     }
 
