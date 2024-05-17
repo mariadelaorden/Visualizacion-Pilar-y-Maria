@@ -4,9 +4,9 @@ import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.recurso.Recurso;
 
 public class Tesoro extends Recurso {
-    private float aumentoProbabilidadReproduccion;
+    private double aumentoProbabilidadReproduccion;
 
-    public Tesoro(float aumentoProbabilidadReproduccion) {
+    public Tesoro(double aumentoProbabilidadReproduccion) {
         super();
         this.aumentoProbabilidadReproduccion = aumentoProbabilidadReproduccion;
 

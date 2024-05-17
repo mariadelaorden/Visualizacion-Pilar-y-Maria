@@ -5,9 +5,9 @@ import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.recurso.Recurso;
 
 public class Biblioteca extends Recurso {
-    private int aumentoProbabilidadClonacion;
+    private double aumentoProbabilidadClonacion;
 
-    public Biblioteca(float aumentoProbabilidadClonacion) {
+    public Biblioteca(double aumentoProbabilidadClonacion) {
         super();
         this.aumentoProbabilidadClonacion = (int) aumentoProbabilidadClonacion;
     }

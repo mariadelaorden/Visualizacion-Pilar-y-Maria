@@ -1,62 +1,142 @@
 @startuml
-abstract class Recurso{
-- nombre:String
-+ getNombre():String
-+ abstract aplicarEfecto(individuo:Individuo)
-}
-class Agua{
-+Agua()
-+aplicarEfecto((individuo:Individuo)
-}
-class Comida{
-+Comida()
-+aplicarEfecto((individuo:Individuo)
-}
-class Montaña{
-+Montaña()
-+aplicarEfecto((individuo:Individuo)
-}
-class Pozo{
-+Pozo()
-+aplicarEfecto((individuo:Individuo)
-}
-class Biblioteca{}
-class Tesoro{}
-
-Agua-|> Recurso
-Comida-|> Recurso
-Montaña-|> Recurso
-Pozo-|> Recurso
-Biblioteca-|> Recurso
-Tesoro-|> Recurso
-
-class Tablero{
-+ ancho:int
-+ largo:int
-+ listaceldas: ListaSimple
-+ Tablero(int ancho, int largo)
-+ getAncho():int
-+ getLargo():int
-+ setAncho(ancho:int)
-+ setLargo(largo:int)
-+ getCelda(x:int, y:int):Celda
-+ setCelda(x:int, y:int, Celda celda)
-+ resetearTablero()
-+ imprimirTablero()
+skinparam class {
+    BackgroundColor<<Recurso>> LightBlue
+    BorderColor<<Recurso>> Black
+    BackgroundColor<<Concreto>> LightGreen
+    BorderColor<<Concreto>> Black
+    ArrowColor Black
+    ArrowThickness 2
+    LineColor Black
+    LineThickness 2
 }
 
-class Celda{
-+ individuos:ListaSimple
-+ recursos:ListaSimple
-+ Celda()
-+ getIndividuos():ListaSimple
-+ getRecursos():ListaSimple
-+ addIndividuo(individuo: Individuo)
-+ addRecurso(recurso: Recurso)
-+ isempty():boolean
+folder modelo {
+    folder recurso {
+        abstract class Recurso <<Recurso>> {
+            - nombre: String
+            + getNombre(): String
+            + abstract aplicarEfecto(individuo: Individuo)
+        }
+        class Agua <<Concreto>> {
+            +Agua()
+            + aplicarEfecto(individuo: Individuo)
+        }
+        class Comida <<Concreto>> {
+            +Comida()
+            + aplicarEfecto(individuo: Individuo)
+        }
+        class Montaña <<Concreto>> {
+            +Montaña()
+            + aplicarEfecto(individuo: Individuo)
+        }
+        class Pozo <<Concreto>> {
+            +Pozo()
+            + aplicarEfecto(individuo: Individuo)
+        }
+        class Biblioteca <<Concreto>> {
+            - aumentoProbabilidadClonacion: double
+            + Biblioteca(aumentoProbabilidadClonacion: double)
+            + aplicarEfecto(individuo: Individuo)
+        }
+        class Tesoro <<Concreto>> {
+            - aumentoProbabilidadReproduccion: double
+            + Tesoro(aumentoProbabilidadReproduccion: double)
+            + aplicarEfecto(individuo: Individuo)
+        }
+
+        Recurso <|-- Agua
+        Recurso <|-- Comida
+        Recurso <|-- Montaña
+        Recurso <|-- Pozo
+        Recurso <|-- Biblioteca
+        Recurso <|-- Tesoro
+    }
+
+    folder tablero {
+        class Tablero {
+            + ancho: int
+            + largo: int
+            + listaceldas: ListaSimple
+            + Tablero(int ancho, int largo)
+            + getAncho(): int
+            + getLargo(): int
+            + setAncho(ancho: int)
+            + setLargo(largo: int)
+            + getCelda(x: int, y: int): Celda
+            + setCelda(x: int, y: int, celda: Celda)
+            + resetearTablero()
+            + imprimirTablero()
+        }
+
+        class Celda {
+            + individuos: ListaSimple
+            + recursos: ListaSimple
+            + Celda()
+            + getIndividuos(): ListaSimple
+            + getRecursos(): ListaSimple
+            + addIndividuo(individuo: Individuo)
+            + addRecurso(recurso: Recurso)
+            + isempty(): boolean
+        }
+    }
+skinparam class {
+    BackgroundColor LightYellow
+    BorderColor Black
+    ArrowColor Black
+    ArrowThickness 2
+    LineColor Black
+    LineThickness 2
 }
 
+folder individuo {
+    class Individuo {
+        - posicionX: int
+        - posicionY: int
+        - static ultimoid: int
+        - id: int
+        - generacion: int
+        - vida: int
+        - probReproduccion: double
+        - probClonacion: double
+        - probmuerte: double
+        - tipo: TipoIndividuo
+        + Individuo(generacion: int, posicionX: int, posicionY: int, vida: int, probReproduccion: double, probClonacion: double, tipo: TipoIndividuo)
+        + getPosicionX(): int
+        + setPosicionX(posicionX: int)
+        + getPosicionY(): int
+        + setPosicionY(posicionY: int)
+        + getId(): int
+        + setId(id: int)
+        + getGeneracion(): int
+        + setGeneracion(generacion: int)
+        + getTipo(): TipoIndividuo
+        + setTipo(tipo: TipoIndividuo)
+        + getVida(): int
+        + setVida(vida: int)
+        + getProbReproduccion(): double
+        + setProbReproduccion(probReproduccion: double)
+        + getProbClonacion(): double
+        + setProbClonacion(probClonacion: double)
+        + setProbmuerte(probmuerte: double)
+        + bajarvida(numvida: int)
+        + subirvida(numvida: int)
+        + bajarprobReproduccion(prob: float)
+        + bajarprobClonacion(prob: float)
+        + subirprobReproduccion(prob: float)
+        + subirprobClonacion(prob: float)
+        + mover(tablero: Tablero)
+        + moverAleatorio(tablero: Tablero)
+        + matar()
+        + cambiarPosicion(nuevaX: int, nuevaY: int, tablero: Tablero)
+    }
 
+    enum TipoIndividuo {
+    }
+
+    Individuo --> TipoIndividuo : tipo
+}
+}
+@enduml
 
 
 
