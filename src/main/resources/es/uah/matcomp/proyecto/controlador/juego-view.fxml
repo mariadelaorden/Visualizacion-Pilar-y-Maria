@@ -14,21 +14,30 @@
                   <Image url="@../../../../../Fondo/flowey.jpg" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="514.0" layoutY="218.0" prefHeight="118.0" prefWidth="197.0">
+            <AnchorPane layoutX="488.0" layoutY="202.0" prefHeight="134.0" prefWidth="223.0">
                <children>
-                   <Button layoutX="53.0" layoutY="33.0" onAction="#onCargarPartidaButtonClick" style="-fx-background-color: FF7F50; -fx-text-fill: FFFFFF;" styleClass="-fx-text-fill" text="Cargar partida" />
-                   <Button layoutX="37.0" layoutY="68.0" onAction="#onIniciarPartidaButtonClick" prefHeight="26.0" prefWidth="124.0" text="Iniciar nueva partida" />
+                   <Button layoutX="53.0" layoutY="14.0" onAction="#onCargarPartidaButtonClick" prefHeight="44.0" prefWidth="154.0" style="-fx-background-color: FF7F50; -fx-text-fill: FFFFFF;" styleClass="-fx-text-fill" text="Cargar partida">
+                     <font>
+                        <Font name="Lucida Fax Regular" size="15.0" />
+                     </font></Button>
+                   <Button layoutX="18.0" layoutY="76.0" onAction="#onIniciarPartidaButtonClick" prefHeight="44.0" prefWidth="223.0" text="Iniciar nueva partida">
+                     <font>
+                        <Font name="Lucida Fax Regular" size="15.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="180.0" layoutY="54.0" prefHeight="142.0" prefWidth="400.0">
                <children>
 
-                      <Label fx:id="welcomeText" layoutX="74.0" layoutY="59.0" prefHeight="44.0" prefWidth="252.0" text="JUEGO DE LA VIDA" textAlignment="JUSTIFY" textFill="#d01f1f">
+                      <Label fx:id="welcomeText" contentDisplay="CENTER" layoutX="57.0" layoutY="33.0" prefHeight="134.0" prefWidth="386.0" text="JUEGO DE LA VIDA" textAlignment="JUSTIFY" textFill="#d01f1f">
                        <font>
-                           <Font name="System Bold" size="28.0" />
+                           <Font name="Impact" size="40.0" />
                        </font>
                    </Label>
-                   <Label layoutX="169.0" layoutY="41.0" text="Bienvenido!" />
+                   <Label layoutX="155.0" layoutY="42.0" text="Bienvenido!" textFill="#f8f7f7">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
          </children></AnchorPane>
