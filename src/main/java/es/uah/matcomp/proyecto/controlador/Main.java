@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("juego-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 550);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 650);
         stage.setTitle("JUEGO DE LA VIDA");
         stage.setScene(scene);
         stage.show();

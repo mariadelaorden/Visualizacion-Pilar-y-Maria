@@ -7,9 +7,9 @@
 
 <AnchorPane maxHeight="1032.0" maxWidth="1850.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.uah.matcomp.proyecto.controlador.MainWindowController">
    <children>
-      <AnchorPane layoutX="7.0" prefHeight="514.0" prefWidth="700.0">
+      <AnchorPane layoutX="7.0" prefHeight="1032.0" prefWidth="1850.0">
          <children>
-            <ImageView fitHeight="600.0" fitWidth="887.0" layoutX="-74.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="1500.0" fitWidth="1000.0" layoutX="-74.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../Fondo/flowey.jpg" />
                </image>
