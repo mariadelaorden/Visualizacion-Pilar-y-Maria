@@ -1,13 +1,13 @@
 
 package es.uah.matcomp.proyecto.controlador;
 
-import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
 
@@ -15,23 +15,37 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ParametersController implements Initializable {
+
+    //    public Slider sliderVidasBasico;
+//    public Slider sliderProbReproduccionBasico;
+//    public Slider sliderProbClonacionBasico;
+    public Slider sliderVidasNormal;
+    public Slider sliderProbReproduccionNormal;
+    public Slider sliderProbClonacionNormal;
+    public Slider sliderVidasAvanzado;
+    public Slider sliderProbReproduccionAvanzado;
+    public Slider sliderProbClonacionAvanzado;
     /**
      * Hooks de conexión entre los controles visuales y el código, llevan @FXML para identificarlos
      **/
+
+    private boolean openedFromMainWindow;
+    private Stage prevStage;
+
+
 
     @FXML
     private Slider SliderAncho;
     @FXML
     private Slider SliderLargo;
     @FXML
-    private Slider sliderVidas;
+    private Slider sliderVidasBasico;
     @FXML
-    private Slider sliderProbReproduccion;
+    private Slider sliderProbReproduccionBasico;
     @FXML
-    private Slider sliderProbClonacion;
-    @FXML
-    ChoiceBox<String> seleccionTipo;
+    private Slider sliderProbClonacionBasico;
 
+    public Tab tableroTab;
     /**
      * Controlador con modelo de datos en el que trabajar
      **/
@@ -55,25 +69,51 @@ public class ParametersController implements Initializable {
             stage.setTitle("Tablero");
             stage.setScene(scene);
             TableroController tableroController = fxmlLoader.getController();
+            tableroController.setModeloParaGUICompartido(this.model);
+            tableroController.crearTablero();
+            tableroController.setParametersScene(this.scene);
             tableroController.setStage(stage);
+            stage.close();
             stage.show();
+            this.scene.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
+    public void disableTableroTab() {
+        tableroTab.setDisable(true);
+    }
+
+
+
     @FXML
     protected void onReiniciarButtonClick() {
         this.model.rollback();
     }
 
+
     public void setStage(Stage s){
         this.scene = s;
     }
 
+    public Stage getPrevStage() {
+        return prevStage;
+    }
+
+    public void setPrevStage(Stage prevStage) {
+        this.prevStage = prevStage;
+    }
+
+    public void setOpenedFromMainWindow(boolean openedFromMainWindow) {
+        this.openedFromMainWindow = openedFromMainWindow;
+    }
+
     @FXML protected void onCerrarButtonClick(){
+        this.model.rollback();
         this.scene.close();
+        this.prevStage.show();
     }
 
     /**
@@ -86,7 +126,6 @@ public class ParametersController implements Initializable {
         if (this.model != null) {
             this.updateGUIwithModel();
         }
-
     }
 
     /**
@@ -95,10 +134,16 @@ public class ParametersController implements Initializable {
     protected void updateGUIwithModel() {
         SliderAncho.valueProperty().bindBidirectional(model.anchoProperty());
         SliderLargo.valueProperty().bindBidirectional(model.largoProperty());
-        sliderVidas.valueProperty().bindBidirectional(model.vidasProperty());
-        sliderProbReproduccion.valueProperty().bindBidirectional(model.probReproduccionProperty());
-        sliderProbClonacion.valueProperty().bindBidirectional(model.probClonacionProperty());
-        seleccionTipo.valueProperty().bindBidirectional(model.seleccionTipoProperty());
+
+        sliderVidasBasico.valueProperty().bindBidirectional(model.vidasBasicoProperty());
+        sliderProbReproduccionBasico.valueProperty().bindBidirectional(model.probReproduccionBasicoProperty());
+        sliderProbClonacionBasico.valueProperty().bindBidirectional(model.probClonacionBasicoProperty());
+        sliderVidasNormal.valueProperty().bindBidirectional(model.vidasNormalProperty());
+        sliderProbReproduccionNormal.valueProperty().bindBidirectional(model.probReproduccionNormalProperty());
+        sliderProbClonacionNormal.valueProperty().bindBidirectional(model.probClonacionNormalProperty());
+        sliderVidasAvanzado.valueProperty().bindBidirectional(model.vidasAvanzadoProperty());
+        sliderProbReproduccionAvanzado.valueProperty().bindBidirectional(model.probReproduccionAvanzadoProperty());
+        sliderProbClonacionAvanzado.valueProperty().bindBidirectional(model.probClonacionAvanzadoProperty());
     }
 
     /**
@@ -108,6 +153,4 @@ public class ParametersController implements Initializable {
         this.model = parametrosData;
         this.updateGUIwithModel();
     }
-
-
 }

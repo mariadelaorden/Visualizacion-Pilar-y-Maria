@@ -1,7 +1,6 @@
 package es.uah.matcomp.proyecto.controlador;
 
-import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
-import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
+import es.uah.matcomp.proyecto.modelo.individuo.PlantillaIndividuo;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,14 +16,18 @@ public class MainWindowController implements Initializable {
     private Tablero tableroDataModel =
             new Tablero(5, 5);
 
-    private Individuo individuoDataModel =
-            new Individuo(0, 0, 0, 0, 0, TipoIndividuo.BASICO);
+    private PlantillaIndividuo individuoBasicoDataModel =
+            new PlantillaIndividuo();
 
-    private ParameterDataModelProperties modeloParaGUICompartido =
-            new ParameterDataModelProperties(
-                    tableroDataModel,
-                    individuoDataModel
-            );
+    private PlantillaIndividuo individuoNormalDataModel =
+            new PlantillaIndividuo();
+
+    private PlantillaIndividuo individuoAvanzadoDataModel =
+            new PlantillaIndividuo();
+
+    private ParameterDataModelProperties modeloParaGUICompartido;
+
+    private Stage scene;
 
     @FXML
     protected void onIniciarPartidaButtonClick() {
@@ -34,10 +37,19 @@ public class MainWindowController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setTitle("Parametros");
             stage.setScene(scene);
+            modeloParaGUICompartido =
+                    new ParameterDataModelProperties(
+                            tableroDataModel,
+                            individuoBasicoDataModel,
+                            individuoNormalDataModel,
+                            individuoAvanzadoDataModel);
             ParametersController parametersController = fxmlLoader.getController();
             parametersController.loadUserData(this.modeloParaGUICompartido);
             parametersController.setStage(stage);
+            parametersController.setOpenedFromMainWindow(true);
+            parametersController.setPrevStage(this.scene);
             stage.show();
+            this.scene.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,32 +67,14 @@ public class MainWindowController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-//    @FXML
-//    protected void onGuardarButtonClick() {
-//        int ancho = (int) SliderAncho.getValue();
-//        int largo = (int) SliderLargo.getValue();
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
-//            Parent root = fxmlLoader.load();
-//            TableroController tableroController = fxmlLoader.getController();
-//            tableroController.crearTablero(ancho, largo);
-//
-//            Stage stage = new Stage();
-//            stage.setTitle("Tablero");
-//            stage.setScene(new Scene(root));
-//            stage.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
+    public void setStage(Stage s) {
+        this.scene = s;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.print("Inicialización en ejecución del controlador\n");
     }
-}
+}}

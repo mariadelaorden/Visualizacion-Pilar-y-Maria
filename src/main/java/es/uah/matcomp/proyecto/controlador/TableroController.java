@@ -7,7 +7,9 @@ import es.uah.matcomp.proyecto.modelo.tablero.Celda;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -22,10 +24,10 @@ public class TableroController extends GridPane implements Initializable {
     private GridPane tableroGridPane;
     private Tablero tablero;
 
-    private int anchoTablero;
-    private int largoTablero;
-
     private Stage scene;
+
+    private Stage parametersScene;
+    private ParameterDataModelProperties modeloParaGUICompartido;
 
     @FXML
     private Slider sliderVidas;
@@ -39,20 +41,20 @@ public class TableroController extends GridPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        this.tablero = new Tablero(anchoTablero, largoTablero);
-        crearTablero();
     }
-//    public TableroController() {
-//        this.anchoTablero = 10;
-//        this.largoTablero = 10;
-//
-//        this.tablero = new Tablero(anchoTablero, largoTablero);
-//        crearTablero();
-//    }
+
+    public void setParametersScene(Stage parametersScene) {
+        this.parametersScene = parametersScene;
+    }
+
+    public void setModeloParaGUICompartido(ParameterDataModelProperties modeloParaGUICompartido) {
+        this.modeloParaGUICompartido = modeloParaGUICompartido;
+        this.tablero = modeloParaGUICompartido.getOriginalTablero();
+    }
 
     public void crearTablero() {
-        for (int i = 0; i < this.anchoTablero; i++) {
-            for (int j = 0; j < this.largoTablero; j++) {
+        for (int i = 0; i < this.tablero.getLargo(); i++) {
+            for (int j = 0; j < this.tablero.getAncho(); j++) {
                 // Crear celdaLabel
                 Label celdaLabel = new CustomLabel(i, j, "");
                 celdaLabel.setMinSize(30, 30);
@@ -72,12 +74,8 @@ public class TableroController extends GridPane implements Initializable {
     private void addIndividuo(CustomLabel celdaLabel) {
         System.out.println("Clicked position: " + celdaLabel.getI() + " " + celdaLabel.getJ());
         Celda celda = tablero.getCelda(celdaLabel.getI(), celdaLabel.getJ());
-        celda.addIndividuo(new Individuo(1, 1, 1, 1, 1, TipoIndividuo.AVANZADO));
+        celda.addIndividuo(new Individuo(modeloParaGUICompartido.getIndividuoBasico(), 1, TipoIndividuo.BASICO));
         celdaLabel.setStyle("-fx-background-color: black;");
-    }
-
-    public void onCargarPartidaButtonClick(ActionEvent actionEvent) {
-        this.tablero.imprimirTablero();
     }
 
     public void setStage(Stage s){
@@ -87,6 +85,37 @@ public class TableroController extends GridPane implements Initializable {
     @FXML protected void onCerrarButtonClick(){
         this.scene.close();
     }
+
+    public void onGuardarButtonClick(ActionEvent actionEvent) {
+    }
+
+    public void onReiniciarButtonClick(ActionEvent actionEvent) {
+    }
+
+    public void onParametrosButtonClick(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("parametrizar-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            stage.setTitle("Parametros");
+            stage.setScene(scene);
+            ParametersController parametersController = fxmlLoader.getController();
+            parametersController.loadUserData(this.modeloParaGUICompartido);
+            parametersController.setStage(stage);
+            parametersController.setOpenedFromMainWindow(false);
+            parametersController.setPrevStage(this.scene);
+            parametersController.disableTableroTab();
+            stage.show();
+            this.scene.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadUserData(ParameterDataModelProperties modeloParaGUICompartido) {
+        this.tablero = modeloParaGUICompartido.getOriginalTablero();
+    }
+
 //    private void mostrarOpcionesCelda(Label celda) {
 //        ContextMenu menu = new ContextMenu();
 //        MenuItem opcion1 = new MenuItem("Añadir individuo");
