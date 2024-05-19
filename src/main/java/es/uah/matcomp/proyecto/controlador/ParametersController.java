@@ -16,9 +16,6 @@ import java.util.ResourceBundle;
 
 public class ParametersController implements Initializable {
 
-    //    public Slider sliderVidasBasico;
-//    public Slider sliderProbReproduccionBasico;
-//    public Slider sliderProbClonacionBasico;
     public Slider sliderVidasNormal;
     public Slider sliderProbReproduccionNormal;
     public Slider sliderProbClonacionNormal;
@@ -65,7 +62,7 @@ public class ParametersController implements Initializable {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tablero-view.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Tablero");
             stage.setScene(scene);
             TableroController tableroController = fxmlLoader.getController();
@@ -73,7 +70,7 @@ public class ParametersController implements Initializable {
             tableroController.crearTablero();
             tableroController.setParametersScene(this.scene);
             tableroController.setStage(stage);
-            stage.close();
+            stage.sizeToScene();
             stage.show();
             this.scene.close();
         } catch (Exception e) {

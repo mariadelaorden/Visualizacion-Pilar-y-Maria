@@ -1,15 +1,16 @@
+
 package es.uah.matcomp.proyecto.modelo.recurso;
 
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
-import es.uah.matcomp.proyecto.modelo.recurso.Recurso;
 
 public class Agua extends Recurso {
-    public Agua(){
-        super();
+    @Override
+    public void aplicarEfecto(Individuo ind) {
+        // Lógica para reducir la vida del individuo
     }
 
     @Override
-    public void aplicarEfecto(Individuo individuo) {
-        individuo.subirvida(2);
+    public String toString() {
+        return "A";
     }
 }

@@ -4,6 +4,7 @@ package es.uah.matcomp.proyecto.controlador;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.tablero.Celda;
+import es.uah.matcomp.proyecto.modelo.tablero.CustomLabel;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,8 +75,8 @@ public class TableroController extends GridPane implements Initializable {
     private void addIndividuo(CustomLabel celdaLabel) {
         System.out.println("Clicked position: " + celdaLabel.getI() + " " + celdaLabel.getJ());
         Celda celda = tablero.getCelda(celdaLabel.getI(), celdaLabel.getJ());
-        celda.addIndividuo(new Individuo(modeloParaGUICompartido.getIndividuoBasico(), 1, TipoIndividuo.BASICO));
-        celdaLabel.setStyle("-fx-background-color: black;");
+        celda.addIndividuo(new Individuo(modeloParaGUICompartido.getIndividuoBasico(), 1, TipoIndividuo.AVANZADO));
+        celdaLabel.updateLabel(celda);
     }
 
     public void setStage(Stage s){

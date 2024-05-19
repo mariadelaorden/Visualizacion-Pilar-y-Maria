@@ -34,7 +34,7 @@ public class MainWindowController implements Initializable {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("parametrizar-view.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Parametros");
             stage.setScene(scene);
             modeloParaGUICompartido =
