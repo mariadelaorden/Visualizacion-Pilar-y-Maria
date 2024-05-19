@@ -7,17 +7,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+//ABRIR JUEGO
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("juego-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 300);
-        MainWindowController mainWindowController = fxmlLoader.getController();
-        mainWindowController.setStage(stage);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 650);
         stage.setTitle("JUEGO DE LA VIDA");
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

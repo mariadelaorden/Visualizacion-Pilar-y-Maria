@@ -9,37 +9,98 @@
    <children>
       <AnchorPane layoutX="7.0" prefHeight="1032.0" prefWidth="1850.0">
          <children>
-            <ImageView fitHeight="1500.0" fitWidth="1000.0" layoutX="-74.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="1032.0" fitWidth="1850.0" layoutX="-74.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../Fondo/mario.jpeg" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="488.0" layoutY="202.0" prefHeight="134.0" prefWidth="223.0">
+            <AnchorPane layoutX="844.0" layoutY="245.0" prefHeight="134.0" prefWidth="223.0">
                <children>
-                   <Button layoutX="53.0" layoutY="14.0" onAction="#onCargarPartidaButtonClick" prefHeight="44.0" prefWidth="154.0" style="-fx-background-color: FF7F50; -fx-text-fill: FFFFFF;" styleClass="-fx-text-fill" text="Cargar partida">
-                     <font>
-                        <Font name="Lucida Fax Regular" size="15.0" />
-                     </font></Button>
                    <Button layoutX="18.0" layoutY="76.0" onAction="#onIniciarPartidaButtonClick" prefHeight="44.0" prefWidth="223.0" text="Iniciar nueva partida">
                      <font>
                         <Font name="Lucida Fax Regular" size="15.0" />
                      </font></Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="180.0" layoutY="54.0" prefHeight="142.0" prefWidth="400.0">
+            <AnchorPane layoutX="433.0" layoutY="141.0" prefHeight="142.0" prefWidth="740.0">
                <children>
-
-                      <Label fx:id="welcomeText" contentDisplay="CENTER" layoutX="57.0" layoutY="33.0" prefHeight="134.0" prefWidth="386.0" text="JUEGO DE LA VIDA" textAlignment="JUSTIFY" textFill="#d01f1f">
+      
+                      <Label fx:id="welcomeText" contentDisplay="CENTER" prefHeight="90.0" prefWidth="39.0" text="J" textAlignment="JUSTIFY" textFill="#fa5ccd">
                        <font>
-                           <Font name="Impact" size="40.0" />
+                           <Font name="Impact" size="96.0" />
                        </font>
                    </Label>
-                   <Label layoutX="155.0" layoutY="42.0" text="Bienvenido!" textFill="#f8f7f7">
+                  <Label layoutX="32.0" layoutY="12.0" text="U" textFill="#ff9200">
                      <font>
-                        <Font size="17.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="85.0" prefHeight="118.0" prefWidth="98.0" text="E" textFill="#55e118">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="121.0" layoutY="12.0" text="G" textFill="#7ad9ec">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="174.0" text="O" textFill="#e42f60">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="267.0" text="D" textFill="#b571dc">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="321.0" layoutY="-12.0" prefHeight="118.0" prefWidth="82.0" text="E" textFill="#4da6f4">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="397.0" text="L" textFill="#c3d754">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="440.0" text="A" textFill="#ef8bd6">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="525.0" layoutY="12.0" text="V" textFill="#56b72c">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="575.0" text="I" textFill="#ffb61c">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="603.0" layoutY="12.0" text="D" textFill="#8cdfea">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="657.0" text="A" textFill="#ddabfc">
+                     <font>
+                        <Font name="Impact" size="96.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+             <Label layoutX="697.0" layoutY="263.0" text="¿SOBREVIVIRÁS?" textFill="#00ea56">
+               <font>
+                  <Font name="Impact" size="31.0" />
+               </font>
+            </Label>
+             <Button layoutX="637.0" layoutY="319.0" onAction="#onCargarPartidaButtonClick" prefHeight="53.0" prefWidth="141.0" style="-fx-background-color: FF7F50; -fx-text-fill: FFFFFF; -fx-background-radius: 40;" styleClass="-fx-text-fill" text="Cargar partida">
+               <font>
+                  <Font name="Lucida Fax Regular" size="15.0" />
+               </font>
+            </Button>
          </children></AnchorPane>
    </children>
 </AnchorPane>
