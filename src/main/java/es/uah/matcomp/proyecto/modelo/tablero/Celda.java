@@ -1,8 +1,8 @@
 
 package es.uah.matcomp.proyecto.modelo.tablero;
 
-import es.uah.matcomp.proyecto.estructurasdedatos.ElementoLS;
-import es.uah.matcomp.proyecto.estructurasdedatos.ListaSimple;
+import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
+import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.recurso.*;
