@@ -1,11 +1,74 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+'autonumber
+actor Usuario
+participant Main
+participant MainWindowController
+participant TableroController
+participant FXMLLoader
+participant Scene
+participant Stage
 
-autonumber
+Usuario -> Main: main(String[] args)
+activate Main
+Main -> Main: launch()
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+activate Main
+Main -> Main: start(Stage stage)
+activate Main
+Main -> FXMLLoader: FXMLLoader.load(Main.class.getResource("juego-view.fxml"))
+activate FXMLLoader
+Main -> Scene: new Scene(fxmlLoader.load(), 1300, 650)
+activate Scene
+Main -> Stage: stage.setTitle("JUEGO DE LA VIDA")
+Main -> Stage: stage.setScene(scene)
+Main -> Stage: stage.show()
+deactivate Scene
+deactivate FXMLLoader
+deactivate Main
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+Usuario -> MainWindowController: onIniciarPartidaButtonClick()
+activate MainWindowController
+MainWindowController -> FXMLLoader: FXMLLoader.load(Main.class.getResource("parametrizar-view.fxml"))
+activate FXMLLoader
+MainWindowController -> Scene: new Scene(fxmlLoader.load())
+activate Scene
+MainWindowController -> Stage: stage.setTitle("Parametros")
+MainWindowController -> Stage: stage.setScene(scene)
+MainWindowController -> ParametersController: parametersController.loadUserData()
+MainWindowController -> ParametersController: parametersController.setStage(stage)
+MainWindowController -> ParametersController: parametersController.setOpenedFromMainWindow(true)
+MainWindowController -> ParametersController: parametersController.setPrevStage(this.scene)
+MainWindowController -> Stage: stage.show()
+MainWindowController -> Stage: this.scene.close()
+deactivate Scene
+deactivate FXMLLoader
+deactivate MainWindowController
+
+Usuario -> MainWindowController: onCargarPartidaButtonClick()
+activate MainWindowController
+MainWindowController -> FXMLLoader: FXMLLoader.load(Main.class.getResource("tablero-view.fxml"))
+activate FXMLLoader
+MainWindowController -> Scene: new Scene(fxmlLoader.load(), 600, 400)
+activate Scene
+MainWindowController -> Stage: stage.setTitle("Tablero")
+MainWindowController -> Stage: stage.setScene(scene)
+MainWindowController -> Stage: stage.show()
+deactivate Scene
+deactivate FXMLLoader
+deactivate MainWindowController
+
+Usuario -> TableroController: onPlayButtonClick()
+activate TableroController
+TableroController -> Timeline: timeline.play()
+deactivate TableroController
+
+Usuario -> TableroController: onPauseButtonClick()
+activate TableroController
+TableroController -> Timeline: timeline.pause()
+deactivate TableroController
+
+Usuario -> TableroController: onStopButtonClick()
+activate TableroController
+TableroController -> Timeline: timeline.stop()
+deactivate TableroController
 @enduml

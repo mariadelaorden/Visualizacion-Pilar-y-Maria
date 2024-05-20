@@ -6,6 +6,7 @@ module es.uah.matcomp.proyecto.javafx.visualizacion {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires com.google.gson;
+    requires org.apache.logging.log4j;
 
 
     opens es.uah.matcomp.proyecto.controlador to javafx.fxml;
