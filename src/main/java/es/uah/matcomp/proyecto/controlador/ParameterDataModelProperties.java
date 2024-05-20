@@ -2,15 +2,20 @@
 package es.uah.matcomp.proyecto.controlador;
 
 import es.uah.matcomp.proyecto.modelo.individuo.PlantillaIndividuo;
+import es.uah.matcomp.proyecto.modelo.recurso.*;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.beans.property.*;
 
 public class ParameterDataModelProperties {
+
+    private static ParameterDataModelProperties instance;
+
     //Modelo de datos original
     protected Tablero originalTablero;
     protected PlantillaIndividuo individuoBasico;
     protected PlantillaIndividuo individuoNormal;
     protected PlantillaIndividuo individuoAvanzado;
+
 
     private IntegerProperty ancho = new SimpleIntegerProperty();
     private IntegerProperty largo = new SimpleIntegerProperty();
@@ -26,9 +31,25 @@ public class ParameterDataModelProperties {
     private DoubleProperty probReproduccionAvanzado = new SimpleDoubleProperty();
     private DoubleProperty probClonacionAvanzado = new SimpleDoubleProperty();
 
-    public ParameterDataModelProperties(Tablero originalTablero, PlantillaIndividuo individuoBasico,
-                                        PlantillaIndividuo individuoNormal, PlantillaIndividuo individuoAvanzado) {
+    private DoubleProperty probAparicionRecurso = new SimpleDoubleProperty();
+    private DoubleProperty probTesoro = new SimpleDoubleProperty();
+    private DoubleProperty probAgua = new SimpleDoubleProperty();
+    private DoubleProperty probComida = new SimpleDoubleProperty();
+    private DoubleProperty probMontaña = new SimpleDoubleProperty();
+    private DoubleProperty probBiblioteca = new SimpleDoubleProperty();
+    private DoubleProperty probPozo = new SimpleDoubleProperty();
+
+    private ParameterDataModelProperties(Tablero originalTablero, PlantillaIndividuo individuoBasico,
+                                         PlantillaIndividuo individuoNormal, PlantillaIndividuo individuoAvanzado) {
         setOriginal(originalTablero, individuoBasico, individuoNormal, individuoAvanzado);
+    }
+
+    public static ParameterDataModelProperties getInstance(Tablero originalTablero, PlantillaIndividuo individuoBasico,
+                                                           PlantillaIndividuo individuoNormal, PlantillaIndividuo individuoAvanzado) {
+        if (instance == null) {
+            instance = new ParameterDataModelProperties(originalTablero, individuoBasico, individuoNormal, individuoAvanzado);
+        }
+        return instance;
     }
 
     public void commit() {
@@ -43,6 +64,14 @@ public class ParameterDataModelProperties {
         individuoAvanzado.setVida(vidasAvanzado.get());
         individuoAvanzado.setProbReproduccion(probReproduccionAvanzado.get());
         individuoAvanzado.setProbClonacion(probClonacionAvanzado.get());
+
+        Recurso.setProbAparicion(probAparicionRecurso.get());
+        Tesoro.setProbAparicion(probTesoro.get());
+        Agua.setProbAparicion(probAgua.get());
+        Comida.setProbAparicion(probComida.get());
+        Biblioteca.setProbAparicion(probBiblioteca.get());
+        Montana.setProbAparicion(probMontaña.get());
+        Pozo.setProbAparicion(probPozo.get());
     }
 
     public void rollback() {
@@ -57,6 +86,14 @@ public class ParameterDataModelProperties {
         vidasAvanzado.set(individuoAvanzado.getVida());
         probReproduccionAvanzado.set(individuoAvanzado.getProbReproduccion());
         probClonacionAvanzado.set(individuoAvanzado.getProbClonacion());
+
+        probAparicionRecurso.set(Recurso.getProbAparicion());
+        probTesoro.set(Tesoro.getProbAparicion());
+        probAgua.set(Recurso.getProbAparicion());
+        probComida.set(Recurso.getProbAparicion());
+        probMontaña.set(Recurso.getProbAparicion());
+        probBiblioteca.set(Recurso.getProbAparicion());
+        probPozo.set(Recurso.getProbAparicion());
     }
 
     public Tablero getOriginalTablero() {
@@ -81,6 +118,8 @@ public class ParameterDataModelProperties {
         this.individuoBasico = individuoBasico;
         this.individuoNormal = individuoNormal;
         this.individuoAvanzado = individuoAvanzado;
+
+
         rollback(); //Se inicializan los properties.
     }
 
@@ -126,5 +165,33 @@ public class ParameterDataModelProperties {
 
     public Property<Number> probClonacionAvanzadoProperty() {
         return probClonacionAvanzado;
+    }
+
+    public Property<Number> probAparicionRecursoProperty() {
+        return probAparicionRecurso;
+    }
+
+    public Property<Number> probTesoroProperty() {
+        return probTesoro;
+    }
+
+    public Property<Number> probAguaProperty() {
+        return probAgua;
+    }
+
+    public Property<Number> probComidaProperty() {
+        return probComida;
+    }
+
+    public Property<Number> probMontañaProperty() {
+        return probMontaña;
+    }
+
+    public Property<Number> probBibliotecaProperty() {
+        return probBiblioteca;
+    }
+
+    public Property<Number> probPozoProperty() {
+        return probPozo;
     }
 }
