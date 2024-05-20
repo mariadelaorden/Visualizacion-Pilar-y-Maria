@@ -1,7 +1,7 @@
 package es.uah.matcomp.proyecto.estructurasdedatos.grafo;
 
 
-
+/**
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 
 public class Camino<T> {
@@ -36,3 +36,4 @@ public class Camino<T> {
     }
 
 }
+ **/
