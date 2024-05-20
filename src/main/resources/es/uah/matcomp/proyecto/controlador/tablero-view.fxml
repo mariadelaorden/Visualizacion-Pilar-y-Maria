@@ -18,7 +18,7 @@
         <Button fx:id="playButton" mnemonicParsing="false" text="Play" onAction="#onPlayButtonClick"/>
         <Button fx:id="pauseButton" mnemonicParsing="false" text="Pause" onAction="#onPauseButtonClick"/>
         <Button fx:id="stopButton" mnemonicParsing="false" text="Stop" onAction="#onStopButtonClick"/>
-        <Button fx:id="guardarButton" onAction="#onGuardarButtonClick" text="Guardar Partida">
+        <Button fx:id="guardarButton" onAction="#onGuardarPartidaButtonClick" text="Guardar Partida">
             <opaqueInsets>
                 <Insets/>
             </opaqueInsets>

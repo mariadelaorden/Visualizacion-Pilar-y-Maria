@@ -21,3 +21,5 @@ RECURSOS ABREVIACIONES
 - TESORO (T)
 - BIBLIOTECA (B)
 - POZO (P)
+
+guardar datos json @Expose

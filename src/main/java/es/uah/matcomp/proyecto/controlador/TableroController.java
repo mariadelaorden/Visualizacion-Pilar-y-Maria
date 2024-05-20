@@ -1,6 +1,7 @@
 
 package es.uah.matcomp.proyecto.controlador;
 
+import com.google.gson.GsonBuilder;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
@@ -20,24 +21,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TableroController extends GridPane implements Initializable {
     @FXML
     private GridPane tableroGridPane;
-    @FXML
-    private Slider sliderVidas;
-    @FXML
-    private Slider sliderProbReproduccion;
-    @FXML
-    private Slider sliderProbClonacion;
-    @FXML
-    private ChoiceBox<String> seleccionTipo;
-
     private boolean tableroCreado = false;
     private Stage scene;
 
@@ -103,13 +101,40 @@ public class TableroController extends GridPane implements Initializable {
         this.scene = s;
     }
 
-    @FXML protected void onCerrarButtonClick(){
+    @FXML
+    protected void onCerrarButtonClick(){
         this.scene.close();
     }
 
-    public void onGuardarButtonClick(ActionEvent actionEvent) {
+    public void onGuardarPartidaButtonClick(ActionEvent actionEvent) {
         this.modeloParaGUICompartido.originalTablero.imprimirTablero();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar Partida");
+
+        // Configurar filtro de extensión para archivos JSON
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos JSON (*.json)", "*.json");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Mostrar el cuadro de diálogo para seleccionar la ubicación y el nombre del archivo
+        File file = fileChooser.showSaveDialog(scene);
+
+        if (file != null) {
+            String rutaArchivo = file.getAbsolutePath();
+            guardarPartida(this.modeloParaGUICompartido.originalTablero,rutaArchivo);
+        }
+
     }
+
+    public static void guardarPartida(Object objeto, String rutaArchivo) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(objeto);
+        try (FileWriter writer = new FileWriter(rutaArchivo)) {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void onReiniciarButtonClick(ActionEvent actionEvent) {
 
@@ -207,4 +232,5 @@ public class TableroController extends GridPane implements Initializable {
 
         this.updateBoard();
     }
+
 }

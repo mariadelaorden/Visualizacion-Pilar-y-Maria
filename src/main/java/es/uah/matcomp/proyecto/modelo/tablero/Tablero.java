@@ -1,11 +1,15 @@
 package es.uah.matcomp.proyecto.modelo.tablero;
 
+import com.google.gson.annotations.Expose;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 
 public class Tablero {
 
+    @Expose
     private int ancho;
+    @Expose
     private int largo;
+    @Expose
     private ListaSimple listaceldas;
 
     public Tablero(int ancho, int largo) {

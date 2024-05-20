@@ -1,0 +1,327 @@
+@startuml
+               skinparam class {
+                   BackgroundColor<<Recurso>> LightBlue
+                   BorderColor<<Recurso>> Black
+                   BackgroundColor<<Concreto>> LightGreen
+                   BorderColor<<Concreto>> Black
+                   ArrowColor Black
+                   ArrowThickness 2
+                   LineColor Black
+                   LineThickness 2
+               }
+
+               folder modelo {
+                   folder recurso {
+                       abstract class Recurso <<Recurso>> {
+                           - duracion: int
+                           - <<static>> probAparicion:double
+                           + Recurso()
+                           + <<static>> getProbAparicion(): double
+                           + <<static>> setProbAparicion(probAparicion:double)
+                           + <<abstract>> aplicarEfecto(individuo: Individuo)
+                           + getDuracion():int
+                           + setDuracion(duracion:int)
+                       }
+                       class Agua <<Concreto>> {
+                           - <<static>> probAparicion: double
+                           + Agua()
+                           + aplicarEfecto(individuo: Individuo)
+                           + toString(): String
+                           + <<static>> getProbAparicion(): double
+                           + <<static>> setProbAparicion(probAparicion: double)
+                       }
+                       class Comida <<Concreto>> {
+                          - <<static>> probAparicion: double
+                          + Comida()
+                          + aplicarEfecto(individuo: Individuo)
+                          + toString(): String
+                          + <<static>> getProbAparicion(): double
+                          + <<static>> setProbAparicion(probAparicion: double)
+                       }
+                       class Montana <<Concreto>> {
+                         - <<static>> probAparicion: double
+                         + Montana()
+                         + aplicarEfecto(individuo: Individuo)
+                         + toString(): String
+                         + <<static>> getProbAparicion(): double
+                         + <<static>> setProbAparicion(probAparicion: double)
+                       }
+                       class Pozo <<Concreto>> {
+                         - <<static>> probAparicion: double
+                         + Pozo()
+                         + aplicarEfecto(individuo: Individuo)
+                         + toString(): String
+                         + <<static>> getProbAparicion(): double
+                         + <<static>> setProbAparicion(probAparicion: double)
+                       }
+                       class Biblioteca <<Concreto>> {
+                            - <<static>> probAparicion: double
+                           + Biblioteca()
+                           + aplicarEfecto(individuo: Individuo)
+                           + toString(): String
+                           + <<static>> getProbAparicion(): double
+                           + <<static>> setProbAparicion(probAparicion: double)
+                       }
+                       class Tesoro <<Concreto>> {
+                           - <<static>> probAparicion: double
+                            + Tesoro()
+                            + aplicarEfecto(individuo: Individuo)
+                            + toString(): String
+                            + <<static>> getProbAparicion(): double
+                            + <<static>> setProbAparicion(probAparicion: double)
+                       }
+
+                       Recurso <|-- Agua
+                       Recurso <|-- Comida
+                       Recurso <|-- Montana
+                       Recurso <|-- Pozo
+                       Recurso <|-- Biblioteca
+                       Recurso <|-- Tesoro
+                   }
+
+                   folder tablero {
+                       class Tablero {
+                           + ancho: int
+                           + largo: int
+                           + listaceldas: ListaSimple
+                           + Tablero(int ancho, int largo)
+                           + updateTableroSize()
+                           + resetearTablero()
+                           + getAncho(): int
+                           + getLargo(): int
+                           + setAncho(ancho: int)
+                           + setLargo(largo: int)
+                           + getCelda(x: int, y: int): Celda
+                           + setCelda(x: int, y: int, celda: Celda)
+                           + imprimirTablero()
+                       }
+
+                       class Celda {
+                           + individuos: ListaSimple
+                           + recursos: ListaSimple
+                           + maxIndividuals: int = 3
+                           + maxResources: int = 3
+                           + Celda()
+                           + getIndividuos(): ListaSimple
+                           + getRecursos(): ListaSimple
+                           + addIndividuo(individuo: Individuo)
+                           + addRecurso(recurso: Recurso)
+                           + isempty(): boolean
+                           + toString():String
+                       }
+                       class CeldaInfo {
+                            - individuosListView: ListView<String>
+                            - recursosListView: ListView<String>
+                            + CeldaInfo()
+                            + updateCelda(celda:Celda)
+
+                       }
+                       class VBox #AA00AA
+                       class Label #AA00AA
+                       class CustomLabel{
+                            - <<final>> parametros: ParameterDataModelProperties
+                            - <final>> celda: Celda
+                            + CustomLabel(celda:Celda), parametros:ParameterDataModelProperties)
+                            + addContextMenu()
+                            + getCelda():Celda
+                            + update Label()
+                       }
+
+                       VBox<|-Celda
+                       Label <|-CustomLabel
+                   }
+
+
+                   skinparam class {
+                       BackgroundColor LightYellow
+                       BorderColor Black
+                       ArrowColor Black
+                       ArrowThickness 2
+                       LineColor Black
+                       LineThickness 2
+                   }
+
+                   folder individuo {
+                       class PlantillaIndividuo {
+                           - <<static>> probMejora: double = 0.0
+                           - vida: int
+                           - probReproduccion: double
+                           - probClonacion: double
+                           - probmuerte: double
+                           + PlantillaIndividuo()
+                           + PlantillaIndividuo(plantilla: PlantillaIndividuo)
+                           + <<static>> setProbMejora(probMejora:double)
+                           + getVida(): int
+                           + setVida(vida: int)
+                           + getProbReproduccion(): double
+                           + setProbReproduccion(probReproduccion: double)
+                           + getProbClonacion(): double
+                           + setProbClonacion(probClonacion: double)
+                           + setProbmuerte(probmuerte: double)
+
+                       }
+
+
+                       enum TipoIndividuo {
+                       }
+                       class Individuo {
+                            - <<static>> siguienteId: int=0
+                            - <<final>> id:int
+                            - <<final>> generacion:int
+                            - tipo: TipoIndividuo
+                            + Individuo(plantilla:PlantillaIndividuo, generacion:int, tipo:TipoIndividuo)
+                            + getId():int
+                            + getGeneracion(): int
+                            + getTipo():TipoIndividuo
+                            + setTipo(tipo:TipoIndividuo)
+                            + toString():String
+                       }
+
+                       Individuo --> TipoIndividuo : tipo
+                       Individuo-|> PlantillaIndividuo
+                   }
+               }
+
+               folder controlador{
+
+                   class Main {
+                       - start(stage:Stage)
+                   }
+                   class MainWindowController {
+                       - tableroDataModel: Tablero
+                       - individuoBasicoDataModel: PlantillaIndividuo
+                       - individuoNormalDataModel: PlantillaIndividuo
+                       - individuoAvanzadoDataModel: PlantillaIndividuo
+                       - modeloParaGUICompartido: ParameterDataModelProperties
+                       - scene:Stage
+                       + onIniciarPartidaButtonClick()
+                       + onCargarPartidaButtonClick()
+                       + setStage(s:Satege)
+                       + initialize(url:URL, resourceBundle: ResourceBundle)
+
+                   }
+                   class ParameterDataModelProperties {
+                       - <<static>> instance: ParameterDataModelProperties
+                       # originalTablero:Tablero
+                       # individuoBasico:PlantillaIndividuo
+                       # individuoNormal:PlantillaIndividuo
+                       # individuoAvanzado:PlantillaIndividuo
+                       - ancho:IntegerProperty
+                       - largo:IntegerProperty
+                       - vidasBasico:IntegerProperty
+                       - probReproduccionBasico:DoubleProperty
+                       - probReproduccionBasico:DoubleProperty
+                       - vidasNormal:IntegerProperty
+                       - probReproduccionNormal:DoubleProperty
+                       - probReproduccionNormal:DoubleProperty
+                       - vidasAvanzado:IntegerProperty
+                       - probReproduccionAvanzado:DoubleProperty
+                       - probReproduccionAvanzado:DoubleProperty
+                       - probAparicionRecurso:DoubleProperty
+                       - probTesoro:DoubleProperty
+                       - probAgua:DoubleProperty
+                       - probMontana:DoubleProperty
+                       - probPozo:DoubleProperty
+                       - probComida:DoubleProperty
+                       - probBiblioteca:DoubleProperty
+                       - ParameterDataModelProperties(originalTablero:Tablero, individuoBasico:PlantillaIndividuo, individuoNormal:PlantillaIndividuo, individuoAvanzado:PlantillaIndividuo)
+                       + commit()
+                       + rollback()
+                       + getOriginalTablero():Tablero
+                       + getIndividuoBasico():PlantillaIndividuo
+                       + getIndividuoNormal():PlantillaIndividuo
+                       + getIndividuoAvanzado():PlantillaIndividuo
+                       + setOriginal(originalTablero:Tablero, individuoBasico:PlantillaIndividuo, individuoNormal:PlantillaIndividuo, individuoAvanzado:PlantillaIndividuo)
+                       + anchoProperty():Property<Number>
+                       + largoProperty():Property<Number>
+                       + vidasBasicoProperty():Property<Number>
+                       + probReproduccionBasicoProperty():Property<Number>
+                       + probClonacionBasicoProperty():Property<Number>
+                       + vidasNormalProperty():Property<Number>
+                       + probReproduccionNormalProperty():Property<Number>
+                       + probClonacionNormalProperty():Property<Number>
+                       + vidasAvanzadoProperty():Property<Number>
+                       + probReproduccionAvanzadoProperty():Property<Number>
+                       + probClonacionAvanzadoProperty():Property<Number>
+                       + probApariconRecursoProperty():Property<Number>
+                       + probTesoroProperty():Property<Number>
+                       + probAguaProperty():Property<Number>
+                       + probComidaProperty():Property<Number>
+                       + probPozoProperty():Property<Number>
+                       + probBibliotecaProperty():Property<Number>
+                       + probMontanaProperty():Property<Number>
+
+                   }
+                   class ParameterController {
+                        - sliderVidasBasico:Slider
+                        - sliderProbReproduccionBasico:Slider
+                        - sliderProbClonacionBasico:Slider
+                        - sliderVidasNormal:Slider
+                        - sliderProbReproduccionNormal:Slider
+                        - sliderProbClonacionNormal:Slider
+                        - sliderVidasAvanzado:Slider
+                        - sliderProbReproduccionAvanzado:Slider
+                        - sliderProbClonacionAvanzado:Slider
+                        - sliderProbAparicionRecurso:Slider
+                        - sliderProbAgua:Slider
+                        - sliderProbTesoro:Slider
+                        - sliderProbPozo:Slider
+                        - sliderProbComida:Slider
+                        - sliderProbBiblioteca:Slider
+                        - sliderProbMontana:Slider
+                        - openedFromMainWindow:boolean
+                        - prevSatge:Stage
+                        - tableroScene:Scene
+                        - SliderAncho:Slider
+                        - SliderLargo:Slider
+                        - tableroTab:Tab
+                        - model:ParameterDataModelProperties
+                        - scene:Stage
+                        - onGuardarButtonClick()
+                        - disableTableroTab()
+                        # onReiniciarButtonClick()
+                        + setStage(s:Stage)
+                        + setPrevStage(prevStage:Stage)
+                        + setOpenedFromMainWindow(openedFromMainWindow:boolean)
+                        # onCerrarButtonClick()
+                        + initialize()
+                        # updateGUIwithModel()
+                        + loadUserData()
+
+                   }
+                   class TableroController {
+                        - tableroGridPane:GridPane
+                        - tableroCreado: boolean=false
+                        - scene:Stage
+                        - parametersScene:Stage
+                        - modeloParaGUICompartido:ParameterDataModelProperties
+                        - timeline:Timeline
+                        - generacionActual:int=0
+                        + initialize(url:URL, resources: ResourceBundle)
+                        + setParametersScene(parametersScene:Scene)
+                        + setModeloParaGUICompartido()
+                        + crearTablero()
+                        + updateBoard()
+                        + setStage(s:stage)
+                        # onCerrarButtonClick()
+                        + onGuardarPartidaButtonClick(actionEvent:ActionEvent)
+                        + <<static>> guardarPartida(objeto:Objeto, rutaArchivo:String)
+                        + onReiniciarButtonClick(actionEvent:ActionEvent)
+                        + onParametrosButtonClick(actionEvent:ActionEvent)
+                        + onPlayButtonClick(actionEvent:ActionEvent)
+                        + onPauseButtonClick(actionEvent:ActionEvent)
+                        + onStopButtonClick(actionEvent:ActionEvent)
+                        - actualizarVidaIndividuos()
+                        - buclePrincipal()
+                   }
+                   class Aplication #AA00AA
+                   interface Initializable #AA00AA
+                   class GridPane #AA00AA
+
+                   Aplication<|-Main
+                   Initializable<|..MainWindowController
+                   Initializable<|..ParametersController
+                   Initializable<|..TableroController
+                   GridPane<|-TableroController
+               }
+               @enduml
