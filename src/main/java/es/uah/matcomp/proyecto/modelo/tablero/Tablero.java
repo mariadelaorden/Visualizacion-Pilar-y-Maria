@@ -8,16 +8,16 @@ public class Tablero {
     private int largo;
     private ListaSimple listaceldas;
 
-    public Tablero() {
-        this.ancho = 5;
-        this.largo = 5;
-        this.listaceldas = new ListaSimple(ancho * largo);
-    }
-
     public Tablero(int ancho, int largo) {
         this.ancho = ancho;
         this.largo = largo;
         this.listaceldas = new ListaSimple(ancho * largo);
+        resetearTablero();
+    }
+
+    public void updateTableroSize() {
+        listaceldas = new ListaSimple(this.ancho * this.largo);
+        resetearTablero();
     }
 
     // Resetear el tablero (llenarlo de celdas vacias)
@@ -57,8 +57,8 @@ public class Tablero {
 
     public void setAncho(int ancho) {
         this.ancho = ancho;
-        listaceldas = new ListaSimple(ancho * largo);
-        resetearTablero();
+//        listaceldas = new ListaSimple(ancho * largo);
+//        resetearTablero();
     }
 
     public int getLargo() {
@@ -67,7 +67,7 @@ public class Tablero {
 
     public void setLargo(int largo) {
         this.largo = largo;
-        listaceldas = new ListaSimple(ancho * largo);
-        resetearTablero();
+//        listaceldas = new ListaSimple(ancho * largo);
+//        resetearTablero();
     }
 }

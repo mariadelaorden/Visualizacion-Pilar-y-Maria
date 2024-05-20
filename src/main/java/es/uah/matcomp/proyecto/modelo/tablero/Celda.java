@@ -1,9 +1,11 @@
 
 package es.uah.matcomp.proyecto.modelo.tablero;
 
-import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
+import es.uah.matcomp.proyecto.estructurasdedatos.ElementoLS;
+import es.uah.matcomp.proyecto.estructurasdedatos.ListaSimple;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
-import es.uah.matcomp.proyecto.modelo.recurso.Recurso;
+import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
+import es.uah.matcomp.proyecto.modelo.recurso.*;
 
 public class Celda {
     private ListaSimple individuos;
@@ -39,17 +41,55 @@ public class Celda {
     @Override
     public String toString() {
         String resString = "";
+        System.out.println("Hemos llegado a toString de Celda: " + individuos.toString() + "///" + recursos.toString() + "\n");
+        for (int i = 0; i < individuos.getMaximo(); i++) {
+            if (!individuos.isVacia()) {
+                ElementoLS elemento = individuos.getElemento(i);
+                if (elemento != null) {
+                    Individuo ind = (Individuo) elemento.getData();
 
-        for (int i = 0; i < individuos.getNumeroElementos(); i++) {
-            resString += individuos.getElemento(i).getData().toString();
+                    if (ind.getTipo() == TipoIndividuo.BASICO) {
+                        resString += "\uD83D\uDC64"; // 👤 Individuo Básico
+                    } else if (ind.getTipo() == TipoIndividuo.NORMAL) {
+                        resString += "\uD83D\uDC65"; // 👥 Individuo Normal
+                    } else if (ind.getTipo() == TipoIndividuo.AVANZADO) {
+                        resString += "\uD83E\uDDD1\u200D\uD83D\uDD2C"; // 🧑‍🔬 Individuo Avanzado
+                    }
+                }
+
+            } else {
+                resString += " ";
+            }
         }
 
         resString += "\n";
 
-        for (int i = 0; i < recursos.getNumeroElementos(); i++) {
-            resString += recursos.getElemento(i).getData().toString();
-        }
+        for (int i = 0; i < recursos.getMaximo(); i++) {
 
+            if (!recursos.isVacia()) {
+                ElementoLS elemento = recursos.getElemento(i);
+                if (elemento != null) {
+                    Recurso rec = (Recurso) elemento.getData();
+
+                    if (rec instanceof Agua) {
+                        resString += "\uD83D\uDCA7"; // 💧 Agua
+                    } else if (rec instanceof Biblioteca) {
+                        resString += "\uD83D\uDCDA"; // 📚 Biblioteca
+                    } else if (rec instanceof Comida) {
+                        resString += "\uD83C\uDF54"; // 🍔 Comida
+                    } else if (rec instanceof Montana) {
+                        resString += "\u26F0"; // ⛰️ Montaña
+                    } else if (rec instanceof Pozo) {
+                        resString += "\uD83D\uDD73"; // 🍳 Pozo
+                    } else if (rec instanceof Tesoro) {
+                        resString += "\uD83D\uDC8E"; // 💎 Tesoro
+                    }
+                }
+            } else {
+                resString += " ";
+            }
+        }
+        System.out.println("El resultado de toString de Celda es: " + resString + "\n");
         return resString;
     }
 }
