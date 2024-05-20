@@ -1,6 +1,11 @@
 package es.uah.matcomp.proyecto.modelo.individuo;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class PlantillaIndividuo {
+    private static final Logger logger = LogManager.getLogger(PlantillaIndividuo.class);
+
     protected static double probMejora = 0.0;
 
     protected int vida;
@@ -15,16 +20,23 @@ public class PlantillaIndividuo {
         this.probMuerte = 0.0;
     }
 
-
     public PlantillaIndividuo(PlantillaIndividuo plantilla) {
+        if (plantilla == null) {
+            logger.error("Se intentó crear una instancia de PlantillaIndividuo a partir de un valor nulo.");
+            throw new IllegalArgumentException("La plantilla no puede ser nula");
+        }
         this.vida = plantilla.vida;
         this.probReproduccion = plantilla.probReproduccion;
         this.probClonacion = plantilla.probClonacion;
         this.probMuerte = plantilla.probMuerte;
     }
 
-    public static void setProbMejora(double porbMejora) {
-        PlantillaIndividuo.probMejora = Math.min(Math.max(0.0, porbMejora), 1.0);
+    public static void setProbMejora(double probMejora) {
+        if (probMejora < 0 || probMejora > 1) {
+            logger.warn("Se intentó establecer una probabilidad de mejora fuera del rango [0, 1]: {}", probMejora);
+            throw new IllegalArgumentException("La probabilidad de mejora debe estar en el rango [0, 1]");
+        }
+        PlantillaIndividuo.probMejora = probMejora;
     }
 
     public int getVida() {
@@ -32,6 +44,10 @@ public class PlantillaIndividuo {
     }
 
     public void setVida(int vida) {
+        if (vida < 0) {
+            logger.warn("Se intentó establecer una vida negativa: {}", vida);
+            throw new IllegalArgumentException("La vida no puede ser negativa");
+        }
         this.vida = vida;
     }
 
@@ -40,7 +56,11 @@ public class PlantillaIndividuo {
     }
 
     public void setProbReproduccion(double probReproduccion) {
-        this.probReproduccion = Math.min(Math.max(0.0, probReproduccion), 1.0);
+        if (probReproduccion < 0 || probReproduccion > 1) {
+            logger.warn("Se intentó establecer una probabilidad de reproducción fuera del rango [0, 1]: {}", probReproduccion);
+            throw new IllegalArgumentException("La probabilidad de reproducción debe estar en el rango [0, 1]");
+        }
+        this.probReproduccion = probReproduccion;
     }
 
     public double getProbClonacion() {
@@ -48,7 +68,11 @@ public class PlantillaIndividuo {
     }
 
     public void setProbClonacion(double probClonacion) {
-        this.probClonacion = Math.min(Math.max(0.0, probClonacion), 1.0);
+        if (probClonacion < 0 || probClonacion > 1) {
+            logger.warn("Se intentó establecer una probabilidad de clonación fuera del rango [0, 1]: {}", probClonacion);
+            throw new IllegalArgumentException("La probabilidad de clonación debe estar en el rango [0, 1]");
+        }
+        this.probClonacion = probClonacion;
     }
 
     public double getProbMuerte() {
@@ -56,6 +80,10 @@ public class PlantillaIndividuo {
     }
 
     public void setProbMuerte(double probMuerte) {
-        this.probMuerte = Math.min(Math.max(0.0, probMuerte), 1.0);
+        if (probMuerte < 0 || probMuerte > 1) {
+            logger.warn("Se intentó establecer una probabilidad de muerte fuera del rango [0, 1]: {}", probMuerte);
+            throw new IllegalArgumentException("La probabilidad de muerte debe estar en el rango [0, 1]");
+        }
+        this.probMuerte = probMuerte;
     }
 }

@@ -1,13 +1,16 @@
-
 package es.uah.matcomp.proyecto.modelo.tablero;
 
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
-import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.recurso.*;
+import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Celda {
+    private static final Logger logger = LogManager.getLogger(Celda.class);
+
     private ListaSimple individuos;
     private ListaSimple recursos;
     private int maxIndividuals = 3;
@@ -27,17 +30,32 @@ public class Celda {
     }
 
     public void addIndividuo(Individuo individuo) {
+        if (individuo == null) {
+            logger.error("Se intentó añadir un individuo nulo a la celda.");
+            throw new IllegalArgumentException("El individuo no puede ser nulo");
+        }
+        if (individuos.getNumeroElementos() >= maxIndividuals) {
+            logger.warn("Se intentó añadir un individuo a una celda llena.");
+            throw new IllegalStateException("La celda está llena, no se pueden añadir más individuos");
+        }
         individuos.add(individuo);
     }
 
     public void addRecurso(Recurso recurso) {
+        if (recurso == null) {
+            logger.error("Se intentó añadir un recurso nulo a la celda.");
+            throw new IllegalArgumentException("El recurso no puede ser nulo");
+        }
+        if (recursos.getNumeroElementos() >= maxResources) {
+            logger.warn("Se intentó añadir un recurso a una celda llena.");
+            throw new IllegalStateException("La celda está llena, no se pueden añadir más recursos");
+        }
         recursos.add(recurso);
     }
 
     public boolean isEmpty() {
         return individuos.isVacia() && recursos.isVacia();
     }
-
     @Override
     public String toString() {
         String resString = "";
