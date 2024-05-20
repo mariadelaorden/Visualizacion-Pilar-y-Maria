@@ -1,3 +1,4 @@
+
 package es.uah.matcomp.proyecto.controlador;
 
 import es.uah.matcomp.proyecto.modelo.individuo.PlantillaIndividuo;
@@ -38,13 +39,13 @@ public class MainWindowController implements Initializable {
             stage.setTitle("Parametros");
             stage.setScene(scene);
             modeloParaGUICompartido =
-                    new ParameterDataModelProperties(
+                    ParameterDataModelProperties.getInstance(
                             tableroDataModel,
                             individuoBasicoDataModel,
                             individuoNormalDataModel,
                             individuoAvanzadoDataModel);
             ParametersController parametersController = fxmlLoader.getController();
-            parametersController.loadUserData(this.modeloParaGUICompartido);
+            parametersController.loadUserData();
             parametersController.setStage(stage);
             parametersController.setOpenedFromMainWindow(true);
             parametersController.setPrevStage(this.scene);

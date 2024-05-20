@@ -5,23 +5,36 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ParametersController implements Initializable {
-
+    // Individuos
+    public Slider sliderVidasBasico;
+    public Slider sliderProbReproduccionBasico;
+    public Slider sliderProbClonacionBasico;
     public Slider sliderVidasNormal;
     public Slider sliderProbReproduccionNormal;
     public Slider sliderProbClonacionNormal;
     public Slider sliderVidasAvanzado;
     public Slider sliderProbReproduccionAvanzado;
     public Slider sliderProbClonacionAvanzado;
+
+    // Recursos
+    public Slider sliderProbAparicionRecurso;
+    public Slider sliderProbTesoro;
+    public Slider sliderProbAgua;
+    public Slider sliderProbComida;
+    public Slider sliderProbMontaña;
+    public Slider sliderProbBiblioteca;
+    public Slider sliderProbPozo;
     /**
      * Hooks de conexión entre los controles visuales y el código, llevan @FXML para identificarlos
      **/
@@ -29,18 +42,12 @@ public class ParametersController implements Initializable {
     private boolean openedFromMainWindow;
     private Stage prevStage;
 
-
+    private Scene tableroScene;
 
     @FXML
     private Slider SliderAncho;
     @FXML
     private Slider SliderLargo;
-    @FXML
-    private Slider sliderVidasBasico;
-    @FXML
-    private Slider sliderProbReproduccionBasico;
-    @FXML
-    private Slider sliderProbClonacionBasico;
 
     public Tab tableroTab;
     /**
@@ -59,22 +66,35 @@ public class ParametersController implements Initializable {
     protected void onGuardarButtonClick() {
         model.commit();
 
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tablero-view.fxml"));
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Tablero");
-            stage.setScene(scene);
-            TableroController tableroController = fxmlLoader.getController();
-            tableroController.setModeloParaGUICompartido(this.model);
-            tableroController.crearTablero();
-            tableroController.setParametersScene(this.scene);
-            tableroController.setStage(stage);
-            stage.sizeToScene();
-            stage.show();
-            this.scene.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!openedFromMainWindow) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Éxito");
+            alert.setHeaderText(null);
+            alert.setContentText("Cambios aplicados con éxito.");
+            alert.showAndWait();
+        } else {
+
+            model.originalTablero.updateTableroSize();
+
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tablero-view.fxml"));
+            try {
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setTitle("Tablero");
+                stage.setScene(scene);
+                TableroController tableroController = fxmlLoader.getController();
+                tableroController.setModeloParaGUICompartido();
+                tableroController.setParametersScene(this.scene);
+                tableroController.setStage(stage);
+                tableroController.crearTablero();
+                stage.sizeToScene();
+                stage.show();
+                this.scene.close();
+                this.openedFromMainWindow = false;
+                disableTableroTab();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -82,8 +102,6 @@ public class ParametersController implements Initializable {
     public void disableTableroTab() {
         tableroTab.setDisable(true);
     }
-
-
 
     @FXML
     protected void onReiniciarButtonClick() {
@@ -141,13 +159,21 @@ public class ParametersController implements Initializable {
         sliderVidasAvanzado.valueProperty().bindBidirectional(model.vidasAvanzadoProperty());
         sliderProbReproduccionAvanzado.valueProperty().bindBidirectional(model.probReproduccionAvanzadoProperty());
         sliderProbClonacionAvanzado.valueProperty().bindBidirectional(model.probClonacionAvanzadoProperty());
+
+        sliderProbAparicionRecurso.valueProperty().bindBidirectional(model.probAparicionRecursoProperty());
+        sliderProbTesoro.valueProperty().bindBidirectional(model.probTesoroProperty());
+        sliderProbAgua.valueProperty().bindBidirectional(model.probAguaProperty());
+        sliderProbComida.valueProperty().bindBidirectional(model.probComidaProperty());
+        sliderProbMontaña.valueProperty().bindBidirectional(model.probMontañaProperty());
+        sliderProbBiblioteca.valueProperty().bindBidirectional(model.probBibliotecaProperty());
+        sliderProbPozo.valueProperty().bindBidirectional(model.probPozoProperty());
     }
 
     /**
      * Este método recibe los datos del modelo y los establece
      **/
-    public void loadUserData(ParameterDataModelProperties parametrosData) {
-        this.model = parametrosData;
+    public void loadUserData() {
+        this.model = ParameterDataModelProperties.getInstance(null, null, null, null);
         this.updateGUIwithModel();
     }
 }
