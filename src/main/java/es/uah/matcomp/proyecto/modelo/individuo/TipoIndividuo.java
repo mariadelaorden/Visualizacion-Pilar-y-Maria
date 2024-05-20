@@ -1,7 +1,7 @@
 package es.uah.matcomp.proyecto.modelo.individuo;
 
-public enum TipoIndividuo {  //enum
+public enum TipoIndividuo {
     BASICO,
     NORMAL,
-    AVANZADO;
+    AVANZADO, AGUA;
 }

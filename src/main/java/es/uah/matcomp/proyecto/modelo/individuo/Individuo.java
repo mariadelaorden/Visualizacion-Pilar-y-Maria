@@ -10,6 +10,7 @@ public class Individuo extends PlantillaIndividuo{
 
     // Constructor
     public Individuo(PlantillaIndividuo plantilla, int generacion, TipoIndividuo tipo) {
+        super(plantilla);
         this.id = Individuo.siguienteID++; // Incrementar y asignar el ID
         this.generacion = generacion;
         this.tipo = tipo;
