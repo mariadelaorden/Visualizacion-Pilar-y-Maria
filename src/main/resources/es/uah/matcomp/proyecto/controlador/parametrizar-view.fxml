@@ -1,24 +1,20 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: yellow;"
-      xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="es.uah.matcomp.proyecto.controlador.ParametersController">
+<VBox prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.uah.matcomp.proyecto.controlador.ParametersController">
     <children>
         <AnchorPane>
             <children>
-                <VBox style="-fx-background-color: white;" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <VBox style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
                         <TabPane prefHeight="332.0" prefWidth="508.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                             <tabs>
-                                <Tab text="TABLERO" fx:id="tableroTab">
+                                <Tab fx:id="tableroTab" text="TABLERO">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
@@ -26,21 +22,14 @@
                                                     <children>
                                                         <Label text="Personaliza el tablero:" underline="true">
                                                             <font>
-                                                                <Font size="20.0"/>
+                                                                <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
-                                                        <Label text="Seleccione ancho del tablero:"/>
-                                                        <Slider fx:id="SliderAncho" blockIncrement="1.0"
-                                                                majorTickUnit="1.0" max="20" min="1.0"
-                                                                minorTickCount="0" prefHeight="37.0" prefWidth="477.0"
-                                                                showTickLabels="true" showTickMarks="true"
-                                                                snapToTicks="true"/>
-                                                        <Label text="Seleccione largo del tablero:"/>
-                                                        <Slider fx:id="SliderLargo" blockIncrement="1.0"
-                                                                majorTickUnit="1.0" max="20" min="1.0"
-                                                                minorTickCount="0" showTickLabels="true"
-                                                                showTickMarks="true" snapToTicks="true"/>
+                                                        <Label text="Seleccione ancho del tablero:" />
+                                                        <Slider fx:id="SliderAncho" blockIncrement="1.0" majorTickUnit="1.0" max="20" min="1.0" minorTickCount="0" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione largo del tablero:" />
+                                                        <Slider fx:id="SliderLargo" blockIncrement="1.0" majorTickUnit="1.0" max="20" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -55,24 +44,17 @@
                                                     <children>
                                                         <Label text="Personaliza tu individuo:" underline="true">
                                                             <font>
-                                                                <Font size="20.0"/>
+                                                                <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
-                                                        <Label text="Seleccione número de vidas:"/>
-                                                        <Slider fx:id="sliderVidasBasico" blockIncrement="1.0"
-                                                                majorTickUnit="1.0" max="5" minorTickCount="1"
-                                                                prefHeight="37.0" prefWidth="477.0"
-                                                                showTickLabels="true" showTickMarks="true" snapToTicks="true"/>
-                                                        <Label text="Seleccione la probabilidad de reproduccion:"/>
-                                                        <Slider fx:id="sliderProbReproduccionBasico" majorTickUnit="0.1"
-                                                                max="1.0" minorTickCount="1" showTickLabels="true"
-                                                                showTickMarks="true"/>
-                                                        <Label text="Seleccione la probabilidad de clonacion:"/>
-                                                        <Slider fx:id="sliderProbClonacionBasico" majorTickUnit="0.1"
-                                                                max="1.0" minorTickCount="1" showTickLabels="true"
-                                                                showTickMarks="true" snapToTicks="true"/>
-                                                        <Label text="Seleccione tipo de individuo:"/>
+                                                        <Label text="Seleccione número de vidas:" />
+                                                        <Slider fx:id="sliderVidasBasico" blockIncrement="1.0" majorTickUnit="1.0" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione la probabilidad de reproduccion:" />
+                                                        <Slider fx:id="sliderProbReproduccionBasico" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+                                                        <Label text="Seleccione la probabilidad de clonacion:" />
+                                                        <Slider fx:id="sliderProbClonacionBasico" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione tipo de individuo:" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -87,24 +69,17 @@
                                                     <children>
                                                         <Label text="Personaliza tu individuo:" underline="true">
                                                             <font>
-                                                                <Font size="20.0"/>
+                                                                <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
-                                                        <Label text="Seleccione número de vidas:"/>
-                                                        <Slider fx:id="sliderVidasNormal" blockIncrement="1.0"
-                                                                majorTickUnit="1.0" max="5" minorTickCount="1"
-                                                                prefHeight="37.0" prefWidth="477.0"
-                                                                showTickLabels="true" showTickMarks="true" snapToTicks="true"/>
-                                                        <Label text="Seleccione la probabilidad de reproduccion:"/>
-                                                        <Slider fx:id="sliderProbReproduccionNormal" majorTickUnit="0.1"
-                                                                max="1.0" minorTickCount="1" showTickLabels="true"
-                                                                showTickMarks="true"/>
-                                                        <Label text="Seleccione la probabilidad de clonacion:"/>
-                                                        <Slider fx:id="sliderProbClonacionNormal" majorTickUnit="0.1"
-                                                                max="1.0" minorTickCount="1" showTickLabels="true"
-                                                                showTickMarks="true" snapToTicks="true"/>
-                                                        <Label text="Seleccione tipo de individuo:"/>
+                                                        <Label text="Seleccione número de vidas:" />
+                                                        <Slider fx:id="sliderVidasNormal" blockIncrement="1.0" majorTickUnit="1.0" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione la probabilidad de reproduccion:" />
+                                                        <Slider fx:id="sliderProbReproduccionNormal" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+                                                        <Label text="Seleccione la probabilidad de clonacion:" />
+                                                        <Slider fx:id="sliderProbClonacionNormal" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione tipo de individuo:" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -119,24 +94,17 @@
                                                     <children>
                                                         <Label text="Personaliza tu individuo:" underline="true">
                                                             <font>
-                                                                <Font size="20.0"/>
+                                                                <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
-                                                        <Label text="Seleccione número de vidas:"/>
-                                                        <Slider fx:id="sliderVidasAvanzado" blockIncrement="1.0"
-                                                                majorTickUnit="1.0" max="5" minorTickCount="1"
-                                                                prefHeight="37.0" prefWidth="477.0"
-                                                                showTickLabels="true" showTickMarks="true" snapToTicks="true"/>
-                                                        <Label text="Seleccione la probabilidad de reproduccion:"/>
-                                                        <Slider fx:id="sliderProbReproduccionAvanzado" majorTickUnit="0.1"
-                                                                max="1.0" minorTickCount="1" showTickLabels="true"
-                                                                showTickMarks="true"/>
-                                                        <Label text="Seleccione la probabilidad de clonacion:"/>
-                                                        <Slider fx:id="sliderProbClonacionAvanzado" majorTickUnit="0.1"
-                                                                max="1.0" minorTickCount="1" showTickLabels="true"
-                                                                showTickMarks="true" snapToTicks="true"/>
-                                                        <Label text="Seleccione tipo de individuo:"/>
+                                                        <Label text="Seleccione número de vidas:" />
+                                                        <Slider fx:id="sliderVidasAvanzado" blockIncrement="1.0" majorTickUnit="1.0" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione la probabilidad de reproduccion:" />
+                                                        <Slider fx:id="sliderProbReproduccionAvanzado" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+                                                        <Label text="Seleccione la probabilidad de clonacion:" />
+                                                        <Slider fx:id="sliderProbClonacionAvanzado" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Label text="Seleccione tipo de individuo:" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -151,29 +119,31 @@
                                                     <children>
                                                         <Label text="Personaliza tus recursos:" underline="true">
                                                             <font>
-                                                                <Font size="20.0"/>
+                                                                <Font size="20.0" />
                                                             </font>
                                                         </Label>
-                                                        <Label text="Seleccione el recurso deseado:"/>
-                                                        <ChoiceBox prefWidth="150.0">
-                                                            <items>
-                                                                <FXCollections fx:factory="observableArrayList">
-                                                                    <String fx:value="Agua"/>
-                                                                    <String fx:value="Comida"/>
-                                                                    <String fx:value="Montaña"/>
-                                                                    <String fx:value="Tesoro"/>
-                                                                    <String fx:value="Biblioteca"/>
-                                                                    <String fx:value="Pozo"/>
-                                                                </FXCollections>
-                                                            </items>
-                                                        </ChoiceBox>
-                                                        <Label text="Los recursos sirven para modificar al individuo"/>
-                                                        <Label text="Agua(A): suma 2 turnos de vida"/>
-                                                        <Label text="Comida(C): suma 10 turnos de vida"/>
-                                                        <Label text="Montaña(M): retsa 2 turnos de vida"/>
-                                                        <Label text="Los recursos sirven para modificar al individuo"/>
-                                                        <Label text="Los recursos sirven para modificar al individuo"/>
-                                                        <Label text="Los recursos sirven para modificar al individuo"/>
+                                                        <Label text="Seleccione la probabilidad de reproduccion:" />
+                                                        <Slider fx:id="sliderProbAparicionRecurso" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="Seleccione la probabilidad de que sea Agua:" />
+                                                        <Slider fx:id="sliderProbAgua" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="Seleccione la probabilidad de que sea Comida:" />
+                                                        <Slider fx:id="sliderProbComida" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="Seleccione la probabilidad de que sea Montaña:" />
+                                                        <Slider fx:id="sliderProbMontaña" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="Seleccione la probabilidad de que sea Biblioteca:" />
+                                                        <Slider fx:id="sliderProbBiblioteca" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="Seleccione la probabilidad de que sea Pozo:" />
+                                                        <Slider fx:id="sliderProbPozo" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="Seleccione la probabilidad de que sea Tesoro:" />
+                                                        <Slider fx:id="sliderProbTesoro" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+
+                                                        <Label text="AVISO: Al aplicar los parametros, las probabilidades de que aparca cada tipo de recurso se normalizaran." />
                                                     </children>
                                                 </VBox>
 
@@ -187,18 +157,15 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="3.0"
-              style="-fx-border-width: 3px;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="3.0" style="-fx-border-width: 3px;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <Button fx:id="onGuardarButton" onAction="#onGuardarButtonClick" text="Aplicar">
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                 </Button>
-                <Button fx:id="onReiniciarButtonClick" mnemonicParsing="false" onAction="#onReiniciarButtonClick"
-                        text="Reiniciar"/>
-                <Button fx:id="onCerrarButtonClick" mnemonicParsing="false" onAction="#onCerrarButtonClick"
-                        text="Cancelar"/>
+                <Button fx:id="onReiniciarButtonClick" mnemonicParsing="false" onAction="#onReiniciarButtonClick" text="Reiniciar" />
+                <Button fx:id="onCerrarButtonClick" mnemonicParsing="false" onAction="#onCerrarButtonClick" text="Cerrar" />
             </children>
         </HBox>
     </children>

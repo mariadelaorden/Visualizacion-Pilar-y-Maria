@@ -16,17 +16,17 @@
         <HBox.margin>
             <Insets/>
         </HBox.margin>
-        <Button mnemonicParsing="false" text="Play"/>
-        <Button mnemonicParsing="false" text="Pause"/>
-        <Button mnemonicParsing="false" text="Stop"/>
+        <Button fx:id="playButton" mnemonicParsing="false" text="Play" onAction="#onPlayButtonClick"/>
+        <Button fx:id="pauseButton" mnemonicParsing="false" text="Pause" onAction="#onPauseButtonClick"/>
+        <Button fx:id="stopButton" mnemonicParsing="false" text="Stop" onAction="#onStopButtonClick"/>
         <Button fx:id="guardarButton" onAction="#onGuardarButtonClick" text="Guardar Partida">
             <opaqueInsets>
                 <Insets/>
             </opaqueInsets>
         </Button>
-        <Button fx:id="cerrarButton" mnemonicParsing="false" onAction="#onParametrosButtonClick"
+        <Button fx:id="parametrosButton" mnemonicParsing="false" onAction="#onParametrosButtonClick"
                 text="Parametros"/>
-        <Button fx:id="reiniciarButton" mnemonicParsing="false" onAction="#onReiniciarButtonClick"
+        <Button fx:id="editarButton" mnemonicParsing="false" onAction="#onReiniciarButtonClick"
                 text="Editar"/>
     </HBox>
 </VBox>
