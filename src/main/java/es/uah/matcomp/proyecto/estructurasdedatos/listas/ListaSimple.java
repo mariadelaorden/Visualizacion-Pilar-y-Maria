@@ -1,110 +1,182 @@
 package es.uah.matcomp.proyecto.estructurasdedatos.listas;
 
-import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ListaSimple {
+    private static final Logger logger = LogManager.getLogger(ListaSimple.class);
     private ElementoLS[] datos;
     private int maximo;
 
     public ListaSimple(int maximo) {
         this.maximo = maximo;
-
         datos = new ElementoLS[maximo];
+        logger.info("ListaSimple creada con tamaño máximo: {}", maximo);
     }
 
     public boolean isVacia() {
-        for (int i = 0; i < maximo; i++) {
-            if (datos[i] != null) {
-                return false;
+        try {
+            for (int i = 0; i < maximo; i++) {
+                if (datos[i] != null) {
+                    return false;
+                }
             }
+            return true;
+        } catch (Exception e) {
+            logger.error("Error al comprobar si la lista está vacía", e);
+            throw new RuntimeException("Error al comprobar si la lista está vacía", e);
         }
-        return true;
     }
 
     public void vaciar() {
-        for (int i = 0; i < maximo; i++) {
-            datos[i] = null;
+        try {
+            for (int i = 0; i < maximo; i++) {
+                datos[i] = null;
+            }
+            logger.info("Lista vaciada");
+        } catch (Exception e) {
+            logger.error("Error al vaciar la lista", e);
+            throw new RuntimeException("Error al vaciar la lista", e);
         }
     }
 
     private int add(ElementoLS el) {
-        for (int i = 0; i < maximo; i++) {
-            if (datos[i] == null) {
-                datos[i] = el;
-                return i;
+        try {
+            for (int i = 0; i < maximo; i++) {
+                if (datos[i] == null) {
+                    datos[i] = el;
+                    logger.info("Elemento añadido en la posición {}", i);
+                    return i;
+                }
             }
+            logger.warn("No se pudo añadir el elemento, la lista está llena");
+            return -1;
+        } catch (Exception e) {
+            logger.error("Error al añadir un elemento a la lista", e);
+            throw new RuntimeException("Error al añadir un elemento a la lista", e);
         }
-        return -1;
     }
 
     public void add(Object data) {
-        ElementoLS el = new ElementoLS();
-        el.setData(data);
-        add(el);
+        try {
+            ElementoLS el = new ElementoLS();
+            el.setData(data);
+            add(el);
+        } catch (Exception e) {
+            logger.error("Error al añadir un dato a la lista", e);
+            throw new RuntimeException("Error al añadir un dato a la lista", e);
+        }
     }
 
     public void insert(Object data, int posicion) {
-        if ((posicion >= 0) && (posicion < maximo)) {
-            ElementoLS el = new ElementoLS();
-            el.setData(data);
-            datos[posicion] = el;
+        try {
+            if ((posicion >= 0) && (posicion < maximo)) {
+                ElementoLS el = new ElementoLS();
+                el.setData(data);
+                datos[posicion] = el;
+                logger.info("Elemento insertado en la posición {}: {}", posicion, data);
+            } else {
+                logger.warn("Posición inválida: {}", posicion);
+            }
+        } catch (Exception e) {
+            logger.error("Error al insertar un dato en la posición " + posicion, e);
+            throw new RuntimeException("Error al insertar un dato en la posición " + posicion, e);
         }
     }
 
     public int del(int posicion) {
-        if ((posicion >= 0) && (posicion < maximo)) {
-            datos[posicion] = null;
-            return 1;
+        try {
+            if ((posicion >= 0) && (posicion < maximo)) {
+                datos[posicion] = null;
+                logger.info("Elemento eliminado en la posición {}", posicion);
+                return 1;
+            } else {
+                logger.warn("Posición inválida: {}", posicion);
+                return -1;
+            }
+        } catch (Exception e) {
+            logger.error("Error al eliminar el elemento en la posición " + posicion, e);
+            throw new RuntimeException("Error al eliminar el elemento en la posición " + posicion, e);
         }
-        return -1;
     }
 
     public int getNumeroElementos() {
-        int cont = 0;
-        for (int i = 0; i < maximo; i++) {
-            if (datos[i] != null) {
-                cont++;
+        try {
+            int cont = 0;
+            for (int i = 0; i < maximo; i++) {
+                if (datos[i] != null) {
+                    cont++;
+                }
             }
+            return cont;
+        } catch (Exception e) {
+            logger.error("Error al obtener el número de elementos de la lista", e);
+            throw new RuntimeException("Error al obtener el número de elementos de la lista", e);
         }
-        return cont;
     }
 
     public int getPosicion(ElementoLS el) {
-        for (int i = 0; i < maximo; i++) {
-            if (datos[i] != null && datos[i].equals(el)) {
-                return i;
+        try {
+            for (int i = 0; i < maximo; i++) {
+                if (datos[i] != null && datos[i].equals(el)) {
+                    return i;
+                }
             }
+            return -1;
+        } catch (Exception e) {
+            logger.error("Error al obtener la posición del elemento", e);
+            throw new RuntimeException("Error al obtener la posición del elemento", e);
         }
-        return -1;
     }
 
     public ElementoLS getPrimero() {
-        return datos[0];
+        try {
+            return datos[0];
+        } catch (Exception e) {
+            logger.error("Error al obtener el primer elemento de la lista", e);
+            throw new RuntimeException("Error al obtener el primer elemento de la lista", e);
+        }
     }
 
     public ElementoLS getUltimo() {
-        for (int i = maximo - 1; i >= 0; i--) {
-            if (datos[i] != null) {
-                return datos[i];
+        try {
+            for (int i = maximo - 1; i >= 0; i--) {
+                if (datos[i] != null) {
+                    return datos[i];
+                }
             }
+            return null;
+        } catch (Exception e) {
+            logger.error("Error al obtener el último elemento de la lista", e);
+            throw new RuntimeException("Error al obtener el último elemento de la lista", e);
         }
-        return null;
     }
 
     public ElementoLS getSiguiente(ElementoLS el) {
-        for (int i = 0; i < maximo - 1; i++) {
-            if (datos[i] == el && i + 1 < maximo) {
-                return datos[i + 1];
+        try {
+            for (int i = 0; i < maximo - 1; i++) {
+                if (datos[i] == el && i + 1 < maximo) {
+                    return datos[i + 1];
+                }
             }
+            return null;
+        } catch (Exception e) {
+            logger.error("Error al obtener el siguiente elemento de la lista", e);
+            throw new RuntimeException("Error al obtener el siguiente elemento de la lista", e);
         }
-        return null;
     }
 
     public ElementoLS getElemento(int posicion) {
-        if ((posicion >= 0) && (posicion < maximo)) {
-            return datos[posicion];
+        try {
+            if ((posicion >= 0) && (posicion < maximo)) {
+                return datos[posicion];
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Error al obtener el elemento en la posición " + posicion, e);
+            throw new RuntimeException("Error al obtener el elemento en la posición " + posicion, e);
         }
-        return null;
     }
 
     public int getMaximo() {
@@ -112,34 +184,44 @@ public class ListaSimple {
     }
 
     public void imprimir() {
-        StringBuilder resultado = new StringBuilder();
-        for (int i = 0; i < maximo; i++) {
-            if (datos[i] != null) {
-                resultado.append(datos[i].getData());
-            } else {
-                resultado.append("null");
+        try {
+            StringBuilder resultado = new StringBuilder();
+            for (int i = 0; i < maximo; i++) {
+                if (datos[i] != null) {
+                    resultado.append(datos[i].getData());
+                } else {
+                    resultado.append("null");
+                }
+                if (i < maximo - 1) {
+                    resultado.append(", ");
+                }
             }
-            if (i < maximo - 1) {
-                resultado.append(", ");  // Añade una coma y un espacio entre los elementos
-            }
+            System.out.println(resultado.toString());
+            logger.info("Lista impresa: {}", resultado.toString());
+        } catch (Exception e) {
+            logger.error("Error al imprimir la lista", e);
+            throw new RuntimeException("Error al imprimir la lista", e);
         }
-        System.out.println(resultado.toString());
     }
 
     @Override
     public String toString() {
-        StringBuilder resultado = new StringBuilder();
-        for (int i = 0; i < maximo; i++) {
-            if (datos[i] != null) {
-                resultado.append(datos[i].getData());
-            } else {
-                resultado.append("null");
+        try {
+            StringBuilder resultado = new StringBuilder();
+            for (int i = 0; i < maximo; i++) {
+                if (datos[i] != null) {
+                    resultado.append(datos[i].getData());
+                } else {
+                    resultado.append("null");
+                }
+                if (i < maximo - 1) {
+                    resultado.append(", ");
+                }
             }
-            if (i < maximo - 1) {
-                resultado.append(", ");  // Añade una coma y un espacio entre los elementos
-            }
+            return resultado.toString();
+        } catch (Exception e) {
+            logger.error("Error en el método toString", e);
+            throw new RuntimeException("Error en el método toString", e);
         }
-        return resultado.toString();
     }
-
 }
