@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.uah.matcomp.proyecto.controlador.ArbolController">
+   <children>
+      <Label layoutX="167.0" layoutY="31.0" prefHeight="60.0" prefWidth="306.0" text="FIN DE LA PARTIDA" textFill="#f60c0c">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="219.0" layoutY="82.0" text="Aqui esta tu arbol genealógico" />
+   </children>
+</AnchorPane>

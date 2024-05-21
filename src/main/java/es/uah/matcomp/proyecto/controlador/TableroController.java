@@ -12,6 +12,7 @@ import es.uah.matcomp.proyecto.modelo.tablero.CustomLabel;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -191,12 +192,13 @@ public class TableroController extends GridPane implements Initializable {
     public void onStopButtonClick(ActionEvent actionEvent) {
         logger.info("Deteniendo simulación...");
         timeline.stop();
+        mostrarArbolGenealogico();
     }
-
     private void actualizarVidaIndividuos() {
         logger.info("Actualizando vida de los individuos...");
-        for (Node node: this.tableroGridPane.getChildren()) {
-            ListaSimple individuos = ((CustomLabel) node).getCelda().getIndividuos();
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
 
             if (individuos.getNumeroElementos() > 0) {
                 logger.debug("Individuos en celda antes del delete: (tamaño: {})", individuos.getNumeroElementos());
@@ -207,7 +209,7 @@ public class TableroController extends GridPane implements Initializable {
                 ElementoLS el = individuos.getElemento(i);
                 if (el != null) {
                     logger.debug("El indice {} es: {}", i, el.getData());
-                    Individuo ind = (Individuo) individuos.getElemento(i).getData();
+                    Individuo ind = (Individuo) el.getData();
                     ind.setVida(ind.getVida() - 1);
                     if (ind.getVida() <= 0) {
                         individuos.del(i);
@@ -219,6 +221,8 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
+
+
     private void actualizarRecursos() {
         logger.info("Actualizando duración de los recursos...");
         for (Node node : this.tableroGridPane.getChildren()) {
@@ -229,8 +233,12 @@ public class TableroController extends GridPane implements Initializable {
                 ElementoLS el = recursos.getElemento(i);
                 if (el != null) {
                     Recurso recurso = (Recurso) el.getData();
-                    recurso.setDuracion(recurso.getDuracion() - 1);
-                    if (recurso.getDuracion() <= 0) {
+                    if (recurso.getDuracion() > 0) {
+                        recurso.setDuracion(recurso.getDuracion() - 1);
+                        if (recurso.getDuracion() <= 0) {
+                            recursos.del(i);
+                        }
+                    } else {
                         recursos.del(i);
                         logger.debug("Recurso eliminado: {}", recurso);
                     }
@@ -360,11 +368,206 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
+    private void moverIndividuos() {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                ListaSimple individuosEnCelda = celda.getIndividuos();
+
+                for (int k = 0; k < individuosEnCelda.getNumeroElementos(); k++) {
+                    Individuo individuo = (Individuo) individuosEnCelda.getElemento(k).getData();
+
+                    switch (individuo.getTipo()) {
+                        case BASICO:
+                            moverIndividuoBasico(tablero, individuo, i, j);
+                            break;
+                        case NORMAL:
+                            moverIndividuoNormal(tablero, individuo, i, j);
+                            break;
+                        case AVANZADO:
+                            moverIndividuoAvanzado(tablero, individuo, i, j);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void moverIndividuoBasico(Tablero tablero, Individuo individuo, int x, int y) {
+        Random rand = new Random();
+        int nuevoX = x + rand.nextInt(3) - 1; // Movimiento aleatorio en el rango [-1, 1]
+        int nuevoY = y + rand.nextInt(3) - 1;
+        moverIndividuo(tablero, individuo, x, y, nuevoX, nuevoY);
+    }
+
+    private void moverIndividuoNormal(Tablero tablero, Individuo individuo, int x, int y) {
+        Celda objetivo = encontrarRecursoAleatorio(tablero);
+        if (objetivo != null) {
+            int[] coordsObjetivo = obtenerCoordenadasCelda(tablero, objetivo);
+            if (coordsObjetivo != null) {
+                int nuevoX = moverHacia(x, coordsObjetivo[0]);
+                int nuevoY = moverHacia(y, coordsObjetivo[1]);
+                moverIndividuo(tablero, individuo, x, y, nuevoX, nuevoY);
+            }
+        }
+    }
+
+    private void moverIndividuoAvanzado(Tablero tablero, Individuo individuo, int x, int y) {
+        Celda objetivo = encontrarRecursoMasCercano(tablero, x, y);
+        if (objetivo != null) {
+            int[] coordsObjetivo = obtenerCoordenadasCelda(tablero, objetivo);
+            if (coordsObjetivo != null) {
+                int nuevoX = moverHacia(x, coordsObjetivo[0]);
+                int nuevoY = moverHacia(y, coordsObjetivo[1]);
+                moverIndividuo(tablero, individuo, x, y, nuevoX, nuevoY);
+            }
+        }
+    }
+
+    private void moverIndividuo(Tablero tablero, Individuo individuo, int x, int y, int nuevoX, int nuevoY) {
+        if (esPosicionValida(tablero, nuevoX, nuevoY)) {
+            Celda celdaActual = tablero.getCelda(x, y);
+            Celda nuevaCelda = tablero.getCelda(nuevoX, nuevoY);
+
+            // Crear un ElementoLS con el Individuo
+            ElementoLS elementoIndividuo = new ElementoLS();
+            elementoIndividuo.setData(individuo);
+
+            int posicionIndividuo = celdaActual.getIndividuos().getPosicion(elementoIndividuo);
+            if (posicionIndividuo != -1) { // Verificar si el individuo está en la lista
+                celdaActual.getIndividuos().del(posicionIndividuo);
+                nuevaCelda.addIndividuo(individuo);
+            } else {
+                // El individuo no está en la celda actual
+                System.out.println("Error: El individuo no está en la celda actual");
+            }
+        }
+    }
+
+    private boolean esPosicionValida(Tablero tablero, int x, int y) {
+        return x >= 0 && x < tablero.getAncho() && y >= 0 && y < tablero.getLargo();
+    }
+
+    private int moverHacia(int actual, int objetivo) {
+        if (actual < objetivo) {
+            return actual + 1;
+        } else if (actual > objetivo) {
+            return actual - 1;
+        } else {
+            return actual;
+        }
+    }
+
+    private Celda encontrarRecursoAleatorio(Tablero tablero) {
+        ListaSimple celdasConRecursos = new ListaSimple(60);
+
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                if (!celda.getRecursos().isVacia()) {
+                    celdasConRecursos.add(celda);
+                }
+            }
+        }
+
+        if (celdasConRecursos.isVacia()) {
+            return null;
+        }
+
+        Random rand = new Random();
+        return (Celda) celdasConRecursos.getElemento(rand.nextInt(celdasConRecursos.getNumeroElementos())).getData();
+    }
+
+    private Celda encontrarRecursoMasCercano(Tablero tablero, int x, int y) {
+        Celda recursoMasCercano = null;
+        double distanciaMinima = Double.MAX_VALUE;
+
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                if (!celda.getRecursos().isVacia() && (i != x || j != y)) {
+                    double distancia = calcularDistancia(x, y, i, j);
+                    if (distancia < distanciaMinima) {
+                        distanciaMinima = distancia;
+                        recursoMasCercano = celda;
+                    }
+                }
+            }
+        }
+
+        return recursoMasCercano;
+    }
+
+    private double calcularDistancia(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    private int[] obtenerCoordenadasCelda(Tablero tablero, Celda celda) {
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                if (tablero.getCelda(i, j) == celda) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null;
+    }
+
+    private int contarIndividuosEnTablero() {
+        int totalIndividuos = 0;
+        Tablero tablero = this.modeloParaGUICompartido.getOriginalTablero();
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                totalIndividuos += celda.getIndividuos().getNumeroElementos();
+            }
+        }
+        return totalIndividuos;
+    }
+
+    private void mostrarArbolGenealogico() {
+        logger.info("Mostrando arbol...");
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("arbol-view.fxml"));
+
+        try {
+            // Attempt to load the FXML file
+            logger.debug("Loading FXML file for arbol-view...");
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Arbol genealogico");
+            stage.setScene(scene);
+
+            // Attempt to get the controller
+            logger.debug("Getting controller for arbol-view...");
+            ParametersController parametersController = fxmlLoader.getController();
+            if (parametersController == null) {
+                throw new RuntimeException("Failed to get controller for arbol-view.fxml");
+            }
+
+            // Load user data and set stage details
+            parametersController.loadUserData();
+            parametersController.setStage(stage);
+            parametersController.setOpenedFromMainWindow(true);
+            parametersController.setPrevStage(this.scene);
+
+            stage.show();
+
+            // Close the current scene if it exists
+            if (this.scene != null) {
+                this.scene.close();
+            }
+            logger.info("Arbol genealogico completado.");
+        } catch (Exception e) {
+            logger.error("Error al crear el arbol", e);
+            throw new RuntimeException("Error al generar el arbol", e);
+        }
+    }
+
     private void buclePrincipal() {
         logger.info("Ejecutando bucle principal...");
 
-        // Se ejecutará el movimiento de cada individuo (siempre obligatorio).
-        // Para cada posición del tablero, se evaluará si deben aparecer nuevos recursos.
         // IMPORTANTE, FALTA NORMALIZAR LA PROBABILIDAD DE APARICIÓN DE LOS RECURSOS. (las V del enunciado)
 
         // Añadir un individuo en la posición tempContadorX (un contador temporal que puedes incrementar en cada ciclo)
@@ -382,7 +585,7 @@ public class TableroController extends GridPane implements Initializable {
         this.actualizarRecursos();
 
         // Movimiento individuos
-        //this.moverIndividuos();
+        this.moverIndividuos();
 
         // Evaluar las mejoras de los individuos
         this.evaluarMejorasIndividuos();
@@ -395,6 +598,11 @@ public class TableroController extends GridPane implements Initializable {
 
         // Evaluar la aparición de nuevos recursos en cada posición del tablero
         this.evaluarAparicionRecursos();
+
+        //Evaluar si no quedan individuos para finalizar el juego
+        //if (contarIndividuosEnTablero() == 0) {
+            //mostrarArbolGenealogico();
+        //}
 
         // Actualizar tablero en la interfaz gráfica
         this.updateBoard();
