@@ -57,4 +57,35 @@ public class Individuo extends PlantillaIndividuo {
         }
         return siguienteID++;
     }
+    public Individuo crearNuevoIndividuo() {
+        // Usamos la misma plantilla
+        PlantillaIndividuo plantilla = new PlantillaIndividuo(this);
+
+        // Creamos un nuevo individuo con la misma plantilla y generación, pero con un nuevo ID
+        Individuo nuevoIndividuo = new Individuo(plantilla, this.generacion, this.tipo);
+
+        return nuevoIndividuo;
+    }
+
+    public Individuo evaluarClonacion() {
+        double probabilidad = Math.random(); // Genera un número aleatorio entre 0 y 1
+        if (probabilidad < this.getProbClonacion()) {
+            // Se clona el individuo
+            return this.crearNuevoIndividuo();
+        } else {
+            return null; // No se realiza la clonación
+        }
+    }
+    public Individuo evaluarReproduccion() {
+        double probabilidad = Math.random(); // Genera un número aleatorio entre 0 y 1
+        if (probabilidad < this.getProbReproduccion()) {
+            // Se crea un nuevo individuo
+            return this.crearNuevoIndividuo();
+        } else {
+            return null; // No se realiza la reproducción
+        }
+    }
+
+
 }
+

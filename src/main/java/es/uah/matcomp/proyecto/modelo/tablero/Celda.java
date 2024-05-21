@@ -13,8 +13,8 @@ public class Celda {
 
     private ListaSimple individuos;
     private ListaSimple recursos;
-    private int maxIndividuals = 3;
-    private int maxResources = 3;
+    public static int maxIndividuals = 3;
+    public static int maxResources = 3;
 
     public Celda() {
         this.individuos = new ListaSimple(maxIndividuals); // Máximo 3 individuos por celda
@@ -51,6 +51,10 @@ public class Celda {
             throw new IllegalStateException("La celda está llena, no se pueden añadir más recursos");
         }
         recursos.add(recurso);
+    }
+    public void delIndividuo(int posicion) {
+        // Eliminar individuo de la lista de individuos
+        this.individuos.del(posicion);
     }
 
     public boolean isEmpty() {

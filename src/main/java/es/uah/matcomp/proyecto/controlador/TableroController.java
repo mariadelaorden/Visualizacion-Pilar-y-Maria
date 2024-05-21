@@ -6,8 +6,11 @@ import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
+import es.uah.matcomp.proyecto.modelo.recurso.*;
+import es.uah.matcomp.proyecto.modelo.tablero.Celda;
 import es.uah.matcomp.proyecto.modelo.tablero.CeldaInfo;
 import es.uah.matcomp.proyecto.modelo.tablero.CustomLabel;
+import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -16,9 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class TableroController extends GridPane implements Initializable {
@@ -201,36 +203,336 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
+    private void actualizarRecursos() {
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple recursos = celda.getRecursos();
+
+            for (int i = 0; i < recursos.getMaximo(); i++) {
+                ElementoLS el = recursos.getElemento(i);
+                if (el != null) {
+                    Recurso recurso = (Recurso) el.getData();
+                    recurso.setDuracion(recurso.getDuracion() - 1);
+                    if (recurso.getDuracion() <= 0) {
+                        recursos.del(i);
+                    }
+                }
+            }
+        }
+    }
+
+    private void evaluarMejorasIndividuos() {
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+            ListaSimple recursos = celda.getRecursos();
+
+            for (int i = 0; i < individuos.getMaximo(); i++) {
+                ElementoLS elIndividuo = individuos.getElemento(i);
+                if (elIndividuo != null) {
+                    Individuo individuo = (Individuo) elIndividuo.getData();
+                    for (int j = 0; j < recursos.getMaximo(); j++) {
+                        ElementoLS elRecurso = recursos.getElemento(j);
+                        if (elRecurso != null) {
+                            Recurso recurso = (Recurso) elRecurso.getData();
+                            recurso.aplicarEfecto(individuo);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void evaluarSobrePoblacion() {
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+
+            while (individuos.getNumeroElementos() > Celda.maxIndividuals) {
+                individuos.del(individuos.getNumeroElementos() - 1);
+            }
+        }
+    }
+
+    private void evaluarAparicionRecursos() {
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            if (Math.random() < Recurso.getProbAparicion()) {
+                Recurso nuevoRecurso = generarNuevoRecurso();
+                if (celda.getRecursos().getNumeroElementos() < Celda.maxResources) {
+                    celda.addRecurso(nuevoRecurso);
+                }
+            }
+        }
+    }
+    private Recurso generarNuevoRecurso() {
+        double probabilidadTotal = 0;
+        double probabilidadAleatoria = Math.random();
+
+        // Calcular probabilidades de aparición
+        probabilidadTotal += Agua.getProbAparicion();
+        probabilidadTotal += Comida.getProbAparicion();
+        probabilidadTotal += Montana.getProbAparicion();
+        probabilidadTotal += Pozo.getProbAparicion();
+        probabilidadTotal += Biblioteca.getProbAparicion();
+        probabilidadTotal += Tesoro.getProbAparicion();
+
+        // Determinar probabilidad aleatoria
+        double acumuladorProbabilidad = 0;
+        if (probabilidadAleatoria <= Agua.getProbAparicion() / probabilidadTotal) {
+            return new Agua();
+        } else {
+            acumuladorProbabilidad += Agua.getProbAparicion() / probabilidadTotal;
+        }
+
+        if (probabilidadAleatoria <= (Comida.getProbAparicion() + acumuladorProbabilidad)) {
+            return new Comida();
+        } else {
+            acumuladorProbabilidad += Comida.getProbAparicion() / probabilidadTotal;
+        }
+
+        if (probabilidadAleatoria <= (Montana.getProbAparicion() + acumuladorProbabilidad)) {
+            return new Montana();
+        } else {
+            acumuladorProbabilidad += Montana.getProbAparicion() / probabilidadTotal;
+        }
+
+        if (probabilidadAleatoria <= (Pozo.getProbAparicion() + acumuladorProbabilidad)) {
+            return new Pozo();
+        } else {
+            acumuladorProbabilidad += Pozo.getProbAparicion() / probabilidadTotal;
+        }
+
+        if (probabilidadAleatoria <= (Biblioteca.getProbAparicion() + acumuladorProbabilidad)) {
+            return new Biblioteca();
+        } else {
+            acumuladorProbabilidad += Biblioteca.getProbAparicion() / probabilidadTotal;
+        }
+
+        return new Tesoro();
+    }
+
+    private void evaluarClonacionYReproduccion() {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                for (int k = 0; k < celda.getIndividuos().getNumeroElementos(); k++) {
+                    Individuo individuo = (Individuo) celda.getIndividuos().getElemento(k).getData();
+                    Individuo nuevoIndividuo = individuo.evaluarClonacion();
+                    if (nuevoIndividuo != null) {
+                        celda.addIndividuo(nuevoIndividuo);
+                    }
+                    nuevoIndividuo = individuo.evaluarReproduccion();
+                    if (nuevoIndividuo != null) {
+                        celda.addIndividuo(nuevoIndividuo);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+
+    private void moverIndividuos() {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                ListaSimple individuosEnCelda = celda.getIndividuos();
+
+                for (int k = 0; k < individuosEnCelda.getNumeroElementos(); k++) {
+                    Individuo individuo = (Individuo) individuosEnCelda.getElemento(k).getData();
+
+                    switch (individuo.getTipo()) {
+                        case BASICO:
+                            moverIndividuoBasico(individuo, i, j);
+                            break;
+                        case NORMAL:
+                            moverIndividuoNormal(individuo, i, j);
+                            break;
+                        case AVANZADO:
+                            moverIndividuoAvanzado(individuo, i, j);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void moverIndividuoBasico(Individuo individuo, int x, int y) {
+        Random rand = new Random();
+        int nuevoX = x + rand.nextInt(3) - 1;
+        int nuevoY = y + rand.nextInt(3) - 1;
+        moverIndividuo(individuo, x, y, nuevoX, nuevoY);
+    }
+
+    private void moverIndividuoNormal(Individuo individuo, int x, int y) {
+        Celda objetivo = encontrarRecursoAleatorio();
+        if (objetivo != null) {
+            int nuevoX = moverHacia(x, y, objetivo);
+            int nuevoY = moverHacia(y, x, objetivo);
+            moverIndividuo(individuo, x, y, nuevoX, nuevoY);
+        }
+    }
+
+    private void moverIndividuoAvanzado(Individuo individuo, int x, int y) {
+        Celda objetivo = encontrarRecursoMasCercano(x, y);
+        if (objetivo != null) {
+            int nuevoX = moverHacia(x, y, objetivo);
+            int nuevoY = moverHacia(y, x, objetivo);
+            moverIndividuo(individuo, x, y, nuevoX, nuevoY);
+        }
+    }
+
+    private void moverIndividuo(Individuo individuo, int x, int y, int nuevoX, int nuevoY) {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+        if (esPosicionValida(tablero, nuevoX, nuevoY)) {
+            Celda celdaActual = tablero.getCelda(x, y);
+            Celda nuevaCelda = tablero.getCelda(nuevoX, nuevoY);
+            int posicionIndividuo = celdaActual.getIndividuos().getPosicion(individuo);
+            if (posicionIndividuo != -1) { // Verificar si el individuo está en la lista
+                celdaActual.delIndividuo(posicionIndividuo);
+                nuevaCelda.addIndividuo(individuo);
+            } else {
+                // El individuo no está en la celda actual
+                System.out.println("Error: El individuo no está en la celda actual");
+            }
+        }
+    }
+    private boolean esPosicionValida(Tablero tablero, int x, int y) {
+        return x >= 0 && x < tablero.getAncho() && y >= 0 && y < tablero.getLargo();
+    }
+
+    private int moverHacia(int actual, int otro, Celda objetivo) {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+        int nuevo = actual;
+        ListaSimple posiblesCeldas = obtenerCeldasAdyacentes(tablero, otro, objetivo);
+
+        for (int i = 0; i < posiblesCeldas.getNumeroElementos(); i++) {
+            Celda celda = (Celda) posiblesCeldas.getElemento(i).getData();
+            if (celda == objetivo) {
+                nuevo = obtenerNuevaCoordenada(actual, otro, celda);
+                break;
+            }
+        }
+
+        return nuevo;
+    }
+
+    private ListaSimple obtenerCeldasAdyacentes(Tablero tablero, int otraCoord, Celda objetivo) {
+        ListaSimple celdasAdyacentes = new ListaSimple(8);
+        int x = objetivo.getIndividuos().get(0).getPosX();  // ejemplo de obtener coordenada x
+        int y = objetivo.getIndividuos().get(0).getPosY();  // ejemplo de obtener coordenada y
+
+        // celdas adyacentes
+        if (esPosicionValida(tablero,x - 1, otraCoord)) celdasAdyacentes.add(tablero.getCelda(x - 1, otraCoord));
+        if (esPosicionValida(tablero,x + 1, otraCoord)) celdasAdyacentes.add(tablero.getCelda(x + 1, otraCoord));
+        if (esPosicionValida(tablero,x, y - 1)) celdasAdyacentes.add(tablero.getCelda(x, y - 1));
+        if (esPosicionValida(tablero,x, y + 1)) celdasAdyacentes.add(tablero.getCelda(x, y + 1));
+
+        return celdasAdyacentes;
+    }
+
+    private int obtenerNuevaCoordenada(int actual, int otro, Celda objetivo) {
+        int nuevaCoord = actual;
+
+        if (actual < objetivo.getIndividuos().get(0).getPosX()) {
+            nuevaCoord++;
+        } else if (actual > objetivo.getIndividuos().get(0).getPosX()) {
+            nuevaCoord--;
+        }
+
+        return nuevaCoord;
+    }
+
+    private Celda encontrarRecursoAleatorio() {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+        ListaSimple celdasConRecursos = new ListaSimple(60);
+
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                if (!celda.getRecursos().isVacia()) {
+                    celdasConRecursos.add(celda);
+                }
+            }
+        }
+
+        if (celdasConRecursos.isVacia()) {
+            return null;
+        }
+
+        Random rand = new Random();
+        return celdasConRecursos.get(rand.nextInt(celdasConRecursos.getNumeroElementos()));
+    }
+
+    private Celda encontrarRecursoMasCercano(int x, int y) {
+        Tablero tablero = this.modeloParaGUICompartido.originalTablero;
+        Celda recursoMasCercano = null;
+        double distanciaMinima = Double.MAX_VALUE;
+
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                if (!celda.getRecursos().isVacia() && (i != x || j != y)) {
+                    double distancia = calcularDistancia(x, y, i, j);
+                    if (distancia < distanciaMinima) {
+                        distanciaMinima = distancia;
+                        recursoMasCercano = celda;
+                    }
+                }
+            }
+        }
+
+        return recursoMasCercano;
+    }
+
+    private double calcularDistancia(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+     **/
+
+
     private void buclePrincipal() {
         // Implementar las operaciones que se deben realizar cada 2 segundos
-        // Añadir un individuo en la posicion tempContadorX
-        Individuo ind = new Individuo(this.modeloParaGUICompartido.individuoBasico, generacionActual, TipoIndividuo.BASICO);
-//        Celda celda = this.modeloParaGUICompartido.originalTablero.getCelda(tempContadorX, 0);
-//        celda.addIndividuo(ind);
-        generacionActual++;
-        System.out.println("Generación actual: " + generacionActual);
-
-        // Para cada individuo, se actualiza su tiempo de vida, y en su caso se elimina si ha muerto.
-        this.actualizarVidaIndividuos();
-
-        //  Para cada recurso, evaluará si sigue activo o debe eliminarse (por su tiempo de aparición).
 
         //  Se ejecutará el movimiento de cada individuo (siempre obligatorio).
-
-        //  Para cada individuo evaluará las mejoras obtenidas por los distintos recursos que se
-        //encuentren en su nueva posición.
-
-        // Para cada posición, evaluará si existe reproducción o no.
-
-        // Para cada individuo, evaluará si existe clonación o no.
-
-        // Para cada posición del tablero en la que existan varios individuos, se evaluará si deben
-        //desaparecer algunos.
 
         // Para cada posición del tablero, se evaluará si deben aparecer nuevos recursos.
         // IMPORTANTE, FALTA NORMALIZAR LA PROBABILIDAD DE APARICIÓN DE LOS RECURSOS. (las V del enunciado)
 
+        // Añadir un individuo en la posición tempContadorX (un contador temporal que puedes incrementar en cada ciclo)
+        int tempContadorX = generacionActual % modeloParaGUICompartido.getOriginalTablero().getAncho(); // Ejemplo para distribuir individuos a lo largo del tablero
+        Individuo ind = new Individuo(this.modeloParaGUICompartido.getIndividuoBasico(), generacionActual, TipoIndividuo.BASICO);
+        Celda celda = this.modeloParaGUICompartido.getOriginalTablero().getCelda(tempContadorX, 0);
+        celda.addIndividuo(ind);
+        generacionActual++;
+        System.out.println("Generación actual: " + generacionActual);
+
+        // Actualizar la vida de los individuos y eliminar los que hayan muerto
+        this.actualizarVidaIndividuos();
+
+        // Actualizar la duración de los recursos y eliminar los que hayan caducado
+        this.actualizarRecursos();
+
+        // Movimiento individuos
+        //this.moverIndividuos();
+
+        // Evaluar las mejoras de los individuos
+        this.evaluarMejorasIndividuos();
+
+        // Evaluar la reproducción y clonacion de los individuos en cada posición
+        this.evaluarClonacionYReproduccion();
+
+        // Evaluar la eliminación de individuos en posiciones con sobrepoblación
+        this.evaluarSobrePoblacion();
+
+        // Evaluar la aparición de nuevos recursos en cada posición del tablero
+        this.evaluarAparicionRecursos();
+
+        // Actualizar  tablero en la interfaz gráfica
         this.updateBoard();
     }
-
 }

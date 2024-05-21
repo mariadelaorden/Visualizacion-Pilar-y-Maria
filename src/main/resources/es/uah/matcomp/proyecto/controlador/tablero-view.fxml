@@ -25,7 +25,5 @@
         </Button>
         <Button fx:id="parametrosButton" mnemonicParsing="false" onAction="#onParametrosButtonClick"
                 text="Parametros"/>
-        <Button fx:id="editarButton" mnemonicParsing="false" onAction="#onReiniciarButtonClick"
-                text="Editar"/>
     </HBox>
 </VBox>
