@@ -600,9 +600,9 @@ public class TableroController extends GridPane implements Initializable {
         this.evaluarAparicionRecursos();
 
         //Evaluar si no quedan individuos para finalizar el juego
-        //if (contarIndividuosEnTablero() == 0) {
-            //mostrarArbolGenealogico();
-        //}
+        if (contarIndividuosEnTablero() == 0) {
+            mostrarArbolGenealogico();
+        }
 
         // Actualizar tablero en la interfaz gráfica
         this.updateBoard();
