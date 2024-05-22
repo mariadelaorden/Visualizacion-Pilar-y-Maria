@@ -534,12 +534,10 @@ public class TableroController extends GridPane implements Initializable {
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Arbol");
+            stage.setTitle("Árbol Genealógico");
             stage.setScene(scene);
-            stage.sizeToScene();
             stage.show();
-            this.scene.close();
-            logger.info("Nuevo ventana creada.");
+            logger.info("Nueva ventana creada.");
         } catch (Exception e) {
             logger.error("Error al abrir la vista del arbol", e);
             throw new RuntimeException("Error al abrir la vista del arbol", e);
