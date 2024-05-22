@@ -533,35 +533,16 @@ public class TableroController extends GridPane implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("arbol-view.fxml"));
 
         try {
-            // Attempt to load the FXML file
-            logger.debug("Loading FXML file for arbol-view...");
             Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Arbol genealogico");
+            stage.setTitle("Arbol");
             stage.setScene(scene);
-
-            // Attempt to get the controller
-            logger.debug("Getting controller for arbol-view...");
-            ParametersController parametersController = fxmlLoader.getController();
-            if (parametersController == null) {
-                throw new RuntimeException("Failed to get controller for arbol-view.fxml");
-            }
-
-            // Load user data and set stage details
-            parametersController.loadUserData();
-            parametersController.setStage(stage);
-            parametersController.setOpenedFromMainWindow(true);
-            parametersController.setPrevStage(this.scene);
-
+            stage.sizeToScene();
             stage.show();
-
-            // Close the current scene if it exists
-            if (this.scene != null) {
-                this.scene.close();
-            }
-            logger.info("Arbol genealogico completado.");
+            this.scene.close();
+            logger.info("Nuevo ventana creada.");
         } catch (Exception e) {
-            logger.error("Error al crear el arbol", e);
-            throw new RuntimeException("Error al generar el arbol", e);
+            logger.error("Error al abrir la vista del arbol", e);
+            throw new RuntimeException("Error al abrir la vista del arbol", e);
         }
     }
 
@@ -601,6 +582,7 @@ public class TableroController extends GridPane implements Initializable {
 
         //Evaluar si no quedan individuos para finalizar el juego
         if (contarIndividuosEnTablero() == 0) {
+            timeline.stop();
             mostrarArbolGenealogico();
         }
 

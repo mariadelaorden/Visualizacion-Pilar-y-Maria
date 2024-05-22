@@ -41,19 +41,18 @@
                                             <children>
                                                 <VBox prefHeight="276.0" prefWidth="508.0">
                                                     <children>
-                                                        <Label text="Personaliza tu individuo:" underline="true">
+                                                        <Label text="Personaliza tu individuo básico:" underline="true">
                                                             <font>
                                                                 <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
                                                         <Label text="Seleccione número de vidas:" />
-                                                        <Slider fx:id="sliderVidasBasico" blockIncrement="1.0" majorTickUnit="1.0" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Slider fx:id="sliderVidasBasico" blockIncrement="1.0" majorTickUnit="1.0" min="1" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                                                         <Label text="Seleccione la probabilidad de reproduccion:" />
                                                         <Slider fx:id="sliderProbReproduccionBasico" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
                                                         <Label text="Seleccione la probabilidad de clonacion:" />
                                                         <Slider fx:id="sliderProbClonacionBasico" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                                                        <Label text="Seleccione tipo de individuo:" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -66,19 +65,18 @@
                                             <children>
                                                 <VBox prefHeight="276.0" prefWidth="508.0">
                                                     <children>
-                                                        <Label text="Personaliza tu individuo:" underline="true">
+                                                        <Label text="Personaliza tu individuo normal:" underline="true">
                                                             <font>
                                                                 <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
                                                         <Label text="Seleccione número de vidas:" />
-                                                        <Slider fx:id="sliderVidasNormal" blockIncrement="1.0" majorTickUnit="1.0" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Slider fx:id="sliderVidasNormal" blockIncrement="1.0" majorTickUnit="1.0" min="1" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                                                         <Label text="Seleccione la probabilidad de reproduccion:" />
                                                         <Slider fx:id="sliderProbReproduccionNormal" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
                                                         <Label text="Seleccione la probabilidad de clonacion:" />
                                                         <Slider fx:id="sliderProbClonacionNormal" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                                                        <Label text="Seleccione tipo de individuo:" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -91,19 +89,18 @@
                                             <children>
                                                 <VBox prefHeight="276.0" prefWidth="508.0">
                                                     <children>
-                                                        <Label text="Personaliza tu individuo:" underline="true">
+                                                        <Label text="Personaliza tu individuo avanzado:" underline="true">
                                                             <font>
                                                                 <Font size="20.0" />
                                                             </font>
                                                         </Label>
 
                                                         <Label text="Seleccione número de vidas:" />
-                                                        <Slider fx:id="sliderVidasAvanzado" blockIncrement="1.0" majorTickUnit="1.0" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                                        <Slider fx:id="sliderVidasAvanzado" blockIncrement="1.0" majorTickUnit="1.0" min="1" max="5" minorTickCount="1" prefHeight="37.0" prefWidth="477.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                                                         <Label text="Seleccione la probabilidad de reproduccion:" />
                                                         <Slider fx:id="sliderProbReproduccionAvanzado" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
                                                         <Label text="Seleccione la probabilidad de clonacion:" />
                                                         <Slider fx:id="sliderProbClonacionAvanzado" majorTickUnit="0.1" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                                                        <Label text="Seleccione tipo de individuo:" />
                                                     </children>
                                                 </VBox>
                                             </children>
