@@ -2,7 +2,10 @@ package es.uah.matcomp.proyecto.controlador;
 
 import es.uah.matcomp.proyecto.modelo.individuo.GenealogyNode;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
+import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -17,6 +20,7 @@ public class ArbolController {
     private void initialize() {
         // Inicialización si es necesario
     }
+    private Stage scene;
 
     public void dibujarArbol(GenealogyNode arbolGenealogico) {
         GraphicsContext grafica = arbolCanvas.getGraphicsContext2D();
@@ -54,8 +58,8 @@ public class ArbolController {
     }
 
     @FXML
-    private void onCerrarButtonClick() {
-        Stage stage = (Stage) arbolCanvas.getScene().getWindow();
-        stage.close();
+    private void onSiguienteButtonClick() {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("estadisticas-view.fxml"));
     }
 }

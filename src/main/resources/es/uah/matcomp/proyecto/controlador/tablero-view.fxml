@@ -3,27 +3,38 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox style="-fx-background-color: yellow;" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.uah.matcomp.proyecto.controlador.TableroController">
+<VBox prefHeight="446.0" prefWidth="503.0" spacing="20.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.uah.matcomp.proyecto.controlador.TableroController">
     <padding>
-        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
-    <Label fx:id="turnoLabel" text="Turno: 0" style="-fx-font-size: 16px;"/>
-    <GridPane fx:id="tableroGridPane" style="-fx-background-color: yellow;"/>
-    <HBox alignment="CENTER_RIGHT" spacing="3.0" style="-fx-border-width: 3px;" AnchorPane.bottomAnchor="10.0"
-          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+    <Label fx:id="turnoLabel" style="-fx-font-size: 16px;" text="Turno: 0" textFill="#f60000">
+      <font>
+         <Font name="Arial Bold" size="22.0" />
+      </font></Label>
+   <AnchorPane prefHeight="111.0" prefWidth="453.0">
+      <children>
+          <Label fx:id="totalReproduccionesLabel" layoutX="-14.0" layoutY="1.0" style="-fx-font-size: 16px;" text="Total de reproducciones: 0" />
+          <Label fx:id="individuoMasLongevoLabel" layoutX="-14.0" layoutY="30.0" prefHeight="25.0" prefWidth="204.0" style="-fx-font-size: 16px;" text="Id individuo más longevo: 0" />
+          <Label fx:id="totalClonacionesLabel" layoutX="226.0" layoutY="-15.0" prefHeight="58.0" prefWidth="169.0" style="-fx-font-size: 16px;" text="Total de clonaciones: 0" />
+          <Label fx:id="IdClonacionesLabel" layoutX="-14.0" layoutY="63.0" prefHeight="58.0" prefWidth="303.0" style="-fx-font-size: 16px;" text="Id individuo con más clonaciones: 0" />
+          <Label fx:id="IdReproduccionesLabel" layoutX="-14.0" layoutY="43.0" prefHeight="49.0" prefWidth="334.0" style="-fx-font-size: 16px;" text="Id individuo con más reproducciones: 0" />
+      </children>
+   </AnchorPane>
+    <GridPane fx:id="tableroGridPane" style="-fx-background-color: yellow;" />
+    <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="360.0" spacing="3.0" style="-fx-border-width: 3px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <HBox.margin>
-            <Insets/>
+            <Insets />
         </HBox.margin>
-        <Button fx:id="playButton" mnemonicParsing="false" text="Play" onAction="#onPlayButtonClick"/>
-        <Button fx:id="pauseButton" mnemonicParsing="false" text="Pause" onAction="#onPauseButtonClick"/>
-        <Button fx:id="stopButton" mnemonicParsing="false" text="Stop" onAction="#onStopButtonClick"/>
+        <Button fx:id="playButton" mnemonicParsing="false" onAction="#onPlayButtonClick" text="Play" />
+        <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseButtonClick" text="Pause" />
+        <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopButtonClick" text="Stop" />
         <Button fx:id="guardarButton" onAction="#onGuardarPartidaButtonClick" text="Guardar Partida">
             <opaqueInsets>
-                <Insets/>
+                <Insets />
             </opaqueInsets>
         </Button>
-        <Button fx:id="parametrosButton" mnemonicParsing="false" onAction="#onParametrosButtonClick" text="Parametros"/>
+        <Button fx:id="parametrosButton" mnemonicParsing="false" onAction="#onParametrosButtonClick" text="Parametros" />
     </HBox>
 </VBox>

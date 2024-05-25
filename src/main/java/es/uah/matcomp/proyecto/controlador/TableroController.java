@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -57,6 +58,17 @@ public class TableroController extends GridPane implements Initializable {
     private int generacionActual = 0;
     @FXML
     private Label turnoLabel;
+    @FXML
+    private Label individuoMasLongevoLabel;
+
+    @FXML
+    private Label totalReproduccionesLabel;
+    @FXML
+    private Label totalClonacionesLabel;
+    @FXML
+    private Label IdClonacionesLabel;
+    @FXML
+    private Label IdReproduccionesLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -561,24 +573,135 @@ public class TableroController extends GridPane implements Initializable {
             ArbolController arbolController = fxmlLoader.getController();
             Individuo ganador = obtenerIndividuoGanador();
             GenealogyNode arbolGenealogico = ganador != null ? ganador.getGenealogyNode() : null;
-            arbolController.dibujarArbol(arbolGenealogico);
+            //arbolController.dibujarArbol(arbolGenealogico);
             stage.setTitle("Árbol Genealógico");
             stage.setScene(scene);
             stage.show();
             logger.info("Nueva ventana creada.");
+            this.scene.close();
         } catch (Exception e) {
             logger.error("Error al abrir la vista del arbol", e);
             throw new RuntimeException("Error al abrir la vista del arbol", e);
         }
     }
 
+    public Individuo calcularIndividuoMasLongevo() {
+        Individuo individuoMasLongevo = null;
+        int maxVida = Integer.MIN_VALUE;
+
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+
+            for (int i = 0; i < individuos.getMaximo(); i++) {
+                ElementoLS el = individuos.getElemento(i);
+                if (el != null) {
+                    Individuo ind = (Individuo) el.getData();
+                    if (ind.getVida() > maxVida) {
+                        maxVida = ind.getVida();
+                        individuoMasLongevo = ind;
+                    }
+                }
+            }
+        }
+
+        return individuoMasLongevo;
+    }
+    public int calcularTotalReproducciones() {
+        int totalReproducciones = 0;
+
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+
+            for (int i = 0; i < individuos.getMaximo(); i++) {
+                ElementoLS el = individuos.getElemento(i);
+                if (el != null) {
+                    Individuo ind = (Individuo) el.getData();
+                    totalReproducciones += ind.getReproducciones();
+                }
+            }
+        }
+
+        return totalReproducciones;
+    }
+
+    public int calcularTotalMutaciones() {
+        int totalMutaciones = 0;
+
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+
+            for (int i = 0; i < individuos.getMaximo(); i++) {
+                ElementoLS el = individuos.getElemento(i);
+                if (el != null) {
+                    Individuo ind = (Individuo) el.getData();
+                    totalMutaciones += ind.getMutaciones();
+                }
+            }
+        }
+
+        return totalMutaciones;
+    }
+    public int calcularIdMayorNumeroMutaciones() {
+        int maxMutaciones = Integer.MIN_VALUE;
+        int idMayorNumeroMutaciones = -1;
+
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+
+            for (int i = 0; i < individuos.getMaximo(); i++) {
+                ElementoLS el = individuos.getElemento(i);
+                if (el != null) {
+                    Individuo ind = (Individuo) el.getData();
+                    if (ind.getMutaciones() > maxMutaciones) {
+                        maxMutaciones = ind.getMutaciones();
+                        idMayorNumeroMutaciones = ind.getId();
+                    }
+                }
+            }
+        }
+
+        return idMayorNumeroMutaciones;
+    }
+
+    public int calcularIdMayorNumeroReproducciones() {
+        int maxReproducciones = Integer.MIN_VALUE;
+        int idMayorNumeroReproducciones = -1;
+
+        for (Node node : this.tableroGridPane.getChildren()) {
+            Celda celda = ((CustomLabel) node).getCelda();
+            ListaSimple individuos = celda.getIndividuos();
+
+            for (int i = 0; i < individuos.getMaximo(); i++) {
+                ElementoLS el = individuos.getElemento(i);
+                if (el != null) {
+                    Individuo ind = (Individuo) el.getData();
+                    if (ind.getReproducciones() > maxReproducciones) {
+                        maxReproducciones = ind.getReproducciones();
+                        idMayorNumeroReproducciones = ind.getId();
+                    }
+                }
+            }
+        }
+
+        return idMayorNumeroReproducciones;
+    }
+
     private void buclePrincipal() {
         logger.info("Ejecutando bucle principal...");
 
         try {
-            //Incrementar turno
+            //Incrementar turno y actualizar estadisticas
             generacionActual++;
             turnoLabel.setText("Turno: " + generacionActual);
+            individuoMasLongevoLabel.setText("Id Individuo más longevo: "+ calcularIndividuoMasLongevo().getId());
+            totalReproduccionesLabel.setText("Total reproducciones: "+ calcularTotalReproducciones());
+            totalClonacionesLabel.setText("Total clonaciones: "+ calcularTotalMutaciones());
+            IdReproduccionesLabel.setText("Id individuo más reproducciones: "+ calcularIdMayorNumeroReproducciones());
+            IdClonacionesLabel.setText("Id individduo más clonaciones: "+ calcularIdMayorNumeroMutaciones());
 
             // Añadir un individuo en la posición tempContadorX (un contador temporal que puedes incrementar en cada ciclo)
             int tempContadorX = generacionActual % modeloParaGUICompartido.getOriginalTablero().getAncho(); // Ejemplo para distribuir individuos a lo largo del tablero

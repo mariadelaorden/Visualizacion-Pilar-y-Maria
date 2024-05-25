@@ -13,6 +13,8 @@ public class Individuo extends PlantillaIndividuo {
     private final int generacion;
     private TipoIndividuo tipo;
     private GenealogyNode genealogyNode;
+    private int mutaciones;
+    private int reproducciones;
 
     // Constructor
     public Individuo(PlantillaIndividuo plantilla, int generacion, TipoIndividuo tipo) {
@@ -21,6 +23,9 @@ public class Individuo extends PlantillaIndividuo {
         this.generacion = generacion;
         this.tipo = tipo;
         this.genealogyNode = new GenealogyNode(this);
+
+        this.mutaciones=0;
+        this.reproducciones=0;
 
         logger.info("Individuo creado: ID = {}, Generacion = {}, Tipo = {}", id, generacion, tipo);
     }
@@ -95,5 +100,21 @@ public class Individuo extends PlantillaIndividuo {
         } else {
             return null; // No se realiza la reproducción
         }
+    }
+
+    public int getMutaciones() {
+        return this.mutaciones;
+    }
+
+    public int getReproducciones() {
+        return this.reproducciones;
+    }
+
+    public void aumentarMutaciones() {
+        this.mutaciones++;
+    }
+
+    public void aumentarReproducciones() {
+        this.reproducciones++;
     }
 }

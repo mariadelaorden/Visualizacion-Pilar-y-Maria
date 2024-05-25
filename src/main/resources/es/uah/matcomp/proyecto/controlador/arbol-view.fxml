@@ -16,6 +16,6 @@
       </Label>
       <Label layoutX="219.0" layoutY="82.0" text="Aquí está tu árbol genealógico"/>
       <Canvas fx:id="arbolCanvas" layoutX="50.0" layoutY="120.0" width="700.0" height="400.0"/>
-      <Button layoutX="350.0" layoutY="550.0" text="Cerrar" onAction="#onCerrarButtonClick"/>
+      <Button layoutX="350.0" layoutY="550.0" text="Siguiente" onAction="#onSiguienteButtonClick"/>
    </children>
 </AnchorPane>
