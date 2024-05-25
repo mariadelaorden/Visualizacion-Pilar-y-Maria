@@ -2,6 +2,7 @@ package es.uah.matcomp.proyecto.modelo.tablero;
 
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
+import es.uah.matcomp.proyecto.excepciones.CeldaLlenaException;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.PlantillaIndividuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CeldaTest {
 
     @Test
-    void addIndividuo() {
+    void addIndividuo() throws CeldaLlenaException {
         Celda celda = new Celda();
         Individuo individuo = new Individuo(new PlantillaIndividuo(), 0, TipoIndividuo.BASICO);
 
@@ -25,7 +26,7 @@ class CeldaTest {
     }
 
     @Test
-    void addRecurso() {
+    void addRecurso() throws CeldaLlenaException {
         Celda celda = new Celda();
         Recurso recurso = new Tesoro();
 
@@ -36,7 +37,7 @@ class CeldaTest {
         assertFalse(celda.isEmpty(), "La celda no debería estar vacía después de añadir un recurso");
     }
     @Test
-    void testGetIndividuos() {
+    void testGetIndividuos() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         assertTrue(celda.getIndividuos().isVacia());
@@ -48,7 +49,7 @@ class CeldaTest {
     }
 
     @Test
-    void testGetRecursos() {
+    void testGetRecursos() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         assertTrue(celda.getRecursos().isVacia());
@@ -76,7 +77,7 @@ class CeldaTest {
     }
 
     @Test
-    void testToStringWithBiblioteca() {
+    void testToStringWithBiblioteca() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         celda.addIndividuo(new Individuo(new PlantillaIndividuo(), 1, TipoIndividuo.BASICO));
@@ -90,7 +91,7 @@ class CeldaTest {
     }
 
     @Test
-    void testToStringWithAgua() {
+    void testToStringWithAgua() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         celda.addRecurso(new Agua());
@@ -104,7 +105,7 @@ class CeldaTest {
     }
 
     @Test
-    void testToStringWithComida() {
+    void testToStringWithComida() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         celda.addRecurso(new Comida());
@@ -118,7 +119,7 @@ class CeldaTest {
     }
 
     @Test
-    void testToStringWithMontana() {
+    void testToStringWithMontana() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         celda.addRecurso(new Montana());
@@ -131,7 +132,7 @@ class CeldaTest {
         assertEquals(expectedRepresentation, actualRepresentation);
     }
     @Test
-    void testToStringWithPozo() {
+    void testToStringWithPozo() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         celda.addRecurso(new Pozo());
@@ -145,7 +146,7 @@ class CeldaTest {
     }
 
     @Test
-    void testToStringWithTesoro() {
+    void testToStringWithTesoro() throws CeldaLlenaException {
         Celda celda = new Celda();
 
         celda.addRecurso(new Tesoro());
