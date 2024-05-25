@@ -13,13 +13,10 @@
       <font>
          <Font name="Arial Bold" size="22.0" />
       </font></Label>
-   <AnchorPane prefHeight="111.0" prefWidth="453.0">
-      <children>
-          <Label fx:id="individuoMasLongevoLabel" layoutX="-14.0" layoutY="30.0" prefHeight="25.0" prefWidth="204.0" style="-fx-font-size: 16px;" text="Id individuo más longevo: 0" />
-          <Label fx:id="IdClonacionesLabel" layoutX="-14.0" layoutY="63.0" prefHeight="58.0" prefWidth="303.0" style="-fx-font-size: 16px;" text="Id individuo con más clonaciones: 0" />
-          <Label fx:id="IdReproduccionesLabel" layoutX="-14.0" layoutY="43.0" prefHeight="49.0" prefWidth="334.0" style="-fx-font-size: 16px;" text="Id individuo con más reproducciones: 0" />
-      </children>
-   </AnchorPane>
+    <Label fx:id="individuoMasLongevoLabel" prefHeight="25.0" prefWidth="204.0" style="-fx-font-size: 16px;" text="Id individuo más longevo: 0" />
+    <Label fx:id="IdReproduccionesLabel" prefHeight="22.0" prefWidth="334.0" style="-fx-font-size: 16px;" text="Id individuo con más reproducciones: 0" />
+    <Label fx:id="IdClonacionesLabel" prefHeight="24.0" prefWidth="303.0" style="-fx-font-size: 16px;" text="Id individuo con más clonaciones: 0" />
+   <AnchorPane prefHeight="111.0" prefWidth="453.0" />
     <GridPane fx:id="tableroGridPane" style="-fx-background-color: yellow;" />
     <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="360.0" spacing="3.0" style="-fx-border-width: 3px;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <HBox.margin>
