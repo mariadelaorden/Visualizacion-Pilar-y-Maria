@@ -3,6 +3,7 @@ package es.uah.matcomp.proyecto.controlador;
 import com.google.gson.GsonBuilder;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
+import es.uah.matcomp.proyecto.excepciones.CeldaLlenaException;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.recurso.*;
@@ -19,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -293,7 +295,11 @@ public class TableroController extends GridPane implements Initializable {
             if (Math.random() < Recurso.getProbAparicion()) {
                 Recurso nuevoRecurso = generarNuevoRecurso();
                 if (celda.getRecursos().getNumeroElementos() < Celda.maxResources) {
-                    celda.addRecurso(nuevoRecurso);
+                    try {
+                        celda.addRecurso(nuevoRecurso);
+                    } catch (IllegalStateException | CeldaLlenaException e) {
+                        logger.warn("No se pudo agregar el recurso: " + e.getMessage());
+                    }
                     logger.debug("Nuevo recurso añadido: {}", nuevoRecurso);
                 }
             }
@@ -347,7 +353,7 @@ public class TableroController extends GridPane implements Initializable {
         return new Tesoro();
     }
 
-    private void evaluarClonacionYReproduccion() {
+    private void evaluarClonacionYReproduccion() throws CeldaLlenaException {
         logger.info("Evaluando clonación y reproducción de los individuos...");
         Tablero tablero = this.modeloParaGUICompartido.getOriginalTablero();
         for (int i = 0; i < tablero.getAncho(); i++) {
@@ -370,7 +376,7 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
-    private void moverIndividuos() {
+    private void moverIndividuos() throws CeldaLlenaException {
         Tablero tablero = this.modeloParaGUICompartido.originalTablero;
 
         for (int i = 0; i < tablero.getAncho(); i++) {
@@ -397,14 +403,14 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
-    private void moverIndividuoBasico(Tablero tablero, Individuo individuo, int x, int y) {
+    private void moverIndividuoBasico(Tablero tablero, Individuo individuo, int x, int y) throws CeldaLlenaException {
         Random rand = new Random();
         int nuevoX = x + rand.nextInt(3) - 1; // Movimiento aleatorio en el rango [-1, 1]
         int nuevoY = y + rand.nextInt(3) - 1;
         moverIndividuo(tablero, individuo, x, y, nuevoX, nuevoY);
     }
 
-    private void moverIndividuoNormal(Tablero tablero, Individuo individuo, int x, int y) {
+    private void moverIndividuoNormal(Tablero tablero, Individuo individuo, int x, int y) throws CeldaLlenaException {
         Celda objetivo = encontrarRecursoAleatorio(tablero);
         if (objetivo != null) {
             int[] coordsObjetivo = obtenerCoordenadasCelda(tablero, objetivo);
@@ -416,7 +422,7 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
-    private void moverIndividuoAvanzado(Tablero tablero, Individuo individuo, int x, int y) {
+    private void moverIndividuoAvanzado(Tablero tablero, Individuo individuo, int x, int y) throws CeldaLlenaException {
         Celda objetivo = encontrarRecursoMasCercano(tablero, x, y);
         if (objetivo != null) {
             int[] coordsObjetivo = obtenerCoordenadasCelda(tablero, objetivo);
@@ -428,7 +434,7 @@ public class TableroController extends GridPane implements Initializable {
         }
     }
 
-    private void moverIndividuo(Tablero tablero, Individuo individuo, int x, int y, int nuevoX, int nuevoY) {
+    private void moverIndividuo(Tablero tablero, Individuo individuo, int x, int y, int nuevoX, int nuevoY) throws CeldaLlenaException {
         if (esPosicionValida(tablero, nuevoX, nuevoY)) {
             Celda celdaActual = tablero.getCelda(x, y);
             Celda nuevaCelda = tablero.getCelda(nuevoX, nuevoY);
@@ -549,46 +555,56 @@ public class TableroController extends GridPane implements Initializable {
     private void buclePrincipal() {
         logger.info("Ejecutando bucle principal...");
 
-        //Incrementar turno
-        generacionActual++;
-        turnoLabel.setText("Turno: " + generacionActual);
+        try {
+            //Incrementar turno
+            generacionActual++;
+            turnoLabel.setText("Turno: " + generacionActual);
 
-        // Añadir un individuo en la posición tempContadorX (un contador temporal que puedes incrementar en cada ciclo)
-        int tempContadorX = generacionActual % modeloParaGUICompartido.getOriginalTablero().getAncho(); // Ejemplo para distribuir individuos a lo largo del tablero
-        Individuo ind = new Individuo(this.modeloParaGUICompartido.getIndividuoBasico(), generacionActual, TipoIndividuo.BASICO);
-        Celda celda = this.modeloParaGUICompartido.getOriginalTablero().getCelda(tempContadorX, 0);
-        celda.addIndividuo(ind);
-        generacionActual++;
-        logger.info("Generación actual: {}", generacionActual);
+            // Añadir un individuo en la posición tempContadorX (un contador temporal que puedes incrementar en cada ciclo)
+            int tempContadorX = generacionActual % modeloParaGUICompartido.getOriginalTablero().getAncho(); // Ejemplo para distribuir individuos a lo largo del tablero
+            Individuo ind = new Individuo(this.modeloParaGUICompartido.getIndividuoBasico(), generacionActual, TipoIndividuo.BASICO);
+            Celda celda = this.modeloParaGUICompartido.getOriginalTablero().getCelda(tempContadorX, 0);
+            celda.addIndividuo(ind);
 
-        // Actualizar la vida de los individuos y eliminar los que hayan muerto
-        this.actualizarVidaIndividuos();
+            logger.info("Generación actual: {}", generacionActual);
+            logger.info("Generación actual: {}", generacionActual);
 
-        // Actualizar la duración de los recursos y eliminar los que hayan caducado
-        this.actualizarRecursos();
+            // Actualizar la vida de los individuos y eliminar los que hayan muerto
+            this.actualizarVidaIndividuos();
 
-        // Movimiento individuos
-        this.moverIndividuos();
+            // Actualizar la duración de los recursos y eliminar los que hayan caducado
+            this.actualizarRecursos();
 
-        // Evaluar las mejoras de los individuos
-        this.evaluarMejorasIndividuos();
+            // Movimiento individuos
+            this.moverIndividuos();
 
-        // Evaluar la reproducción y clonación de los individuos en cada posición
-        this.evaluarClonacionYReproduccion();
+            // Evaluar las mejoras de los individuos
+            this.evaluarMejorasIndividuos();
 
-        // Evaluar la eliminación de individuos en posiciones con sobrepoblación
-        this.evaluarSobrePoblacion();
+            // Evaluar la reproducción y clonación de los individuos en cada posición
+            this.evaluarClonacionYReproduccion();
 
-        // Evaluar la aparición de nuevos recursos en cada posición del tablero
-        this.evaluarAparicionRecursos();
+            // Evaluar la eliminación de individuos en posiciones con sobrepoblación
+            this.evaluarSobrePoblacion();
 
-        //Evaluar si no quedan individuos para finalizar el juego
-        if (contarIndividuosEnTablero() == 0) {
-            timeline.stop();
-            mostrarArbolGenealogico();
+            // Evaluar la aparición de nuevos recursos en cada posición del tablero
+            this.evaluarAparicionRecursos();
+
+            //Evaluar si no quedan individuos para finalizar el juego
+            if (contarIndividuosEnTablero() == 0) {
+                timeline.stop();
+                mostrarArbolGenealogico();
+            }
+
+            // Actualizar tablero en la interfaz gráfica
+            this.updateBoard();
+        } catch (CeldaLlenaException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrió un error durante la ejecución");
+            alert.setContentText("Detalles del error: " + e.getMessage());
+            logger.error("Error en el bucle principal: {}", e.getMessage());
+            e.printStackTrace();
         }
-
-        // Actualizar tablero en la interfaz gráfica
-        this.updateBoard();
     }
 }
