@@ -1,5 +1,7 @@
 package es.uah.matcomp.proyecto.controlador;
 
+import es.uah.matcomp.proyecto.estructurasdedatos.arbol.ArbolBinarioDeBusqueda;
+import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,11 +15,22 @@ public class ArbolController {
 
     @FXML
     private Canvas arbolCanvas;
+    private ArbolBinarioDeBusqueda arbol;
+    private ParameterDataModelProperties modeloParaGUICompartido;
+    private Stage parametersScene;
 
     @FXML
     private void initialize() {
         dibujarArbol();
     }
+    public void setParametersScene(Stage parametersScene) {
+        this.parametersScene = parametersScene;
+    }
+
+    public void setModeloParaGUICompartido() {
+        this.modeloParaGUICompartido = ParameterDataModelProperties.getInstance(null, null, null, null);
+    }
+
 
     //EJEMPLO DIBUJAR ARBOL: hacerlo con los individuos
 

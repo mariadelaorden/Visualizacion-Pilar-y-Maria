@@ -52,6 +52,8 @@ public class TableroController extends GridPane implements Initializable {
     private Timeline timeline;
 
     private int generacionActual = 0;
+    @FXML
+    private Label turnoLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -547,7 +549,9 @@ public class TableroController extends GridPane implements Initializable {
     private void buclePrincipal() {
         logger.info("Ejecutando bucle principal...");
 
-        // IMPORTANTE, FALTA NORMALIZAR LA PROBABILIDAD DE APARICIÓN DE LOS RECURSOS. (las V del enunciado)
+        //Incrementar turno
+        generacionActual++;
+        turnoLabel.setText("Turno: " + generacionActual);
 
         // Añadir un individuo en la posición tempContadorX (un contador temporal que puedes incrementar en cada ciclo)
         int tempContadorX = generacionActual % modeloParaGUICompartido.getOriginalTablero().getAncho(); // Ejemplo para distribuir individuos a lo largo del tablero

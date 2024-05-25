@@ -36,7 +36,7 @@ public class ElementoLDE {
         }
     }
 
-    protected ElementoLDE getSiguiente() {
+    public ElementoLDE getSiguiente() {
         try {
             return this.siguiente;
         } catch (Exception e) {

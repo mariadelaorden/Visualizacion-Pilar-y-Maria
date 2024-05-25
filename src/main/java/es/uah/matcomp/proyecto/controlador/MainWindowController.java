@@ -78,6 +78,12 @@ public class MainWindowController implements Initializable {
                     Scene scene = new Scene(fxmlLoader.load(), 600, 400);
                     stage.setTitle("Tablero");
                     stage.setScene(scene);
+                    TableroController tableroController = fxmlLoader.getController();
+                    tableroController.setModeloParaGUICompartido();
+                    tableroController.setParametersScene(this.scene);
+                    tableroController.setStage(stage);
+                    tableroController.crearTablero();
+                    stage.sizeToScene();
                     stage.show();
                     logger.info("Partida cargada y ventana de tablero mostrada.");
                 } catch (Exception e) {

@@ -9,6 +9,7 @@
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
     </padding>
+    <Label fx:id="turnoLabel" text="Turno: 0" style="-fx-font-size: 16px;"/>
     <GridPane fx:id="tableroGridPane" style="-fx-background-color: yellow;"/>
     <HBox alignment="CENTER_RIGHT" spacing="3.0" style="-fx-border-width: 3px;" AnchorPane.bottomAnchor="10.0"
           AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -23,7 +24,6 @@
                 <Insets/>
             </opaqueInsets>
         </Button>
-        <Button fx:id="parametrosButton" mnemonicParsing="false" onAction="#onParametrosButtonClick"
-                text="Parametros"/>
+        <Button fx:id="parametrosButton" mnemonicParsing="false" onAction="#onParametrosButtonClick" text="Parametros"/>
     </HBox>
 </VBox>

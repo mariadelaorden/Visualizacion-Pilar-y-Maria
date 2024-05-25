@@ -1,145 +1,120 @@
-//package es.uah.matcomp.proyecto.modelo;
-//
-//import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaEnlazada;
-//
-//public class ParameterDataModel {
-//
-//    // listas
-//    private ListaEnlazada individuos = new ListaEnlazada<>();
-//    private ListaEnlazada recursos = new ListaEnlazada<>();
-//
-//    // datos
-//    private Boolean isPausa = false;
-//
-//    // datos tablero
-//    private int IndividuosMaximos = 3;
-//    private int RecursosMaximos = 3;
-//    private int ancho;
-//    private int largo;
-//
-//    // datos individuo
-//    private int vidas;
-//    private double probReproduccion;
-//    private double probClonacion;
-//    private String seleccionTipo;
-//
-//    // datos recurso
-//    private double probAparicion;
-//    private double TiempoAparicion;
-//    private String TipoRecurso;
-//
-//    public ParameterDataModel(int ancho, int largo, int vidas, double probReproduccion, double probClonacion, String seleccionTipo, double TiempoAparcion, double probAparicion, String TipoRecurso) {
-//        this.ancho = ancho;
-//        this.largo = largo;
-//        this.vidas = vidas;
-//        this.probReproduccion = probReproduccion;
-//        this.probClonacion = probClonacion;
-//        this.seleccionTipo = seleccionTipo;
-//        this.TiempoAparicion = TiempoAparcion;
-//        this.probAparicion = probAparicion;
-//        this.TipoRecurso = TipoRecurso;
-//    }
-//
-//    public ListaEnlazada getIndividuos() {
-//        return individuos;
-//    }
-//
-//    public void setIndividuos(ListaEnlazada individuos) {
-//        this.individuos = individuos;
-//    }
-//
-//    public ListaEnlazada getRecursos() {
-//        return recursos;
-//    }
-//
-//    public void setRecursos(ListaEnlazada recursos) {
-//        this.recursos = recursos;
-//    }
-//
-//    public int getIndividuosMaximos() {
-//        return IndividuosMaximos;
-//    }
-//
-//    public void setIndividuosMaximos(int individuosMaximos) {
-//        IndividuosMaximos = individuosMaximos;
-//    }
-//
-//    public int getRecursosMaximos() {
-//        return RecursosMaximos;
-//    }
-//
-//    public void setRecursosMaximos(int recursosMaximos) {
-//        RecursosMaximos = recursosMaximos;
-//    }
-//
-//    public int getAncho() {
-//        return ancho;
-//    }
-//
-//    public void setAncho(int ancho) {
-//        this.ancho = ancho;
-//    }
-//
-//    public int getLargo() {
-//        return largo;
-//    }
-//
-//    public void setLargo(int largo) {
-//        this.largo = largo;
-//    }
-//
-//    public int getVidas() {
-//        return vidas;
-//    }
-//
-//    public void setVidas(int vidas) {
-//        this.vidas = vidas;
-//    }
-//
-//    public double getProbReproduccion() {
-//        return probReproduccion;
-//    }
-//
-//    public void setProbReproduccion(double probReproduccion) {
-//        this.probReproduccion = probReproduccion;
-//    }
-//
-//    public double getProbClonacion() {
-//        return probClonacion;
-//    }
-//
-//    public void setProbClonacion(double probClonacion) {
-//        this.probClonacion = probClonacion;
-//    }
-//
-//    public String getSeleccionTipo() {
-//        return seleccionTipo;
-//    }
-//
-//    public void setSeleccionTipo(String seleccionTipo) {
-//        this.seleccionTipo = seleccionTipo;
-//    }
-//
-//    public double getProbAparicion() {
-//        return probAparicion;
-//    }
-//
-//    public void setProbAparicion(double probAparicion) {
-//        this.probAparicion = probAparicion;
-//    }
-//
-//    public double getTiempoAparicion() {
-//        return TiempoAparicion;
-//    }
-//
-//    public void setTiempoAparicion(double tiempoAparicion) {
-//        TiempoAparicion = tiempoAparicion;
-//    }
-//    public String getTipoRecurso() {
-//        return TipoRecurso;
-//    }
-//
-//    public void setTipoRecurso(String tipoRecurso) {
-//        TipoRecurso = tipoRecurso;
-//    }
-//}
+/**
+
+import es.uah.matcomp.proyecto.controlador.ParameterDataModelProperties;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+
+public static void finalizarPartida (ParameterDataModelProperties model) {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("arbol-view-vista.fxml"));
+        Parent root = fxmlLoader.load();
+        HBox paneGanadores = (HBox) ((AnchorPane) ((ScrollPane) ((VBox) root).getChildren().get(2)).getContent()).getChildren().getFirst();
+
+        HBox.setHgrow(paneGanadores, Priority.ALWAYS);
+        AnchorPane.setTopAnchor(paneGanadores, 0.0);
+        AnchorPane.setBottomAnchor(paneGanadores, 0.0);
+        AnchorPane.setLeftAnchor(paneGanadores, 0.0);
+        AnchorPane.setRightAnchor(paneGanadores, 0.0);
+
+        HashMap<individuo, ArbolBinario<individuo>> arbolesGenealogicos = juegoActual.getArbolesGenealogicos();
+
+        int numeroGanadores = model.getIndividuos().getNumeroElementos();
+        for (int i = 0; i != numeroGanadores; i ++) {
+            individuo individuoActual = model.getIndividuos().getElemento(i).getData();
+            ArbolBinario<individuo> arbolActual = arbolesGenealogicos.get(individuoActual);
+
+            TreeView<individuo> vistaGanadores = new TreeView<>();
+
+            TreeItem<individuo> raiz = new TreeItem<>();
+            raiz.getChildren().add(crearArbolVista(arbolActual));
+            vistaGanadores.setRoot(raiz);
+            vistaGanadores.setShowRoot(false);
+            vistaGanadores.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            vistaGanadores.setCellFactory(_ -> new TreeCell<>() {
+                @Override
+                protected void updateItem(individuo individuo, boolean empty) {
+                    super.updateItem(individuo, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        if (individuo != null) {
+                            setText(STR."Individuo \{individuo.getId()}");
+                            setFont(new Font("Bookman Old Style", 18));
+                        }
+                    }
+                }
+            });
+
+            paneGanadores.getChildren().add(vistaGanadores);
+            HBox.setHgrow(vistaGanadores, Priority.ALWAYS);
+        }
+
+
+        while (!Window.getWindows().isEmpty()) {
+            ((Stage) Window.getWindows().getFirst()).close();
+        };
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setIconified(false);
+        stage.setFullScreen(true);
+        stage.show();
+    } catch (IOException e) {
+        log.error("No se ha encontrado la vista del menú principal");
+    }
+}
+
+private static TreeItem<individuo> crearArbolVista (ArbolBinario<individuo> arbol) {
+    TreeItem<individuo> itemRaiz = new TreeItem<>(arbol.getRaiz().getDato());
+    if (arbol.getAltura() > 1) {
+        crearArbolVistaAux(arbol.getRaiz().getDerecha(), itemRaiz);
+        crearArbolVistaAux(arbol.getRaiz().getIzquierda(), itemRaiz);
+    }
+    return itemRaiz;
+}
+
+private static void crearArbolVistaAux (nodoBST<individuo> nodo, TreeItem<individuo> itemRaiz) {
+    TreeItem<individuo> item = new TreeItem<>(nodo.getDato());
+    itemRaiz.getChildren().add(item);
+
+    if (nodo.getDerecha() != null & nodo.getIzquierda() != null) {
+        crearArbolVistaAux(nodo.getDerecha(), item);
+        crearArbolVistaAux(nodo.getIzquierda(), item);
+    }
+}
+
+private HashMap<individuo, ArbolBinario<individuo>> crearArbolesGenealogicos () {
+    HashMap<individuo, ArbolBinario<individuo>> arbolesGenealogicos = new HashMap<>();
+
+    int totalIndividuos = model.getIndividuos().getNumeroElementos();
+    for (int i = 0; i != totalIndividuos; i ++) {
+        individuo individuoActual = model.getIndividuos().getElemento(i).getData();
+        ArbolBinario<individuo> arbolGenealogico = new ArbolBinario<>(individuoActual);
+
+        añadirPadres(arbolGenealogico.getRaiz());
+        arbolesGenealogicos.put(individuoActual, arbolGenealogico);
+    }
+    return arbolesGenealogicos;
+}
+
+private void añadirPadres (nodoBST<individuo> hijo) {
+    try {
+        if (hijo.getDato().getPadres() != null) {
+            if (hijo.getDato().getPadres().getNumeroElementos() != 2) throw new numeroPadresInvalidoException();
+            hijo.setDerecha(new nodoBST<>(hijo.getDato().getPadres().getPrimero().getData()));
+            hijo.setIzquierda(new nodoBST<>(hijo.getDato().getPadres().getElemento(1).getData()));
+
+            añadirPadres(hijo.getDerecha());
+            añadirPadres(hijo.getIzquierda());
+        }
+    } catch (numeroPadresInvalidoException e) {
+        log.error("El número de padres no es 2");
+    }
+}
+ **/
