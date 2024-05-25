@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.canvas.GraphicsContext?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Label?>
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.uah.matcomp.proyecto.controlador.ArbolController">
    <children>
       <Label layoutX="167.0" layoutY="31.0" prefHeight="60.0" prefWidth="306.0" text="FIN DE LA PARTIDA" textFill="#f60c0c">
          <font>
-            <Font name="System Bold" size="31.0"/>
+            <Font name="System Bold" size="31.0" />
          </font>
       </Label>
-      <Label layoutX="219.0" layoutY="82.0" text="Aquí está tu árbol genealógico"/>
-      <Canvas fx:id="arbolCanvas" layoutX="50.0" layoutY="120.0" width="700.0" height="400.0"/>
-      <Button layoutX="350.0" layoutY="550.0" text="Siguiente" onAction="#onSiguienteButtonClick"/>
+      <Label layoutX="219.0" layoutY="82.0" text="Individuo ganador" />
+      <Canvas fx:id="arbolCanvas" height="400.0" layoutX="50.0" layoutY="120.0" width="700.0" />
+      <Button layoutX="350.0" layoutY="550.0" onAction="#onCerrarButtonClick" text="Cerrar" />
    </children>
 </AnchorPane>

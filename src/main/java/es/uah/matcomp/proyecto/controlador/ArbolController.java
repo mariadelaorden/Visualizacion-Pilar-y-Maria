@@ -16,13 +16,13 @@ public class ArbolController {
     @FXML
     private Canvas arbolCanvas;
 
-    @FXML
-    private void initialize() {
-        // Inicialización si es necesario
-    }
     private Stage scene;
 
-    public void dibujarArbol(GenealogyNode arbolGenealogico) {
+    @FXML
+    private void initialize() {
+    }
+
+    public void dibujarArbol(GenealogyNode arbolGenealogico, Individuo ultimoIndividuo) {
         GraphicsContext grafica = arbolCanvas.getGraphicsContext2D();
         grafica.clearRect(0, 0, arbolCanvas.getWidth(), arbolCanvas.getHeight());
         grafica.setFill(Color.BLACK);
@@ -33,6 +33,12 @@ public class ArbolController {
             double startX = arbolCanvas.getWidth() / 2;
             double startY = 50;
             dibujarNodo(grafica, arbolGenealogico, startX, startY, 200);
+        }
+
+        if (ultimoIndividuo != null) {
+            double centerX = arbolCanvas.getWidth() / 2;
+            double centerY = arbolCanvas.getHeight() - 50;
+            dibujarCirculo(grafica, centerX, centerY, "Último Individuo", ultimoIndividuo.getId());
         }
     }
 
@@ -57,9 +63,24 @@ public class ArbolController {
         }
     }
 
+    private void dibujarCirculo(GraphicsContext grafica, double centerX, double centerY, String texto, int idIndividuo) {
+        grafica.setFill(Color.BLUE);
+        grafica.fillOval(centerX - 20, centerY - 20, 40, 40);
+        grafica.setFill(Color.WHITE);
+        grafica.fillText(texto + ": " + idIndividuo, centerX - 30, centerY);
+    }
+
     @FXML
-    private void onSiguienteButtonClick() {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("estadisticas-view.fxml"));
+    private void onCerrarButtonClick() {
+        Scene scene = arbolCanvas.getScene();
+        // Si la escena no es nula, obtenemos la ventana asociada
+        if (scene != null) {
+            Stage stage = (Stage) scene.getWindow();
+
+            // Si la ventana no es nula, la cerramos
+            if (stage != null) {
+                stage.close();
+            }
+        }
     }
 }

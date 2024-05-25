@@ -573,7 +573,7 @@ public class TableroController extends GridPane implements Initializable {
             ArbolController arbolController = fxmlLoader.getController();
             Individuo ganador = obtenerIndividuoGanador();
             GenealogyNode arbolGenealogico = ganador != null ? ganador.getGenealogyNode() : null;
-            //arbolController.dibujarArbol(arbolGenealogico);
+            arbolController.dibujarArbol(arbolGenealogico, ganador);
             stage.setTitle("Árbol Genealógico");
             stage.setScene(scene);
             stage.show();
