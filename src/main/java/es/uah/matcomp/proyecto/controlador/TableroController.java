@@ -698,8 +698,6 @@ public class TableroController extends GridPane implements Initializable {
             generacionActual++;
             turnoLabel.setText("Turno: " + generacionActual);
             individuoMasLongevoLabel.setText("Id Individuo más longevo: "+ calcularIndividuoMasLongevo().getId());
-            totalReproduccionesLabel.setText("Total reproducciones: "+ calcularTotalReproducciones());
-            totalClonacionesLabel.setText("Total clonaciones: "+ calcularTotalMutaciones());
             IdReproduccionesLabel.setText("Id individuo más reproducciones: "+ calcularIdMayorNumeroReproducciones());
             IdClonacionesLabel.setText("Id individduo más clonaciones: "+ calcularIdMayorNumeroMutaciones());
 
