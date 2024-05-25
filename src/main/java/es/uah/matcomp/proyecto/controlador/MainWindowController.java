@@ -13,9 +13,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -107,4 +105,54 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logger.info("Inicializando MainWindowController...");
     }
+
+    @FXML
+    protected void onGuardarPartidaButtonClick() {
+        logger.info("Guardando partida en archivo...");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar partida");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        File archivoSeleccionado = fileChooser.showSaveDialog(new Stage());
+
+        if (archivoSeleccionado != null) {
+            boolean exito = guardarPartida(archivoSeleccionado.getAbsolutePath(), tableroDataModel);
+            if (exito) {
+                logger.info("Partida guardada exitosamente en el archivo: " + archivoSeleccionado.getAbsolutePath());
+            } else {
+                logger.error("Error al guardar la partida en el archivo: " + archivoSeleccionado.getAbsolutePath());
+            }
+        } else {
+            logger.warn("No se seleccionó ningún archivo para guardar la partida.");
+        }
+    }
+
+    public static <T> boolean guardarPartida(String rutaArchivo, T partida) {
+        logger.info("Guardando partida en el archivo: {}", rutaArchivo);
+        Gson gson = new Gson();
+        try (Writer writer = new FileWriter(rutaArchivo)) {
+            gson.toJson(partida, writer);
+            return true;
+        } catch (IOException e) {
+            logger.error("Error al guardar la partida en el archivo: {}", rutaArchivo, e);
+            return false;
+        }
+    }
+
+    private PartidaDTO toDTO() {
+        PartidaDTO dto = new PartidaDTO();
+        dto.setTablero(tableroDataModel);
+        dto.setIndividuoBasico(individuoBasicoDataModel);
+        dto.setIndividuoNormal(individuoNormalDataModel);
+        dto.setIndividuoAvanzado(individuoAvanzadoDataModel);
+        return dto;
+    }
+
+    private void fromDTO(PartidaDTO dto) {
+        tableroDataModel = dto.getTablero();
+        individuoBasicoDataModel = dto.getIndividuoBasico();
+        individuoNormalDataModel = dto.getIndividuoNormal();
+        individuoAvanzadoDataModel = dto.getIndividuoAvanzado();
+    }
+
+
 }
