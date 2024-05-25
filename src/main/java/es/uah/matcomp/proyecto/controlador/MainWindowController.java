@@ -1,13 +1,18 @@
 package es.uah.matcomp.proyecto.controlador;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import es.uah.matcomp.proyecto.modelo.individuo.PlantillaIndividuo;
 import es.uah.matcomp.proyecto.modelo.tablero.CeldaInfo;
 import es.uah.matcomp.proyecto.modelo.tablero.Tablero;
+import es.uah.matcomp.proyecto.serializacion.PropertyAdapters.*;
+import es.uah.matcomp.proyecto.serializacion.ListViewTypeAdapter;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -64,8 +69,9 @@ public class MainWindowController implements Initializable {
         File archivoSeleccionado = fileChooser.showOpenDialog(new Stage());
 
         if (archivoSeleccionado != null) {
-            CeldaInfo partida = cargarPartida(archivoSeleccionado.getAbsolutePath(), CeldaInfo.class);
-            if (partida != null) {
+            PartidaDTO partidaDTO = cargarPartida(archivoSeleccionado.getAbsolutePath(), PartidaDTO.class);
+            if (partidaDTO != null) {
+                fromDTO(partidaDTO);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tablero-view.fxml"));
                 try {
@@ -88,7 +94,13 @@ public class MainWindowController implements Initializable {
 
     public static <T> T cargarPartida(String rutaArchivo, Class<T> clase) {
         logger.info("Cargando partida desde el archivo: {}", rutaArchivo);
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(IntegerProperty.class, new IntegerPropertyAdapter())
+                .registerTypeAdapter(DoubleProperty.class, new DoublePropertyAdapter())
+                .registerTypeAdapter(StringProperty.class, new StringPropertyAdapter())
+                .registerTypeAdapter(BooleanProperty.class, new BooleanPropertyAdapter())
+                .registerTypeAdapter(ListView.class, new ListViewTypeAdapter<>())
+                .create();
         try (FileReader reader = new FileReader(rutaArchivo)) {
             return gson.fromJson(reader, clase);
         } catch (IOException e) {
@@ -115,7 +127,8 @@ public class MainWindowController implements Initializable {
         File archivoSeleccionado = fileChooser.showSaveDialog(new Stage());
 
         if (archivoSeleccionado != null) {
-            boolean exito = guardarPartida(archivoSeleccionado.getAbsolutePath(), tableroDataModel);
+            PartidaDTO partidaDTO = toDTO();
+            boolean exito = guardarPartida(archivoSeleccionado.getAbsolutePath(), partidaDTO);
             if (exito) {
                 logger.info("Partida guardada exitosamente en el archivo: " + archivoSeleccionado.getAbsolutePath());
             } else {
@@ -128,7 +141,13 @@ public class MainWindowController implements Initializable {
 
     public static <T> boolean guardarPartida(String rutaArchivo, T partida) {
         logger.info("Guardando partida en el archivo: {}", rutaArchivo);
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(IntegerProperty.class, new IntegerPropertyAdapter())
+                .registerTypeAdapter(DoubleProperty.class, new DoublePropertyAdapter())
+                .registerTypeAdapter(StringProperty.class, new StringPropertyAdapter())
+                .registerTypeAdapter(BooleanProperty.class, new BooleanPropertyAdapter())
+                .registerTypeAdapter(ListView.class, new ListViewTypeAdapter<>())
+                .create();
         try (Writer writer = new FileWriter(rutaArchivo)) {
             gson.toJson(partida, writer);
             return true;
@@ -153,6 +172,4 @@ public class MainWindowController implements Initializable {
         individuoNormalDataModel = dto.getIndividuoNormal();
         individuoAvanzadoDataModel = dto.getIndividuoAvanzado();
     }
-
-
 }

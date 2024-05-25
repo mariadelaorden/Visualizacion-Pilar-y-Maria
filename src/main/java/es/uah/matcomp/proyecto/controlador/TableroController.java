@@ -210,18 +210,18 @@ public class TableroController extends GridPane implements Initializable {
                 if (el != null) {
                     logger.debug("El indice {} es: {}", i, el.getData());
                     Individuo ind = (Individuo) el.getData();
-                    ind.setVida(ind.getVida() - 1);
-                    if (ind.getVida() <= 0) {
+                    int nuevaVida = ind.getVida() - 1;
+                    if (nuevaVida <= 0) {
                         individuos.del(i);
                         logger.debug("Individuo eliminado. Estado actual de la celda:");
                         individuos.imprimir();
+                    } else {
+                        ind.setVida(nuevaVida);
                     }
                 }
             }
         }
     }
-
-
 
     private void actualizarRecursos() {
         logger.info("Actualizando duración de los recursos...");
