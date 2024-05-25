@@ -12,6 +12,7 @@ public class Individuo extends PlantillaIndividuo {
     private final int id;
     private final int generacion;
     private TipoIndividuo tipo;
+    private GenealogyNode genealogyNode;
 
     // Constructor
     public Individuo(PlantillaIndividuo plantilla, int generacion, TipoIndividuo tipo) {
@@ -19,6 +20,7 @@ public class Individuo extends PlantillaIndividuo {
         this.id = obtenerSiguienteID();
         this.generacion = generacion;
         this.tipo = tipo;
+        this.genealogyNode = new GenealogyNode(this);
 
         logger.info("Individuo creado: ID = {}, Generacion = {}, Tipo = {}", id, generacion, tipo);
     }
@@ -34,6 +36,10 @@ public class Individuo extends PlantillaIndividuo {
 
     public TipoIndividuo getTipo() {
         return tipo;
+    }
+
+    public GenealogyNode getGenealogyNode() {
+        return genealogyNode;
     }
 
     public void setTipo(TipoIndividuo tipo) throws IndividuoException {
@@ -57,12 +63,16 @@ public class Individuo extends PlantillaIndividuo {
         }
         return siguienteID++;
     }
+
     public Individuo crearNuevoIndividuo() {
         // Usamos la misma plantilla
         PlantillaIndividuo plantilla = new PlantillaIndividuo(this);
 
         // Creamos un nuevo individuo con la misma plantilla y generación, pero con un nuevo ID
         Individuo nuevoIndividuo = new Individuo(plantilla, this.generacion, this.tipo);
+
+        // Añadimos el nuevo individuo al árbol genealógico
+        this.genealogyNode.addHijo(nuevoIndividuo.getGenealogyNode());
 
         return nuevoIndividuo;
     }
@@ -76,6 +86,7 @@ public class Individuo extends PlantillaIndividuo {
             return null; // No se realiza la clonación
         }
     }
+
     public Individuo evaluarReproduccion() {
         double probabilidad = Math.random(); // Genera un número aleatorio entre 0 y 1
         if (probabilidad < this.getProbReproduccion()) {
@@ -85,7 +96,4 @@ public class Individuo extends PlantillaIndividuo {
             return null; // No se realiza la reproducción
         }
     }
-
-
 }
-

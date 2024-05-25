@@ -1,13 +1,10 @@
 package es.uah.matcomp.proyecto.controlador;
 
-import es.uah.matcomp.proyecto.estructurasdedatos.arbol.ArbolBinarioDeBusqueda;
-import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
+import es.uah.matcomp.proyecto.modelo.individuo.GenealogyNode;
+import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -15,48 +12,44 @@ public class ArbolController {
 
     @FXML
     private Canvas arbolCanvas;
-    private ArbolBinarioDeBusqueda arbol;
-    private ParameterDataModelProperties modeloParaGUICompartido;
-    private Stage parametersScene;
 
     @FXML
     private void initialize() {
-        dibujarArbol();
-    }
-    public void setParametersScene(Stage parametersScene) {
-        this.parametersScene = parametersScene;
+        // Inicialización si es necesario
     }
 
-    public void setModeloParaGUICompartido() {
-        this.modeloParaGUICompartido = ParameterDataModelProperties.getInstance(null, null, null, null);
-    }
-
-
-    //EJEMPLO DIBUJAR ARBOL: hacerlo con los individuos
-
-    private void dibujarArbol() {
+    public void dibujarArbol(GenealogyNode arbolGenealogico) {
         GraphicsContext grafica = arbolCanvas.getGraphicsContext2D();
+        grafica.clearRect(0, 0, arbolCanvas.getWidth(), arbolCanvas.getHeight());
         grafica.setFill(Color.BLACK);
         grafica.setStroke(Color.BLACK);
         grafica.setLineWidth(2);
 
-        double startX = arbolCanvas.getWidth() / 2;
-        double startY = 50;
-
-        dibujarNodo(grafica, "Padre", startX, startY, 200);
+        if (arbolGenealogico != null) {
+            double startX = arbolCanvas.getWidth() / 2;
+            double startY = 50;
+            dibujarNodo(grafica, arbolGenealogico, startX, startY, 200);
+        }
     }
 
-    private void dibujarNodo(GraphicsContext grafica, String text, double x, double y, double offset) {
+    private void dibujarNodo(GraphicsContext grafica, GenealogyNode nodo, double x, double y, double offset) {
         // Dibuja el nodo
         grafica.strokeOval(x - 30, y - 15, 60, 30);
-        grafica.fillText(text, x - 20, y + 5);
+        grafica.fillText("ID: " + nodo.getIndividuo().getId(), x - 20, y + 5);
 
         // Dibuja las ramas y nodos hijos
-        if (offset > 20) {
-            grafica.strokeLine(x, y + 15, x - offset, y + 70);
-            grafica.strokeLine(x, y + 15, x + offset, y + 70);
-            dibujarNodo(grafica, "Hijo 1", x - offset, y + 70, offset / 2);
-            dibujarNodo(grafica, "Hijo 2", x + offset, y + 70, offset / 2);
+        if (offset > 20 && nodo.getHijos().getNumeroElementos() > 0) {
+            for (int i = 0; i < nodo.getHijos().getNumeroElementos(); i++) {
+                ElementoLS elHijo = nodo.getHijos().getElemento(i);
+                if (elHijo != null) {
+                    GenealogyNode hijo = (GenealogyNode) elHijo.getData();
+                    double childX = x - offset + (i * 2 * offset) / (nodo.getHijos().getNumeroElementos() - 1);
+                    double childY = y + 70;
+
+                    grafica.strokeLine(x, y + 15, childX, childY - 15);
+                    dibujarNodo(grafica, hijo, childX, childY, offset / 2);
+                }
+            }
         }
     }
 
@@ -66,4 +59,3 @@ public class ArbolController {
         stage.close();
     }
 }
-

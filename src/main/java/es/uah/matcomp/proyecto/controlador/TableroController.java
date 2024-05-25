@@ -5,6 +5,7 @@ import es.uah.matcomp.proyecto.estructurasdedatos.listas.ElementoLS;
 import es.uah.matcomp.proyecto.estructurasdedatos.listas.ListaSimple;
 import es.uah.matcomp.proyecto.excepciones.CeldaLlenaException;
 import es.uah.matcomp.proyecto.modelo.individuo.Individuo;
+import es.uah.matcomp.proyecto.modelo.individuo.GenealogyNode;
 import es.uah.matcomp.proyecto.modelo.individuo.TipoIndividuo;
 import es.uah.matcomp.proyecto.modelo.recurso.*;
 import es.uah.matcomp.proyecto.modelo.tablero.Celda;
@@ -131,7 +132,7 @@ public class TableroController extends GridPane implements Initializable {
         fileChooser.setTitle("Guardar Partida");
 
         // Configurar filtro de extensión para archivos JSON
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos JSON (*.json)", "*.json");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos JSON (.json)", ".json");
         fileChooser.getExtensionFilters().add(extFilter);
 
         // Mostrar el cuadro de diálogo para seleccionar la ubicación y el nombre del archivo
@@ -535,6 +536,21 @@ public class TableroController extends GridPane implements Initializable {
         return totalIndividuos;
     }
 
+    private Individuo obtenerIndividuoGanador() {
+        // Aquí debes implementar la lógica para obtener el individuo ganador del tablero
+        // Este es un ejemplo simple que simplemente retorna el primer individuo que encuentra
+        Tablero tablero = this.modeloParaGUICompartido.getOriginalTablero();
+        for (int i = 0; i < tablero.getAncho(); i++) {
+            for (int j = 0; j < tablero.getLargo(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                if (!celda.getIndividuos().isVacia()) {
+                    return (Individuo) celda.getIndividuos().getElemento(0).getData();
+                }
+            }
+        }
+        return null;
+    }
+
     private void mostrarArbolGenealogico() {
         logger.info("Mostrando arbol...");
         Stage stage = new Stage();
@@ -542,6 +558,10 @@ public class TableroController extends GridPane implements Initializable {
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
+            ArbolController arbolController = fxmlLoader.getController();
+            Individuo ganador = obtenerIndividuoGanador();
+            GenealogyNode arbolGenealogico = ganador != null ? ganador.getGenealogyNode() : null;
+            arbolController.dibujarArbol(arbolGenealogico);
             stage.setTitle("Árbol Genealógico");
             stage.setScene(scene);
             stage.show();
